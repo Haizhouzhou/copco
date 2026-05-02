@@ -53,6 +53,34 @@ python scripts/validate_env.py
 python -m pytest tests/ -q
 ```
 
+## Dyslexia-Labeled Reader Pipeline
+
+The committed CLI scaffold implements the reproducible research program in
+`plan/copco_dyslexia_research_plan.md` while keeping generated outputs ignored under
+`results/`.
+
+```bash
+copco-build-features --config configs/copco_dyslexia_full.yaml
+copco-run-lm-features --output-dir results/<run> --dry-run
+copco-run-models --output-dir results/<run>
+copco-fit-mixed-effects --output-dir results/<run>
+copco-validate-run --output-dir results/<run>
+```
+
+For heavy LM scoring or CPU-heavy modeling, print the Slurm launcher command first:
+
+```bash
+copco-build-features --config configs/copco_dyslexia_full.yaml --print-slurm-command
+copco-run-lm-features --output-dir results/<run> --print-slurm-command
+copco-run-models --output-dir results/<run> --print-slurm-command
+```
+
+The pipeline uses the local `derived57` package when it is importable. If it is absent,
+the run manifest records that missing input and falls back to the ignored local
+`copco-processing/` schema when available. Scientific wording remains
+"dyslexia-labeled reader"; outputs are not clinical diagnosis, screening, or medical
+validation.
+
 ## Data Policy
 
 Raw data, copied datasets, derived participant-level tables, large artifacts, model

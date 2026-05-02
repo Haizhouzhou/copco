@@ -1,0 +1,12 @@
+extends: configs/copco_dyslexia_full.yaml
+
+run:
+  name: copco_dyslexia_smoke
+  output_root: results
+
+sample:
+  participants: 2
+  speeches: 2
+
+language_models:
+  dry_run: true

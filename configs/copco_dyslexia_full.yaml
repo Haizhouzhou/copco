@@ -1,0 +1,162 @@
+run:
+  name: copco_dyslexia_full
+  output_root: results
+  logs_root: logs
+  timestamp_format: "%Y%m%d_%H%M%S"
+
+dataset:
+  source: auto
+  derived57_module: derived57
+  legacy_root: copco-processing
+  extracted_features_glob: ExtractedFeatures/P*.csv
+  ia_reports_glob: InterestAreaReports/IA_report_P*.txt
+  participant_stats_path: participant_stats.csv
+  text_stats_path: texts_stats.csv
+  expected_participants:
+    typical: 38
+    dyslexia_labeled: 19
+  excluded_participants:
+    - P14
+  excluded_speech_ids:
+    - "1327"
+  p32_sensitivity_participant: P32
+
+identifiers:
+  speech_id: "{speechId}"
+  paragraph_id: "{speech_id}_p{paragraphId}"
+  sentence_id: "{paragraph_id}_s{sentenceId}"
+  word_id: "{sentence_id}_w{wordId}"
+
+features:
+  gaze_metric_map:
+    FFD: word_first_fix_dur
+    GD: word_first_pass_dur
+    TRT: word_total_fix_dur
+    fixation_count: number_of_fixations
+  ia_cross_checks:
+    FFD: IA_FIRST_FIXATION_DURATION
+    GD: IA_FIRST_RUN_DWELL_TIME
+    TRT: IA_DWELL_TIME
+    fixation_count: IA_FIXATION_COUNT
+    skip: IA_SKIP
+    regression_in: IA_REGRESSION_IN
+    regression_out: IA_REGRESSION_OUT
+  classical:
+    syllables: pyphen_da_dk_with_vowel_cluster_fallback
+    parser: dacy_optional
+    frequency_sources:
+      subtlexdk: public_optional
+      gigaword: public_optional
+
+language_models:
+  dtype: float16
+  shard_by: paragraph
+  primary_surprisal:
+    model_id: danish-foundation-models/dfm-decoder-open-v0-7b-pt
+    role: base_lm_surprisal
+  sensitivity_surprisal:
+    model_id: google/gemma-2-9b
+    role: base_lm_surprisal_sensitivity
+  embeddings:
+    primary: KennethEnevoldsen/dfm-sentence-encoder-large
+    baseline: intfloat/multilingual-e5-large
+  optional_instruct_annotations:
+    enabled: false
+    models:
+      - mistralai/Mistral-Small-3.1-24B-Instruct
+      - google/gemma-3-27b-it
+    use_for_surprisal: false
+
+cv:
+  participant_grouped_folds: 5
+  random_seeds:
+    - 17
+    - 29
+    - 41
+    - 53
+    - 67
+  regimes:
+    - participant_grouped_5fold
+    - leave_one_participant_out
+    - leave_one_speech_out
+    - exclude_p32_sensitivity
+    - weak_provenance_sensitivity
+
+models:
+  families:
+    A_gaze:
+      - gaze
+    B_gaze_classical:
+      - gaze
+      - classical_linguistic
+    C_gaze_lm:
+      - gaze
+      - lm_surprisal_entropy
+    D_gaze_embeddings:
+      - gaze
+      - embeddings
+    E_full:
+      - gaze
+      - classical_linguistic
+      - lm_surprisal_entropy
+      - embeddings
+    F_instruct_ablation:
+      - gaze
+      - classical_linguistic
+      - lm_surprisal_entropy
+      - embeddings
+      - instruct_annotations
+  sequence_models:
+    enabled: true
+    claim_scope: exploratory_only
+  metrics:
+    - roc_auc
+    - pr_auc
+    - brier
+
+mixed_effects:
+  primary_outcome: TRT
+  group_term: dyslexia_labeled
+  hypotheses:
+    H1_group_reading_cost:
+      fixed_effects:
+        - dyslexia_labeled
+        - word_length_chars
+        - syllable_count
+        - word_position_in_sentence_norm
+      random_effects:
+        - participant_id
+        - word_id
+    H2_predictability_interaction:
+      fixed_effects:
+        - dyslexia_labeled
+        - surprisal_paragraph_context
+        - dyslexia_labeled:surprisal_paragraph_context
+      random_effects:
+        - participant_id
+        - word_id
+    H3_context_integration:
+      fixed_effects:
+        - dyslexia_labeled
+        - delta_surprisal_sentence_minus_paragraph
+        - dyslexia_labeled:delta_surprisal_sentence_minus_paragraph
+      random_effects:
+        - participant_id
+        - word_id
+    H4_regression_behavior:
+      outcome: regression_out
+      fixed_effects:
+        - dyslexia_labeled
+        - word_length_chars
+        - surprisal_paragraph_context
+      random_effects:
+        - participant_id
+        - word_id
+
+slurm:
+  gpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode gpu
+  cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+  gpu_candidate: >-
+    --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+    --gres=gpu:8 --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G
+    --time=04:00:00

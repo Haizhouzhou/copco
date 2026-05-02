@@ -19,6 +19,39 @@ dev = [
   "pytest>=8",
   "ruff>=0.4",
 ]
+runtime = [
+  "joblib>=1.3",
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "pyarrow>=14",
+  "pyyaml>=6",
+  "scikit-learn>=1.3",
+]
+lm = [
+  "sentence-transformers>=3",
+  "torch>=2",
+  "transformers>=4.45",
+]
+nlp = [
+  "pyphen>=0.15",
+]
+stats = [
+  "statsmodels>=0.14",
+]
+trees = [
+  "lightgbm>=4",
+  "xgboost>=2",
+]
+all = [
+  "copco-eye-bench[dev,lm,nlp,runtime,stats,trees]",
+]
+
+[project.scripts]
+copco-build-features = "copco_eye_bench.cli:build_features_main"
+copco-run-lm-features = "copco_eye_bench.cli:run_lm_features_main"
+copco-run-models = "copco_eye_bench.cli:run_models_main"
+copco-fit-mixed-effects = "copco_eye_bench.cli:fit_mixed_effects_main"
+copco-validate-run = "copco_eye_bench.cli:validate_run_main"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
