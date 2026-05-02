@@ -1,0 +1,103 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyre/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments and local installs
+.venv/
+venv/
+env/
+ENV/
+.env/
+*.egg-info/
+build/
+dist/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+*~
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs: keep AI run markdown logs and index, ignore other runtime logs.
+logs/
+!logs/
+logs/*
+!logs/ai_runs/
+!logs/ai_runs/INDEX.md
+!logs/ai_runs/*.md
+
+# Generated outputs and local data
+results/
+data/
+raw/
+external/
+extracted/
+derived/
+artifacts/
+outputs/
+checkpoints/
+models/
+
+# Local legacy/source-data workspaces that must not enter this clean checkpoint
+MECO/
+osf-copco/
+copco-processing/
+_archive_generated_workspaces/
+doc/
+prompt/
+docs/archive_manifests/
+docs/dataset/
+docs/indices/
+docs/protocol/
+docs/README.md
+docs_temp_root_classification.csv
+pull_repo.sh
+push_repo.sh
+
+# Large binary/scientific artifacts
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.joblib
+*.parquet
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.bin
+*.safetensors
+*.feather
+*.arrow
+*.sqlite
+*.db
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# Secrets and local configs
+.env
+.env.*
+!.env.example
+*.secret
+secrets/
+config.local.*
+local_config.*
