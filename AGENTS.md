@@ -93,36 +93,90 @@ python -c "import sys; print(sys.executable)"
 
 ## Project-wide UZH Slurm Resource Policy
 
-This repo inherits `~/.codex/AGENTS.md` if present, but the following rules are active
-directly in this repo.
+- This repo inherits `~/.codex/AGENTS.md` if present, but the following rules are active
+  directly in this repo.
+- The user's time is more expensive than compute.
+- For GPU work, CPU-only heavy work, memory-intensive jobs, large data processing,
+  dense analysis, embedding generation or post-processing, LLM inference, model
+  training, hyperparameter sweeps, bootstrap evaluation, repeated cross-validation, or
+  large statistical analysis, request the strongest immediately available valid
+  resource configuration first.
+- On this UZH Slurm cluster, V100 is the strongest available GPU type. Do not search
+  for, wait for, or request unavailable A100, H100, or newer GPUs.
 
-The user's time is more expensive than compute.
+### Known Tested High-power GPU Profile
 
-For GPU work, CPU-only heavy work, memory-intensive jobs, large data processing, dense
-analysis, embedding generation or post-processing, LLM inference, model training,
-hyperparameter sweeps, bootstrap evaluation, repeated cross-validation, or large
-statistical analysis, request the strongest immediately available valid resource
-configuration first.
-
-On this UZH Slurm cluster, V100 is the strongest available GPU type. Do not search for,
-wait for, or request unavailable A100, H100, or newer GPUs.
-
-For heavy GPU/CPU/memory/data/inference/training tasks, use:
+For large GPU-capable work, the known tested strong profile is:
 
 ```bash
-~/bin/claim_best_immediate_resource.sh
+srun \
+  --partition=teaching \
+  --account=mlnlp2.pilot.s3it.uzh \
+  --qos=normal \
+  --gres=gpu:8 \
+  --cpus-per-task=32 \
+  --mem=128G \
+  --time=04:00:00 \
+  --pty bash
 ```
 
-unless the user explicitly requests a different strategy.
+When immediate/no-wait behavior is supported, prefer:
 
+```bash
+srun \
+  --partition=teaching \
+  --account=mlnlp2.pilot.s3it.uzh \
+  --qos=normal \
+  --gres=gpu:8 \
+  --cpus-per-task=32 \
+  --mem=128G \
+  --time=04:00:00 \
+  --immediate=120 \
+  --pty bash
+```
+
+This 8-GPU, 32-CPU, 128G, 4-hour profile has been tested by the user and can often
+start immediately. It is known to have started immediately many times and should not be
+replaced by weak `balanced` defaults. For large GPU-capable jobs, try this strongest
+tested immediate profile first unless the workload clearly cannot use GPUs or the user
+requests otherwise.
+
+Strongest tested immediate GPU profile values:
+
+- partition: `teaching`
+- account: `mlnlp2.pilot.s3it.uzh`
+- QoS: `normal`
+- GPU: `--gres=gpu:8`
+- CPUs: `--cpus-per-task=32`
+- memory: `--mem=128G`
+- time: `--time=04:00:00`
+
+If the strongest tested profile cannot start immediately, cancel the waiting attempt,
+log the failed stronger attempt, and try the next strongest tested immediate profile.
+Do not step down to weaker resources to be `balanced`. Step down only when the stronger
+immediate request fails or the workload cannot use those resources.
+
+Never silently downgrade. Every downgrade must record:
+
+- attempted command
+- failure reason or immediate-allocation failure
+- next profile selected
+- why the next profile is still appropriate
+
+Never submit jobs that wait indefinitely by default. Never silently choose weaker
+resources.
+
+### General Heavy-resource Rules
+
+- For heavy GPU/CPU/memory/data/inference/training tasks, use
+  `~/bin/claim_best_immediate_resource.sh` unless the user explicitly requests a
+  different strategy.
 - Use `--mode gpu` for GPU tasks.
-- Use `--mode cpu` for CPU-only heavy, memory-heavy, preprocessing, feature
-  extraction, statistics, cross-validation, bootstrap, and large data-processing tasks.
+- Use `--mode cpu` for CPU-only heavy, memory-heavy, preprocessing, feature extraction,
+  statistics, cross-validation, bootstrap, and large data-processing tasks.
 - Use immediate/no-wait allocation behavior by default.
 - Use `--immediate=120` when claiming resources through Slurm unless the user
   explicitly asks for a queued job.
-- Never submit jobs that wait indefinitely by default.
-- Never silently choose weaker resources.
 - Log every failed stronger attempt and why a weaker configuration was selected.
 - Never use CPU fallback for GPU tasks.
 - Never use weak local/login-node fallback for CPU-heavy tasks.
@@ -131,6 +185,11 @@ unless the user explicitly requests a different strategy.
 - If multiple GPUs are requested, verify the code actually uses them.
 - If the code is CPU-only, do not request GPUs. Instead request the strongest immediate
   CPU/memory resources appropriate to the workload.
+- For CPU-only heavy jobs, request the strongest immediate CPU/memory profile known from
+  local policy, scripts, or previous logs.
+- If no tested CPU profile is known, use
+  `~/bin/claim_best_immediate_resource.sh --mode cpu` or inspect local policy rather
+  than inventing weak defaults.
 - For CPU-heavy work, verify CPU count, memory, and actual parallelism before scaling.
 - If CPU-heavy code is single-threaded, parallelize across shards/files/folds/seeds/
   configs rather than only requesting more CPUs.
@@ -155,6 +214,14 @@ unless the user explicitly requests a different strategy.
   exactly unless the workload clearly requires a documented change.
 - If no tested values are found, use the strongest-immediate discovery path through
   `claim_best_immediate_resource.sh`; do not invent exact resource numbers.
+- The known tested 8-GPU profile is not merely an example; it is the first strong GPU
+  profile to try for large GPU-capable jobs unless the workload cannot use GPUs or the
+  user requests otherwise.
+- If it cannot start immediately, cancel the waiting request and try the next strongest
+  tested immediate profile.
+- Do not leave an interactive `srun` request waiting indefinitely.
+- A smaller profile is acceptable only after the stronger immediate request fails, or
+  when the workload cannot use the stronger resources.
 - Never choose generic resource defaults for heavy work when tested stronger options
   exist.
 - Never downgrade from a tested/requested resource profile without logging the reason.
