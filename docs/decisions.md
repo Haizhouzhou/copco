@@ -17,3 +17,10 @@ Initial decisions:
   research-focused unless future project data explicitly support stronger claims.
 - Reference labels are operational research labels, not biological or clinical ground
   truth.
+
+## 2026-05-02: Operational Agent Policy Strengthened
+
+`AGENTS.md` was strengthened to directly encode CopCo environment usage,
+missing-package behavior, V100 strongest-immediate GPU policy, strongest-immediate
+CPU/memory policy for CPU-only heavy work, required Slurm preflight/post-run checks,
+long-job triage, safe acceleration, AI-run logging, and git safety.
