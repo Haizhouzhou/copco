@@ -98,10 +98,14 @@ and push.
   `00:00:37`, exit `0:0`.
 - `2722217`: modeling table joins, CPU teaching profile, completed `00:00:08`, exit `0:0`.
 - `2722218`: predictive model ladder, CPU teaching profile, completed `00:05:26`, exit `0:0`.
+- `2722536`: participant-grouped release model ladder rerun after filtering out
+  leave-one-speech evaluation, CPU teaching profile, completed `00:02:11`, exit `0:0`.
 - `2722264`: mixed-effects analysis, CPU teaching profile, completed `00:00:08`, exit `0:0`.
 - `2722266`: analysis package first attempt, CPU teaching profile, failed `00:00:06`,
   exit `1:0`; completed rerun is `2722274`.
 - `2722274`: analysis package reports, CPU teaching profile, completed `00:00:10`, exit `0:0`.
+- `2722579`: analysis package report rerun after participant-grouped model ladder,
+  CPU teaching profile, completed `00:00:11`, exit `0:0`.
 - `2722278`: final feature-release report, CPU teaching profile, completed `00:00:05`, exit `0:0`.
 - Post-run accounting checked with `sacct -u "$USER" --starttime 2026-05-05T20:00 ...`.
 - `seff` is not installed on this cluster.
@@ -152,6 +156,9 @@ and push.
   - `mixed_effects/mixed_effects_report.md`
   - `analysis/research_plan_next_stage.md`
   - `feature_release_report.md`
+- Word-level model ladder was corrected to report only `participant_grouped_5fold`
+  and `leave_one_participant_out` regimes for the release analysis. Final ladder
+  metrics: 24 rows; final model predictions: 1,368 rows.
 
 ## Commit / Push Status
 

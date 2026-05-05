@@ -316,6 +316,11 @@ def run_models(config: dict[str, Any], output_dir: str | Path, *, seed: int | No
     frame["dyslexia_labeled"] = frame["dyslexia_labeled"].astype(int)
 
     model_families = get_nested(config, "models.families", {})
+    enabled_families = get_nested(config, "models.enabled_families")
+    if enabled_families:
+        enabled = [str(name) for name in enabled_families]
+        model_families = {name: model_families[name] for name in enabled if name in model_families}
+    allow_leave_one_speech_out = bool(get_nested(config, "models.allow_leave_one_speech_out", True))
     random_seed = int(seed or get_nested(config, "cv.random_seeds", [17])[0])
     split_dir = out / "splits"
     participant_split = pd.read_csv(split_dir / "participant_grouped_folds.csv")
@@ -369,24 +374,25 @@ def run_models(config: dict[str, Any], output_dir: str | Path, *, seed: int | No
                 for row in rows:
                     prediction_rows.append({"model": model_name, **row})
 
-            metrics, rows = _evaluate_loso(
-                speech_data,
-                loso_split,
-                speech_feature_columns,
-                classifier_name,
-                classifier,
-            )
-            metric_rows.append(
-                {
-                    "model": model_name,
-                    "classifier": classifier_name,
-                    "cv_regime": "leave_one_speech_out",
-                    "feature_count": len(speech_feature_columns),
-                    **metrics,
-                }
-            )
-            for row in rows:
-                prediction_rows.append({"model": model_name, **row})
+            if allow_leave_one_speech_out:
+                metrics, rows = _evaluate_loso(
+                    speech_data,
+                    loso_split,
+                    speech_feature_columns,
+                    classifier_name,
+                    classifier,
+                )
+                metric_rows.append(
+                    {
+                        "model": model_name,
+                        "classifier": classifier_name,
+                        "cv_regime": "leave_one_speech_out",
+                        "feature_count": len(speech_feature_columns),
+                        **metrics,
+                    }
+                )
+                for row in rows:
+                    prediction_rows.append({"model": model_name, **row})
 
     metrics = pd.DataFrame(metric_rows)
     predictions = pd.DataFrame(prediction_rows)
@@ -405,6 +411,7 @@ def run_models(config: dict[str, Any], output_dir: str | Path, *, seed: int | No
         "metric_rows": int(len(metrics)),
         "prediction_rows": int(len(predictions)),
         "skipped_models": skipped,
+        "allow_leave_one_speech_out": allow_leave_one_speech_out,
         "sequence_models": sequence_manifest,
     }
     _write_json(model_dir / "manifest.json", manifest)

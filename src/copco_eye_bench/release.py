@@ -1219,6 +1219,8 @@ def run_analysis_package(
     model_metrics = out / "models" / "model_metrics.csv"
     if model_metrics.exists():
         ladder = pd.read_csv(model_metrics)
+        participant_grouped_regimes = {"participant_grouped_5fold", "leave_one_participant_out"}
+        ladder = ladder[ladder["cv_regime"].isin(participant_grouped_regimes)].copy()
         ladder.to_csv(pred_dir / "word_level_model_ladder_metrics.csv", index=False)
         _write_md(
             pred_dir / "word_level_model_ladder_report.md",
@@ -1226,7 +1228,7 @@ def run_analysis_package(
                 [
                     "# Word-Level Model Ladder Report",
                     "",
-                    "This ladder is secondary and exploratory because labels are participant-level. Splits are grouped; random word-level splitting is not used.",
+                    "This ladder is secondary and exploratory because labels are participant-level. Only participant-grouped regimes are reported; random word-level and leave-one-speech splits are not used for release interpretation.",
                     "",
                     ladder.groupby(["model", "cv_regime"], dropna=False)["status"].value_counts().to_frame("rows").reset_index().to_markdown(index=False),
                 ]
@@ -1554,6 +1556,13 @@ def validate_feature_release(config: dict[str, Any], output_dir: str | Path) -> 
                 errors.append(f"lm_alignment_bad_status:{bad}")
         if "dfm_lm_word_surprisal" in word.columns and float(word["dfm_lm_word_surprisal"].isna().mean()) > 0.01:
             errors.append("dfm_lm_missing_rate_gt_1pct")
+    ladder_path = out / "analysis" / "predictive_models" / "word_level_model_ladder_metrics.csv"
+    if ladder_path.exists():
+        ladder = pd.read_csv(ladder_path)
+        allowed_regimes = {"participant_grouped_5fold", "leave_one_participant_out"}
+        bad_regimes = sorted(set(ladder["cv_regime"].astype(str)).difference(allowed_regimes))
+        if bad_regimes:
+            errors.append(f"word_ladder_non_participant_grouped_regimes:{bad_regimes}")
     report = {
         "run_type": "validate_feature_release",
         "status": "passed" if not errors else "failed",

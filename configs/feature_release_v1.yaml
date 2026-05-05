@@ -64,6 +64,14 @@ language_models:
     batch_size: 32
 
 models:
+  enabled_families:
+    - A_gaze
+    - B_gaze_classical
+    - C_gaze_parser
+    - D_gaze_dfm_lm
+    - E_gaze_all_lm
+    - F_full_validated
+  allow_leave_one_speech_out: false
   families:
     A_gaze:
       - gaze
