@@ -298,6 +298,7 @@ def run_lm_features(
     output_dir: str | Path,
     *,
     model_id: str | None = None,
+    model_label: str | None = None,
     feature_kind: str = "surprisal",
     shard_index: int = 0,
     shard_count: int = 1,
@@ -311,8 +312,6 @@ def run_lm_features(
 
     pd = _require_pandas()
     out = Path(output_dir).resolve()
-    lm_dir = out / "lm_features" / feature_kind
-    lm_dir.mkdir(parents=True, exist_ok=True)
     chosen_model = model_id or str(
         get_nested(
             config,
@@ -320,10 +319,16 @@ def run_lm_features(
             "danish-foundation-models/dfm-decoder-open-v0-7b-pt",
         )
     )
+    chosen_label = model_label or str(
+        get_nested(config, "language_models.primary_surprisal.output_label", "")
+    )
+    lm_dir = out / "lm_features" / chosen_label / feature_kind if chosen_label else out / "lm_features" / feature_kind
+    lm_dir.mkdir(parents=True, exist_ok=True)
     manifest: dict[str, Any] = {
         "run_type": "lm_features",
         "feature_kind": feature_kind,
         "model_id": chosen_model,
+        "model_label": chosen_label or None,
         "tokenizer_id": chosen_model,
         "context_mode": str(get_nested(config, "language_models.context_mode", "paragraph")),
         "dtype": str(get_nested(config, "language_models.dtype", "float16")),
@@ -405,6 +410,9 @@ def run_lm_features(
         _write_json(lm_dir / f"manifest_shard{shard_index}.json", manifest)
         raise
 
+    for row in rows:
+        if "shard_id" in row:
+            row["shard_id"] = shard_index
     frame = pd.DataFrame(rows)
     output_path = lm_dir / f"{feature_kind}_shard{shard_index:04d}_of_{shard_count:04d}.parquet"
     frame.to_parquet(output_path, index=False)
@@ -571,7 +579,9 @@ def _run_surprisal(
                     "lm_subword_count": int(values["lm_subword_count"]),
                     "lm_scored_subword_count": scored,
                     "lm_alignment_status": alignment_status,
-                    "lm_alignment_error": alignment_error,
+                    "lm_alignment_warning": alignment_error,
+                    "lm_alignment_error": None,
+                    "shard_id": None,
                     # Backward-compatible names used by existing model/mixed-effects scaffolds.
                     "model_id": model_id,
                     "surprisal_paragraph_context": word_surprisal,

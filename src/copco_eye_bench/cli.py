@@ -12,6 +12,15 @@ from .features import build_feature_tables
 from .lm_features import run_lm_features
 from .mixed_effects import fit_mixed_effects
 from .modeling import run_models
+from .release import (
+    build_modeling_tables,
+    finalize_feature_release,
+    run_analysis_package,
+    run_embedding_features,
+    run_parser_features,
+    validate_feature_release,
+    write_release_features,
+)
 from .slurm import launcher_command
 from .validation import validate_run
 
@@ -41,6 +50,10 @@ def build_features_main(argv: list[str] | None = None) -> int:
     sample_speeches = args.sample_speeches
     if sample_speeches is None:
         sample_speeches = get_nested(config, "sample.speeches")
+    if bool(get_nested(config, "feature_release.require_full_corpus", False)) and (
+        sample_participants is not None or sample_speeches is not None
+    ):
+        parser.error("feature release config requires full corpus mode; sample limits are forbidden")
 
     if args.print_slurm_command:
         command = f"copco-build-features --config {args.config}"
@@ -72,6 +85,7 @@ def run_lm_features_main(argv: list[str] | None = None) -> int:
     _add_config_arg(parser)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--model-id")
+    parser.add_argument("--model-label")
     parser.add_argument("--feature-kind", default="surprisal", choices=["surprisal", "embeddings"])
     parser.add_argument("--shard-index", type=int, default=0)
     parser.add_argument("--shard-count", type=int, default=1)
@@ -94,6 +108,8 @@ def run_lm_features_main(argv: list[str] | None = None) -> int:
         )
         if args.model_id:
             command += f" --model-id {args.model_id}"
+        if args.model_label:
+            command += f" --model-label {args.model_label}"
         if args.limit_items:
             command += f" --limit-items {args.limit_items}"
         if args.max_word_tokens:
@@ -108,6 +124,7 @@ def run_lm_features_main(argv: list[str] | None = None) -> int:
         config,
         args.output_dir,
         model_id=args.model_id,
+        model_label=args.model_label,
         feature_kind=args.feature_kind,
         shard_index=args.shard_index,
         shard_count=args.shard_count,
@@ -165,5 +182,127 @@ def validate_run_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", required=True)
     args = parser.parse_args(argv)
     report = validate_run(args.output_dir)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def write_release_features_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Write feature-release tables from base CopCo tables.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-write-release-features --config {args.config} --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(write_release_features(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def run_parser_features_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build parser and morphosyntactic release features.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-parser-features --config {args.config} --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_parser_features(config, args.output_dir))
+    return 0
+
+
+def run_embeddings_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build sentence and paragraph embedding feature files.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--model-id")
+    parser.add_argument("--model-label")
+    parser.add_argument("--baseline", action="store_true")
+    parser.add_argument("--skip-baseline", action="store_true")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-embeddings --config {args.config} --output-dir {args.output_dir}"
+    if args.model_id:
+        command += f" --model-id {args.model_id}"
+    if args.model_label:
+        command += f" --model-label {args.model_label}"
+    if args.baseline:
+        command += " --baseline"
+    if args.skip_baseline:
+        command += " --skip-baseline"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="gpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(
+        run_embedding_features(
+            config,
+            args.output_dir,
+            model_id=args.model_id,
+            model_label=args.model_label,
+            run_baseline=args.baseline,
+            skip_baseline=args.skip_baseline,
+        )
+    )
+    return 0
+
+
+def build_modeling_tables_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Join release feature families into modeling tables.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-build-modeling-tables --config {args.config} --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(build_modeling_tables(config, args.output_dir))
+    return 0
+
+
+def run_analysis_package_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run feature-release analysis reports.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-analysis-package --config {args.config} --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_analysis_package(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def finalize_feature_release_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Write final feature-release report.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-finalize-feature-release --config {args.config} --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(finalize_feature_release(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_feature_release_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate feature-release outputs.")
+    _add_config_arg(parser)
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_feature_release(config, args.output_dir)
     _print(report)
     return 0 if report["status"] == "passed" else 1

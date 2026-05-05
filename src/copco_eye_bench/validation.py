@@ -31,6 +31,8 @@ REQUIRED_LM_SURPRISAL_COLUMNS = {
     "lm_word_entropy",
     "lm_subword_count",
     "lm_alignment_status",
+    "lm_alignment_warning",
+    "lm_alignment_error",
 }
 
 
@@ -149,7 +151,7 @@ def _validate_lm_features(output_dir: Path) -> tuple[list[dict[str, Any]], list[
     if not lm_root.exists():
         return reports, errors
 
-    for path in sorted(lm_root.glob("*/*.parquet")):
+    for path in sorted(lm_root.glob("**/*.parquet")):
         frame = pd.read_parquet(path)
         missing = sorted(REQUIRED_LM_SURPRISAL_COLUMNS.difference(frame.columns))
         duplicate_count = 0
@@ -182,7 +184,7 @@ def _validate_lm_features(output_dir: Path) -> tuple[list[dict[str, Any]], list[
             }
         )
 
-    for path in sorted(lm_root.glob("*/alignment_report_shard*.json")):
+    for path in sorted(lm_root.glob("**/alignment_report_shard*.json")):
         payload = json.loads(path.read_text(encoding="utf-8"))
         if payload.get("status") != "passed":
             errors.append(f"{path.relative_to(output_dir)}:alignment_report_failed")

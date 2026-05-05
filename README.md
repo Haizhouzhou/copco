@@ -129,6 +129,108 @@ the run manifest records that missing input and falls back to the ignored local
 "dyslexia-labeled reader"; outputs are not clinical diagnosis, screening, or medical
 validation.
 
+## Feature Release V1
+
+Use `configs/feature_release_v1.yaml` for the full feature release. This config forbids
+smoke participant or speech limits, uses stable word identifiers, keeps participant
+labels at participant scope, and records Slurm CPU/GPU settings for the UZH cluster.
+
+Create a timestamped release directory and run the stages with the `copco` environment:
+
+```bash
+export RELEASE_DIR=results/feature_release_v1_$(date +%Y%m%d_%H%M)
+
+copco-build-features \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-write-release-features \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-run-parser-features \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+```
+
+Run full DFM LM scoring only with a GPU allocation. Surprisal and entropy must use
+base/pretrained causal LMs, not instruction-tuned models:
+
+```bash
+copco-run-lm-features \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --model-id danish-foundation-models/dfm-decoder-open-v0-7b-pt \
+  --model-label dfm_decoder_7b \
+  --real-run \
+  --require-gpu \
+  --print-slurm-command
+```
+
+Gemma is a non-blocking sensitivity model. Use the base model only:
+
+```bash
+copco-run-lm-features \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --model-id google/gemma-2-9b \
+  --model-label gemma2_9b \
+  --real-run \
+  --require-gpu \
+  --print-slurm-command
+```
+
+Build embeddings, joins, modeling outputs, mixed-effects outputs, and reports:
+
+```bash
+copco-run-embeddings \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-build-modeling-tables \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-run-models \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-fit-mixed-effects \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-run-analysis-package \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR" \
+  --print-slurm-command
+
+copco-finalize-feature-release \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR"
+```
+
+Validate the release:
+
+```bash
+copco-validate-run --output-dir "$RELEASE_DIR"
+copco-validate-feature-release \
+  --config configs/feature_release_v1.yaml \
+  --output-dir "$RELEASE_DIR"
+```
+
+Expected output layout includes `features/`, `linguistic_features/`, `lm_features/`,
+`embedding_features/`, `modeling_tables/`, `analysis/`, `feature_dictionary_v1.json`,
+`label_provenance_report.md`, and `feature_release_report.md`. Generated Parquet,
+embedding, model-output, and result files stay under ignored `results/`; commit only
+code, configs, docs, AI logs, and small release summaries when appropriate.
+
 ## Data Policy
 
 Raw data, copied datasets, derived participant-level tables, large artifacts, model

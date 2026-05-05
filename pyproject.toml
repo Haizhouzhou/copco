@@ -34,7 +34,14 @@ lm = [
   "transformers>=4.45",
 ]
 nlp = [
+  "dacy>=2.7",
+  "spacy>=3.7",
   "pyphen>=0.15",
+]
+analysis = [
+  "matplotlib>=3.8",
+  "seaborn>=0.13",
+  "tabulate>=0.9",
 ]
 stats = [
   "statsmodels>=0.14",
@@ -44,7 +51,7 @@ trees = [
   "xgboost>=2",
 ]
 all = [
-  "copco-eye-bench[dev,lm,nlp,runtime,stats,trees]",
+  "copco-eye-bench[analysis,dev,lm,nlp,runtime,stats,trees]",
 ]
 
 [project.scripts]
@@ -53,6 +60,13 @@ copco-run-lm-features = "copco_eye_bench.cli:run_lm_features_main"
 copco-run-models = "copco_eye_bench.cli:run_models_main"
 copco-fit-mixed-effects = "copco_eye_bench.cli:fit_mixed_effects_main"
 copco-validate-run = "copco_eye_bench.cli:validate_run_main"
+copco-write-release-features = "copco_eye_bench.cli:write_release_features_main"
+copco-run-parser-features = "copco_eye_bench.cli:run_parser_features_main"
+copco-run-embeddings = "copco_eye_bench.cli:run_embeddings_main"
+copco-build-modeling-tables = "copco_eye_bench.cli:build_modeling_tables_main"
+copco-run-analysis-package = "copco_eye_bench.cli:run_analysis_package_main"
+copco-finalize-feature-release = "copco_eye_bench.cli:finalize_feature_release_main"
+copco-validate-feature-release = "copco_eye_bench.cli:validate_feature_release_main"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

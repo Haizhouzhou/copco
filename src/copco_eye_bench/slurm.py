@@ -10,6 +10,10 @@ TESTED_TEACHING_8GPU_CANDIDATE = (
     "--partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal "
     "--gres=gpu:8 --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00"
 )
+TESTED_TEACHING_CPU_CANDIDATE = (
+    "--partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal "
+    "--nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00"
+)
 
 
 PREFLIGHT = r"""
@@ -81,5 +85,6 @@ def launcher_command(
             return f"{base} --candidate {candidate} {quoted}"
         return f"{base} {quoted}"
     if mode == "cpu":
-        return f"~/bin/claim_best_immediate_resource.sh --mode cpu {quoted}"
+        candidate = shlex.quote(TESTED_TEACHING_CPU_CANDIDATE)
+        return f"~/bin/claim_best_immediate_resource.sh --mode cpu --candidate {candidate} {quoted}"
     raise ValueError(f"unknown slurm mode: {mode}")

@@ -21,6 +21,14 @@ FAMILY_FEATURES = {
         "sentence_length_words",
         "paragraph_length_words",
     ],
+    "parser_morphosyntax": [
+        "is_function_word",
+        "is_noun_or_proper",
+        "is_pronoun",
+        "is_finite_verb",
+        "is_negation",
+        "dependency_distance",
+    ],
 }
 EMPTY_METRICS: dict[str, float | None] = {"roc_auc": None, "pr_auc": None, "brier": None}
 
@@ -40,11 +48,19 @@ def _require_pandas() -> Any:
 
 def _load_feature_frame(output_dir: Path) -> Any:
     pd = _require_pandas()
+    for candidate in (
+        output_dir / "modeling_tables" / "word_level_full_with_all_lm.parquet",
+        output_dir / "modeling_tables" / "word_level_full_with_dfm_lm.parquet",
+        output_dir / "modeling_tables" / "word_level_full.parquet",
+    ):
+        if candidate.exists():
+            return pd.read_parquet(candidate)
+
     base_path = output_dir / "tables" / "word_observations.parquet"
     if not base_path.exists():
         raise FileNotFoundError(f"missing feature table: {base_path}")
     frame = pd.read_parquet(base_path)
-    for path in sorted((output_dir / "lm_features").glob("*/*.parquet")):
+    for path in sorted((output_dir / "lm_features").glob("**/*.parquet")):
         extra = pd.read_parquet(path)
         if "word_id" in extra.columns:
             frame = frame.merge(extra, on="word_id", how="left", suffixes=("", "_lm"))
@@ -63,15 +79,16 @@ def _feature_columns(frame: Any, families: list[str]) -> list[str]:
             selected.extend(
                 column
                 for column in frame.columns
-                if "surprisal" in column or column.startswith("entropy")
+                if "surprisal" in column or "entropy" in column
             )
         elif family == "embeddings":
             selected.extend(
                 column
                 for column in frame.columns
                 if column.startswith("embedding_")
-                or column.startswith("cohesion_")
-                or column.startswith("centroid_")
+                or "cohesion" in column
+                or "centroid" in column
+                or "semantic_drift" in column
             )
         elif family == "instruct_annotations":
             selected.extend(

@@ -275,6 +275,16 @@ def _add_gaze_metrics(frame: Any) -> Any:
     out["refixation_count"] = out["fixation_count"].fillna(0).sub(1).clip(lower=0)
     if "word_go_past_time" in out.columns:
         out["go_past_time"] = pd.to_numeric(out["word_go_past_time"], errors="coerce")
+    for target, source in (
+        ("mean_fixation_duration", "word_mean_fix_dur"),
+        ("landing_position", "landing_position"),
+        ("mean_saccade_duration", "word_mean_sacc_dur"),
+        ("peak_saccade_velocity", "word_peak_sacc_velocity"),
+    ):
+        if source in out.columns:
+            out[target] = pd.to_numeric(out[source], errors="coerce")
+        elif target not in out.columns:
+            out[target] = pd.NA
     for metric in ("regression_in", "regression_out"):
         if metric not in out.columns:
             out[metric] = pd.NA
@@ -432,6 +442,10 @@ def _make_word_observations(observations: Any, words: Any, participants: Any) ->
         "skip",
         "refixation_count",
         "go_past_time",
+        "mean_fixation_duration",
+        "landing_position",
+        "mean_saccade_duration",
+        "peak_saccade_velocity",
         "regression_in",
         "regression_out",
     ]
@@ -628,6 +642,13 @@ def build_feature_tables(
     """Build the reproducible CopCo feature-table layer under ``output_dir``."""
 
     pd = _require_pandas()
+    if bool(get_nested(config, "feature_release.require_full_corpus", False)) and (
+        sample_participants is not None or sample_speeches is not None
+    ):
+        raise ValueError(
+            "feature_release_v1 requires full corpus mode; do not pass sample_participants "
+            "or sample_speeches"
+        )
     root = Path(repo_root).resolve()
     out = Path(output_dir).resolve()
     table_dir = out / "tables"

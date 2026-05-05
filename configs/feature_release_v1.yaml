@@ -1,0 +1,137 @@
+extends: configs/copco_dyslexia_full.yaml
+
+run:
+  name: feature_release_v1
+  output_root: results
+
+feature_release:
+  version: v1
+  corpus_mode: full
+  require_full_corpus: true
+  allow_smoke_sample: false
+  forbid_sample_participants: true
+  forbid_sample_speeches: true
+  stable_word_identifiers: true
+  label_scope: participant
+  dyslexia_label_wording: dyslexia-labeled
+  feature_dictionary_path: docs/feature_dictionary_v1.md
+  random_seed: 17
+  output_layout:
+    features: features
+    linguistic_features: linguistic_features
+    lm_features: lm_features
+    embedding_features: embedding_features
+    modeling_tables: modeling_tables
+    analysis: analysis
+
+sample:
+  participants: null
+  speeches: null
+  require_two_classes: false
+  min_participants_per_class: 0
+
+linguistic_features:
+  parser:
+    enabled: true
+    preferred_backend: dacy
+    dacy_model: large
+    fallback_backend: surface_heuristic
+  readability:
+    enabled: true
+  frequency:
+    source: internal_corpus_frequency
+
+language_models:
+  dry_run: false
+  dtype: float16
+  context_mode: paragraph
+  max_word_tokens:
+  primary_surprisal:
+    model_id: danish-foundation-models/dfm-decoder-open-v0-7b-pt
+    output_label: dfm_decoder_7b
+    role: base_lm_surprisal
+  sensitivity_surprisal:
+    model_id: google/gemma-2-9b
+    output_label: gemma2_9b
+    role: base_lm_surprisal_sensitivity
+    required_for_primary_release: false
+  embeddings:
+    primary: KennethEnevoldsen/dfm-sentence-encoder-large
+    primary_label: dfm_sentence_encoder
+    baseline: intfloat/multilingual-e5-large
+    baseline_label: e5_large
+    run_baseline_if_available: true
+    batch_size: 32
+
+models:
+  families:
+    A_gaze:
+      - gaze
+    B_gaze_classical:
+      - gaze
+      - classical_linguistic
+    C_gaze_parser:
+      - gaze
+      - parser_morphosyntax
+    D_gaze_dfm_lm:
+      - gaze
+      - lm_surprisal_entropy
+    E_gaze_all_lm:
+      - gaze
+      - lm_surprisal_entropy
+    F_full_validated:
+      - gaze
+      - classical_linguistic
+      - parser_morphosyntax
+      - lm_surprisal_entropy
+      - embeddings
+
+mixed_effects:
+  primary_outcome: TRT
+  max_fit_rows: 50000
+  word_random_effects_max_levels: 5000
+  hypotheses:
+    H1_group_reading_cost:
+      fixed_effects:
+        - dyslexia_labeled
+        - word_length_chars
+        - log_corpus_frequency
+        - dfm_lm_word_surprisal
+        - word_position_in_sentence_norm
+      max_fit_rows: 50000
+      word_random_effects_max_levels: 5000
+    H2_surprisal_group_sensitivity:
+      fixed_effects:
+        - dyslexia_labeled
+        - dfm_lm_word_surprisal
+        - dyslexia_labeled:dfm_lm_word_surprisal
+      max_fit_rows: 50000
+      word_random_effects_max_levels: 5000
+    H3_entropy_group_sensitivity:
+      fixed_effects:
+        - dyslexia_labeled
+        - dfm_lm_word_entropy
+        - dyslexia_labeled:dfm_lm_word_entropy
+      max_fit_rows: 50000
+      word_random_effects_max_levels: 5000
+    H4_regression_behavior:
+      outcome: regression_out
+      fixed_effects:
+        - dyslexia_labeled
+        - word_length_chars
+        - dfm_lm_word_surprisal
+      max_fit_rows: 50000
+      word_random_effects_max_levels: 5000
+
+analysis:
+  max_plot_points: 10000
+  participant_prediction_bootstrap: 200
+  claim_scope: exploratory_psycholinguistic_analysis
+
+slurm:
+  gpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode gpu
+  cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+  gpu_candidate: >-
+    --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+    --gres=gpu:8 --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G
+    --time=04:00:00
