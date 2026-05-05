@@ -18,7 +18,7 @@ scoped comparisons to other reading-related datasets where appropriate.
 
 CopCo is a Danish natural-reading eye-tracking corpus. It should not be described as a
 dyslexia dataset. Dyslexia-related or reading-difficulty-related work must use careful
-operational language and must not imply clinical diagnosis, clinical validation, or
+operational language and must not imply formal diagnostic status, medical validation, or
 medical screening unless explicitly supported by the project data.
 
 ## Planned Layout
@@ -126,7 +126,7 @@ copco-run-models --output-dir results/<run> --print-slurm-command
 The pipeline uses the local `derived57` package when it is importable. If it is absent,
 the run manifest records that missing input and falls back to the ignored local
 `copco-processing/` schema when available. Scientific wording remains
-"dyslexia-labeled reader"; outputs are not clinical diagnosis, screening, or medical
+"dyslexia-labeled reader"; outputs are not formal diagnostic status, screening, or medical
 validation.
 
 ## Feature Release V1
@@ -230,6 +230,84 @@ Expected output layout includes `features/`, `linguistic_features/`, `lm_feature
 `label_provenance_report.md`, and `feature_release_report.md`. Generated Parquet,
 embedding, model-output, and result files stay under ignored `results/`; commit only
 code, configs, docs, AI logs, and small release summaries when appropriate.
+
+## Label Release v1.1 And Prepared Dataset Freeze
+
+Use `configs/label_release_v1_1.yaml` to derive deterministic labels and freeze the
+analysis-ready dataset from Feature Release V1. The config points to
+`results/feature_release_v1_20260505_2155`, forbids smoke mode, forbids LLM-generated
+core labels, and permits only participant-grouped split labels.
+
+Build the release through the CPU Slurm launcher:
+
+```bash
+copco-build-label-release \
+  --config configs/label_release_v1_1.yaml \
+  --print-slurm-command
+```
+
+Or write to an explicit release directory:
+
+```bash
+copco-build-label-release \
+  --config configs/label_release_v1_1.yaml \
+  --output-dir results/label_release_v1_1_<timestamp> \
+  --print-slurm-command
+```
+
+Validate the generated label release:
+
+```bash
+copco-validate-label-release \
+  --config configs/label_release_v1_1.yaml \
+  --output-dir results/label_release_v1_1_<timestamp>
+```
+
+If label files already exist and only the prepared tables need to be rebuilt:
+
+```bash
+copco-freeze-prepared-dataset \
+  --config configs/label_release_v1_1.yaml \
+  --output-dir results/label_release_v1_1_<timestamp> \
+  --print-slurm-command
+```
+
+Generated files are under:
+
+```text
+results/label_release_v1_1_<timestamp>/
+  labels/
+    participant_labels_v1.parquet
+    segmentation_boundary_labels_v1.parquet
+    segmentation_word_labels_v1.parquet
+    segmentation_sentence_labels_v1.parquet
+    quality_labels_v1.parquet
+    split_labels_v1.parquet
+  prepared_dataset/
+    analysis_ready_word_level_v1_1.parquet
+    analysis_ready_sentence_level_v1_1.parquet
+    analysis_ready_participant_level_v1_1.parquet
+    analysis_ready_manifest.json
+  analysis/label_analysis/
+  manifest.json
+  label_release_report.md
+  label_release_validation_report.json
+```
+
+Segmentation-opacity labels are deterministic orthographic stimulus labels based on
+Danish C/V boundaries using `a e i o u y æ ø å` and uppercase variants. They are not
+pronunciation-aware labels and are not target labels. The current parser status
+`surface_heuristic_fallback` means parser features are surface/morpho-orthographic
+heuristics, not true syntactic annotations.
+
+Legal split labels are `leave_one_participant_out`, `participant_grouped_kfold`, and
+`sensitivity_exclude_uncertain_labels`. Random word-level train/test splits are
+prohibited because word rows are not independent and participant-level labels would
+leak across folds.
+
+Label-card and policy documents are committed under `docs/`, and small label-analysis
+reports are committed under `analysis/label_analysis/`. Large Parquet prepared-dataset
+files remain under ignored `results/` and should not be committed.
 
 ## Data Policy
 

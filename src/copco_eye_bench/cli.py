@@ -9,6 +9,7 @@ from typing import Any
 
 from .config import get_nested, load_config, timestamped_output_dir
 from .features import build_feature_tables
+from .label_release import build_label_release, freeze_prepared_dataset, validate_label_release
 from .lm_features import run_lm_features
 from .mixed_effects import fit_mixed_effects
 from .modeling import run_models
@@ -26,7 +27,7 @@ from .validation import validate_run
 
 
 def _print(payload: dict[str, Any]) -> None:
-    print(json.dumps(payload, indent=2, sort_keys=True))
+    print(json.dumps(payload, indent=2, sort_keys=True, default=str))
 
 
 def _add_config_arg(parser: argparse.ArgumentParser) -> None:
@@ -306,3 +307,49 @@ def validate_feature_release_main(argv: list[str] | None = None) -> int:
     report = validate_feature_release(config, args.output_dir)
     _print(report)
     return 0 if report["status"] == "passed" else 1
+
+
+def build_label_release_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build Label Release v1.1 and freeze prepared tables.")
+    parser.add_argument("--config", default="configs/label_release_v1_1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-build-label-release --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(build_label_release(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_label_release_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate Label Release v1.1 outputs.")
+    parser.add_argument("--config", default="configs/label_release_v1_1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_label_release(args.output_dir, config=config, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def freeze_prepared_dataset_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Rebuild prepared-dataset tables from label release files.")
+    parser.add_argument("--config", default="configs/label_release_v1_1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-freeze-prepared-dataset --config {args.config} --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(freeze_prepared_dataset(config, args.output_dir, repo_root=args.repo_root))
+    return 0

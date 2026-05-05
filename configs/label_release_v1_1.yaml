@@ -1,0 +1,88 @@
+run:
+  name: label_release_v1_1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+label_release:
+  version: v1.1
+  corpus_mode: full
+  source_feature_release_dir: results/feature_release_v1_20260505_2155
+  require_source_feature_release: true
+  forbid_smoke_mode: true
+  deterministic_seed: 17
+  no_llm_generated_labels: true
+  output_layout:
+    labels: labels
+    prepared_dataset: prepared_dataset
+    analysis: analysis/label_analysis
+  docs:
+    participant_label_card: docs/participant_label_card_v1.md
+    segmentation_label_card: docs/segmentation_label_card_v1.md
+    quality_label_card: docs/quality_label_card_v1.md
+    split_policy: docs/split_policy_v1.md
+    analysis_dir: analysis/label_analysis
+  participant_labels:
+    enabled: true
+    expected_total: 57
+    expected_dyslexia_labeled: 19
+    expected_typical_control: 38
+    uncertain_allowed: true
+    label_source_column: label_provenance
+    confidence_default: medium
+    diagnostic_provenance_default: project_metadata
+  segmentation_labels:
+    enabled: true
+    label_version: segmentation_orthographic_v1
+    label_source: deterministic_orthographic_danish_vowels
+    confidence: orthographic_proxy
+    include_sentence_initial_boundaries: true
+    vowel_set: "aeiouyæøåAEIOUYÆØÅ"
+    opacity_scores:
+      C#C: 0
+      C#V: 1
+      V#C: 2
+      V#V: 3
+    opacity_classes:
+      C#C: low
+      C#V: medium_low
+      V#C: medium_high
+      V#V: high
+      other: other
+      unknown: unknown
+    pronunciation_aware_extension: pending
+  quality_labels:
+    enabled: true
+    parser_status_for_surface_fallback: surface_heuristic_fallback
+    parser_confidence_for_surface_fallback: usable_for_surface_not_syntax
+    primary_analysis_requires:
+      - participant_label
+      - segmentation_label
+    sensitivity_analysis_requires:
+      - participant_label
+  split_labels:
+    enabled: true
+    legal_split_types:
+      - leave_one_participant_out
+      - participant_grouped_kfold
+      - sensitivity_exclude_uncertain_labels
+    primary_split: leave_one_participant_out
+    secondary_split: participant_grouped_kfold
+    participant_grouped_kfolds: 5
+    no_random_word_level_split: true
+  prepared_dataset:
+    enabled: true
+    include_split_labels_in_word_table: false
+    preserve_stable_ids: true
+  missingness_policy:
+    keep_missing_values: true
+    report_missingness_by_group: true
+    do_not_drop_lm_missing_rows: true
+  manifest:
+    write_manifest: true
+    write_checksums: true
+    checksum_max_bytes: 500000000
+  slurm:
+    cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+    cpu_candidate: >-
+      --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+      --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00
