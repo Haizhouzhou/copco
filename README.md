@@ -38,7 +38,14 @@ medical screening unless explicitly supported by the project data.
 
 ## Setup
 
-Use Python 3.10 or newer. For local development:
+Use the existing `copco` conda environment for project commands on the UZH cluster:
+
+```bash
+conda activate copco
+python scripts/validate_env.py
+```
+
+For a fresh local development environment outside the cluster, use Python 3.10 or newer:
 
 ```bash
 python -m venv .venv
@@ -67,11 +74,52 @@ copco-fit-mixed-effects --output-dir results/<run>
 copco-validate-run --output-dir results/<run>
 ```
 
+LM surprisal and entropy features use base/pretrained causal language models. The
+primary Danish LM is `danish-foundation-models/dfm-decoder-open-v0-7b-pt`; the
+sensitivity LM is the base `google/gemma-2-9b`. Instruction-tuned models such as
+Gemma-it, Gemma Instruct, Mistral-Instruct, and `gemma-2-9b-it` are not used for
+surprisal or entropy.
+
+Run a dry LM check without loading a model:
+
+```bash
+copco-run-lm-features \
+  --config configs/copco_dyslexia_smoke.yaml \
+  --output-dir results/<run> \
+  --dry-run \
+  --limit-items 1 \
+  --max-word-tokens 32
+```
+
+Run a tiny real LM scoring job only on a GPU allocation, keeping the word budget small:
+
+```bash
+copco-run-lm-features \
+  --config configs/copco_dyslexia_smoke.yaml \
+  --output-dir results/<run> \
+  --model-id danish-foundation-models/dfm-decoder-open-v0-7b-pt \
+  --real-run \
+  --require-gpu \
+  --limit-items 1 \
+  --max-word-tokens 32
+```
+
+On the UZH V100 cluster, the `copco` environment must use a PyTorch build with `sm_70`
+support. This run validated `torch==2.7.1+cu126`; `torch 2.11.0+cu130` did not support
+V100 execution.
+
 For heavy LM scoring or CPU-heavy modeling, print the Slurm launcher command first:
 
 ```bash
 copco-build-features --config configs/copco_dyslexia_full.yaml --print-slurm-command
-copco-run-lm-features --output-dir results/<run> --print-slurm-command
+copco-run-lm-features \
+  --config configs/copco_dyslexia_smoke.yaml \
+  --output-dir results/<run> \
+  --model-id danish-foundation-models/dfm-decoder-open-v0-7b-pt \
+  --real-run \
+  --limit-items 1 \
+  --max-word-tokens 32 \
+  --print-slurm-command
 copco-run-models --output-dir results/<run> --print-slurm-command
 ```
 

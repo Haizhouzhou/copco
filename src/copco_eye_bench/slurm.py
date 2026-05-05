@@ -15,11 +15,11 @@ TESTED_TEACHING_8GPU_CANDIDATE = (
 PREFLIGHT = r"""
 hostname
 echo SLURM_JOB_ID=$SLURM_JOB_ID
-echo SLURM_STEP_ID=$SLURM_STEP_ID
-echo CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES
-echo SLURM_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
-echo SLURM_MEM_PER_NODE=$SLURM_MEM_PER_NODE
-echo SLURM_MEM_PER_CPU=$SLURM_MEM_PER_CPU
+echo SLURM_STEP_ID=${SLURM_STEP_ID:-}
+echo CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-}
+echo SLURM_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK:-}
+echo SLURM_MEM_PER_NODE=${SLURM_MEM_PER_NODE:-}
+echo SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU:-}
 nproc
 free -h
 ulimit -a
@@ -67,6 +67,8 @@ def launcher_command(
             "set -euo pipefail",
             f"cd {shlex.quote(str(repo))}",
             activate,
+            'export HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}"',
+            'export HF_HUB_CACHE="${HF_HUB_CACHE:-$HF_HOME/hub}"',
             PREFLIGHT.strip(),
             command,
         ]

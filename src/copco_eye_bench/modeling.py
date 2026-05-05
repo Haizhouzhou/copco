@@ -22,6 +22,7 @@ FAMILY_FEATURES = {
         "paragraph_length_words",
     ],
 }
+EMPTY_METRICS: dict[str, float | None] = {"roc_auc": None, "pr_auc": None, "brier": None}
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -220,7 +221,7 @@ def _evaluate_participant_splits(
             )
     predictions = pd.DataFrame(prediction_rows)
     if predictions.empty:
-        return {"status": "skipped_no_predictions"}, []
+        return {**EMPTY_METRICS, "status": "skipped_no_predictions"}, []
     metrics = _metric_row(predictions["y_true"], predictions["y_score"])
     metrics["status"] = "complete"
     return metrics, prediction_rows
@@ -259,7 +260,7 @@ def _evaluate_loso(
             )
     predictions = pd.DataFrame(prediction_rows)
     if predictions.empty:
-        return {"status": "skipped_no_predictions"}, []
+        return {**EMPTY_METRICS, "status": "skipped_no_predictions"}, []
     averaged = predictions.groupby("participant_id").agg(y_true=("y_true", "first"), y_score=("y_score", "mean"))
     metrics = _metric_row(averaged["y_true"], averaged["y_score"])
     metrics["status"] = "complete"
@@ -275,8 +276,24 @@ def run_models(config: dict[str, Any], output_dir: str | Path, *, seed: int | No
     model_dir.mkdir(parents=True, exist_ok=True)
     frame = _load_feature_frame(out)
     frame = frame.dropna(subset=["dyslexia_labeled"]).copy()
-    if frame.empty or frame["dyslexia_labeled"].nunique() < 2:
-        manifest = {"run_type": "models", "status": "skipped", "reason": "missing_or_single_class_labels"}
+    if frame.empty:
+        manifest = {
+            "run_type": "models",
+            "status": "skipped",
+            "reason": "missing_labels_after_sampling",
+            "message": "Model smoke skipped: no labeled participants present after sampling",
+        }
+        _write_json(model_dir / "manifest.json", manifest)
+        return manifest
+    if frame["dyslexia_labeled"].nunique() < 2:
+        label_counts = frame["dyslexia_labeled"].value_counts(dropna=False).to_dict()
+        manifest = {
+            "run_type": "models",
+            "status": "skipped",
+            "reason": "only_one_class_after_sampling",
+            "message": "Model smoke skipped: only one class present after sampling",
+            "label_counts": {str(key): int(value) for key, value in label_counts.items()},
+        }
         _write_json(model_dir / "manifest.json", manifest)
         return manifest
     frame["dyslexia_labeled"] = frame["dyslexia_labeled"].astype(int)

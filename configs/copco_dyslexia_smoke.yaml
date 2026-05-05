@@ -7,6 +7,10 @@ run:
 sample:
   participants: 2
   speeches: 2
+  require_two_classes: true
+  min_participants_per_class: 1
+  random_seed: 17
 
 language_models:
   dry_run: true
+  max_word_tokens: 32

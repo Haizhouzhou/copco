@@ -76,10 +76,14 @@ def run_lm_features_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--shard-index", type=int, default=0)
     parser.add_argument("--shard-count", type=int, default=1)
     parser.add_argument("--limit-items", type=int)
+    parser.add_argument("--max-word-tokens", type=int)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--real-run", action="store_true", help="Override config language_models.dry_run.")
     parser.add_argument("--require-gpu", action="store_true")
     parser.add_argument("--print-slurm-command", action="store_true")
     args = parser.parse_args(argv)
+    if args.dry_run and args.real_run:
+        parser.error("--dry-run and --real-run are mutually exclusive")
 
     if args.print_slurm_command:
         command = (
@@ -92,6 +96,10 @@ def run_lm_features_main(argv: list[str] | None = None) -> int:
             command += f" --model-id {args.model_id}"
         if args.limit_items:
             command += f" --limit-items {args.limit_items}"
+        if args.max_word_tokens:
+            command += f" --max-word-tokens {args.max_word_tokens}"
+        if args.real_run:
+            command += " --real-run"
         print(launcher_command(command, repo_root=args.repo_root, mode="gpu"))
         return 0
 
@@ -104,7 +112,9 @@ def run_lm_features_main(argv: list[str] | None = None) -> int:
         shard_index=args.shard_index,
         shard_count=args.shard_count,
         limit_items=args.limit_items,
+        max_word_tokens=args.max_word_tokens,
         dry_run=args.dry_run,
+        force_real_run=args.real_run,
         require_gpu=args.require_gpu,
     )
     _print(manifest)

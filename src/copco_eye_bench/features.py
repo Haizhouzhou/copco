@@ -82,15 +82,16 @@ def _read_extracted_features(
     files = sorted(root.glob(pattern))
     if not files:
         raise FileNotFoundError(f"no extracted feature CSV files found under {root / pattern}")
-    if sample_participants:
-        files = files[:sample_participants]
+    files, sample_report = _select_extracted_feature_files(config, repo_root, files, sample_participants)
 
     frames = []
     for path in files:
         frame = pd.read_csv(path, dtype={"part": "string"})
         frame["participant_id"] = normalize_participant_id(path.stem)
         frames.append(frame)
-    return pd.concat(frames, ignore_index=True)
+    out = pd.concat(frames, ignore_index=True)
+    out.attrs["sample_report"] = sample_report
+    return out
 
 
 def _read_participants(config: dict[str, Any], repo_root: Path) -> Any:
@@ -110,6 +111,106 @@ def _parse_label(value: Any) -> int | None:
     if text in {"0", "false", "no", "n", "control", "typical", "non-dyslexic"}:
         return 0
     return None
+
+
+def _select_extracted_feature_files(
+    config: dict[str, Any],
+    repo_root: Path,
+    files: list[Path],
+    sample_participants: int | None,
+) -> tuple[list[Path], dict[str, Any]]:
+    if not sample_participants:
+        return files, {"strategy": "all_available", "selected_participants": len(files)}
+
+    require_two_classes = bool(get_nested(config, "sample.require_two_classes", False))
+    min_per_class = int(get_nested(config, "sample.min_participants_per_class", 1))
+    seed = int(get_nested(config, "sample.random_seed", get_nested(config, "cv.random_seeds", [17])[0]))
+    report: dict[str, Any] = {
+        "strategy": "first_n",
+        "requested_participants": int(sample_participants),
+        "require_two_classes": require_two_classes,
+        "min_participants_per_class": min_per_class,
+        "random_seed": seed,
+    }
+    if not require_two_classes:
+        selected = files[:sample_participants]
+        report["selected_participants"] = [normalize_participant_id(path.stem) for path in selected]
+        return selected, report
+
+    if sample_participants < min_per_class * 2:
+        raise ValueError(
+            "class-aware smoke sampling needs sample.participants >= "
+            "2 * sample.min_participants_per_class"
+        )
+
+    raw_participants = _read_participants(config, repo_root)
+    if raw_participants.empty:
+        raise ValueError("class-aware smoke sampling requires participant metadata with labels")
+    label_column = None
+    if "dyslexia" in raw_participants.columns:
+        label_column = "dyslexia"
+    elif "dyslexia_labeled" in raw_participants.columns:
+        label_column = "dyslexia_labeled"
+    if label_column is None:
+        raise ValueError("class-aware smoke sampling requires a dyslexia or dyslexia_labeled column")
+
+    source_col = "subj" if "subj" in raw_participants.columns else "participant_id"
+    labels = raw_participants[[source_col, label_column]].copy()
+    labels["participant_id"] = labels[source_col].map(normalize_participant_id)
+    labels["dyslexia_labeled"] = labels[label_column].map(_parse_label)
+    labels = labels.dropna(subset=["participant_id", "dyslexia_labeled"]).copy()
+    labels["dyslexia_labeled"] = labels["dyslexia_labeled"].astype(int)
+
+    file_by_participant = {normalize_participant_id(path.stem): path for path in files}
+    available = labels[labels["participant_id"].isin(file_by_participant)].drop_duplicates(
+        "participant_id"
+    )
+    excluded = {
+        normalize_participant_id(value)
+        for value in get_nested(config, "dataset.excluded_participants", ["P14"])
+    }
+    available = available[~available["participant_id"].isin(excluded)].copy()
+    class_counts = available["dyslexia_labeled"].value_counts().to_dict()
+    report["available_label_counts"] = {
+        "typical": int(class_counts.get(0, 0)),
+        "dyslexia_labeled": int(class_counts.get(1, 0)),
+    }
+
+    if len(class_counts) < 2:
+        selected = files[:sample_participants]
+        report["strategy"] = "first_n_single_class_available"
+        report["selected_participants"] = [normalize_participant_id(path.stem) for path in selected]
+        report["warning"] = "only one class present in available participant metadata"
+        return selected, report
+
+    selected_ids: list[str] = []
+    for label in (1, 0):
+        class_ids = sorted(
+            available[available["dyslexia_labeled"] == label]["participant_id"].astype(str).tolist()
+        )
+        if len(class_ids) < min_per_class:
+            raise ValueError(f"class-aware smoke sampling lacks {min_per_class} participants for class {label}")
+        selected_ids.extend(class_ids[:min_per_class])
+
+    all_available_ids = sorted(available["participant_id"].astype(str).tolist())
+    for participant_id in all_available_ids:
+        if len(selected_ids) >= sample_participants:
+            break
+        if participant_id not in selected_ids:
+            selected_ids.append(participant_id)
+
+    selected_set = set(selected_ids)
+    selected = [path for path in files if normalize_participant_id(path.stem) in selected_set]
+    selected = selected[:sample_participants]
+    report["strategy"] = "class_aware"
+    report["selected_participants"] = [normalize_participant_id(path.stem) for path in selected]
+    selected_labels = available[available["participant_id"].isin(report["selected_participants"])]
+    selected_counts = selected_labels["dyslexia_labeled"].value_counts().to_dict()
+    report["selected_label_counts"] = {
+        "typical": int(selected_counts.get(0, 0)),
+        "dyslexia_labeled": int(selected_counts.get(1, 0)),
+    }
+    return selected, report
 
 
 def _prepare_participants(raw: Any, observations: Any) -> Any:
@@ -545,6 +646,7 @@ def build_feature_tables(
         missing_inputs.append(f"{derived57_module}:python_module_missing")
 
     raw_observations = _read_extracted_features(config, root, sample_participants)
+    sample_report = dict(raw_observations.attrs.get("sample_report", {}))
     observations = add_stable_ids(raw_observations)
     observations = _filter_observations(observations, config)
     observations = _add_gaze_metrics(observations)
@@ -596,6 +698,7 @@ def build_feature_tables(
         "git_sha": _git_sha(root),
         "config_sha256": _config_hash(config),
         "sample": {"participants": sample_participants, "speeches": sample_speeches},
+        "sample_strategy": sample_report,
         "missing_inputs": missing_inputs,
         "row_counts": {
             "raw_observations_loaded": int(len(raw_observations)),

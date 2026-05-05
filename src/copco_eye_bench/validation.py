@@ -18,6 +18,20 @@ REQUIRED_TABLE_COLUMNS = {
 }
 
 REQUIRED_METRIC_COLUMNS = {"model", "classifier", "cv_regime", "roc_auc", "pr_auc", "brier"}
+REQUIRED_LM_SURPRISAL_COLUMNS = {
+    "word_id",
+    "speech_id",
+    "paragraph_id",
+    "sentence_id",
+    "lm_model_id",
+    "lm_tokenizer_id",
+    "lm_context_mode",
+    "lm_context_tokens",
+    "lm_word_surprisal",
+    "lm_word_entropy",
+    "lm_subword_count",
+    "lm_alignment_status",
+}
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -126,6 +140,62 @@ def _validate_metrics(output_dir: Path) -> tuple[dict[str, Any], list[str]]:
     return {"available": True, "rows": int(len(frame))}, []
 
 
+def _validate_lm_features(output_dir: Path) -> tuple[list[dict[str, Any]], list[str]]:
+    import pandas as pd
+
+    reports: list[dict[str, Any]] = []
+    errors: list[str] = []
+    lm_root = output_dir / "lm_features"
+    if not lm_root.exists():
+        return reports, errors
+
+    for path in sorted(lm_root.glob("*/*.parquet")):
+        frame = pd.read_parquet(path)
+        missing = sorted(REQUIRED_LM_SURPRISAL_COLUMNS.difference(frame.columns))
+        duplicate_count = 0
+        if "lm_word_surprisal" in frame.columns:
+            if missing:
+                errors.append(f"{path.relative_to(output_dir)}:missing_columns:{missing}")
+            if "word_id" in frame.columns:
+                key = ["word_id"]
+                if "participant_id" in frame.columns:
+                    key = ["participant_id", "word_id"]
+                duplicate_count = int(frame.duplicated(key).sum())
+                if duplicate_count:
+                    errors.append(f"{path.relative_to(output_dir)}:duplicate_lm_word_keys:{duplicate_count}")
+            for column in ("word_id", "speech_id", "paragraph_id", "sentence_id"):
+                if column in frame.columns and bool(frame[column].isna().any()):
+                    errors.append(f"{path.relative_to(output_dir)}:missing_stable_ids:{column}")
+            if "lm_subword_count" in frame.columns and bool((frame["lm_subword_count"] <= 0).any()):
+                errors.append(f"{path.relative_to(output_dir)}:zero_subword_words")
+            if "lm_alignment_status" in frame.columns:
+                bad = frame[~frame["lm_alignment_status"].isin(["ok", "warning"])]
+                if not bad.empty:
+                    errors.append(f"{path.relative_to(output_dir)}:lm_alignment_failed:{len(bad)}")
+        reports.append(
+            {
+                "lm_feature_file": str(path.relative_to(output_dir)),
+                "rows": int(len(frame)),
+                "columns": int(len(frame.columns)),
+                "missing_required_columns": missing if "lm_word_surprisal" in frame.columns else [],
+                "duplicate_count": duplicate_count,
+            }
+        )
+
+    for path in sorted(lm_root.glob("*/alignment_report_shard*.json")):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("status") != "passed":
+            errors.append(f"{path.relative_to(output_dir)}:alignment_report_failed")
+        reports.append(
+            {
+                "lm_alignment_report": str(path.relative_to(output_dir)),
+                "status": payload.get("status"),
+                "contexts": len(payload.get("reports", [])),
+            }
+        )
+    return reports, errors
+
+
 def validate_run(output_dir: str | Path) -> dict[str, Any]:
     """Validate schemas, duplicate keys, leakage controls, metrics, and manifests."""
 
@@ -134,9 +204,11 @@ def validate_run(output_dir: str | Path) -> dict[str, Any]:
     table_reports, table_errors = _validate_tables(out)
     split_reports, split_errors = _validate_splits(out)
     metric_report, metric_errors = _validate_metrics(out)
+    lm_reports, lm_errors = _validate_lm_features(out)
     errors.extend(table_errors)
     errors.extend(split_errors)
     errors.extend(metric_errors)
+    errors.extend(lm_errors)
     manifest_path = out / "manifest.json"
     manifest_available = manifest_path.exists()
     if not manifest_available:
@@ -149,6 +221,7 @@ def validate_run(output_dir: str | Path) -> dict[str, Any]:
         "tables": table_reports,
         "splits": split_reports,
         "metrics": metric_report,
+        "lm_features": lm_reports,
         "manifest_available": manifest_available,
     }
     _write_json(out / "validation_report.json", report)

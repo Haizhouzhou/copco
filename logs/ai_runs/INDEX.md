@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-05 | [phase2_lm_smoke](2026-05-05_2011_phase2_lm_smoke.md) | Finish Phase 2 real LM scoring safeguards, alignment validation, and class-aware smoke sampling. |
 | 2026-05-02 | [full_dyslexia_pipeline](2026-05-02_0509_full_dyslexia_pipeline.md) | Implement the full CopCo dyslexia-labeled reader pipeline scaffold and CLI. |
 | 2026-05-02 | [add_tested_gpu_profile](2026-05-02_0400_add_tested_gpu_profile.md) | Add the tested UZH 8-GPU teaching profile as the first strong GPU Slurm profile. |
 | 2026-05-02 | [strengthen_cpu_gpu_resource_policy](2026-05-02_0346_strengthen_cpu_gpu_resource_policy.md) | Strengthen CopCo environment, CPU/GPU resource, Slurm, triage, logging, and git policy. |

@@ -9,6 +9,7 @@ import pytest
 from copco_eye_bench.cli import build_features_main
 from copco_eye_bench.features import GAZE_METRIC_MAP, assert_unique_participant_word, build_feature_tables
 from copco_eye_bench.ids import add_stable_ids, word_id_from_source
+from copco_eye_bench.modeling import run_models
 from copco_eye_bench.resources import syllable_count, vowel_cluster_syllable_count
 from copco_eye_bench.slurm import launcher_command
 from copco_eye_bench.splits import assert_no_group_leakage, participant_grouped_folds
@@ -114,6 +115,47 @@ def _write_minimal_legacy_source(root: Path) -> None:
     )
 
 
+def _write_legacy_source_with_labels(root: Path, labels: dict[str, int] | None) -> None:
+    extracted = root / "ExtractedFeatures"
+    extracted.mkdir(parents=True)
+    for participant_id in sorted(labels or {"P01": 0, "P02": 0}):
+        rows = [
+            (participant_id, 1, 45, 1, 1, 1, "Hej", 120, 130, 150, 1),
+            (participant_id, 1, 45, 1, 1, 2, "verden", 121, 131, 151, 2),
+        ]
+        frame = pd.DataFrame(
+            rows,
+            columns=[
+                "part",
+                "trialId",
+                "speechId",
+                "paragraphId",
+                "sentenceId",
+                "wordId",
+                "word",
+                "word_first_fix_dur",
+                "word_first_pass_dur",
+                "word_total_fix_dur",
+                "number_of_fixations",
+            ],
+        )
+        frame["char_IA_ids"] = ""
+        frame["landing_position"] = 0
+        frame["word_go_past_time"] = frame["word_total_fix_dur"]
+        frame["word_mean_fix_dur"] = frame["word_total_fix_dur"]
+        frame["word_mean_sacc_dur"] = 0
+        frame["word_peak_sacc_velocity"] = 0
+        frame.to_csv(extracted / f"{participant_id}.csv", index=False)
+    if labels is None:
+        pd.DataFrame({"subj": ["P01", "P02"], "group": ["typical", "typical"]}).to_csv(
+            root / "participant_stats.csv", index=False
+        )
+    else:
+        pd.DataFrame({"subj": list(labels), "dyslexia": list(labels.values())}).to_csv(
+            root / "participant_stats.csv", index=False
+        )
+
+
 def test_build_features_and_validate_minimal_run(tmp_path: Path) -> None:
     legacy_root = tmp_path / "legacy"
     _write_minimal_legacy_source(legacy_root)
@@ -174,8 +216,99 @@ cv:
     assert manifest["row_counts"]["word_observations"] == 2
 
 
+def test_class_aware_smoke_sample_keeps_two_classes(tmp_path: Path) -> None:
+    legacy_root = tmp_path / "legacy"
+    _write_legacy_source_with_labels(legacy_root, {"P01": 0, "P02": 0, "P03": 1})
+    config = {
+        "sample": {
+            "require_two_classes": True,
+            "min_participants_per_class": 1,
+            "random_seed": 17,
+        },
+        "dataset": {
+            "legacy_root": str(legacy_root),
+            "extracted_features_glob": "ExtractedFeatures/P*.csv",
+            "participant_stats_path": "participant_stats.csv",
+            "excluded_participants": ["P14"],
+            "excluded_speech_ids": ["1327"],
+        },
+        "cv": {"participant_grouped_folds": 2, "random_seeds": [17]},
+        "models": {"families": {"A_gaze": ["gaze"]}},
+    }
+    output_dir = tmp_path / "run"
+    manifest = build_feature_tables(
+        config, output_dir, repo_root=tmp_path, sample_participants=2, sample_speeches=1
+    )
+    participants = pd.read_parquet(output_dir / "tables" / "participants.parquet")
+    assert set(participants["dyslexia_labeled"].astype(int)) == {0, 1}
+    assert manifest["sample_strategy"]["strategy"] == "class_aware"
+    assert manifest["sample_strategy"]["selected_label_counts"] == {
+        "typical": 1,
+        "dyslexia_labeled": 1,
+    }
+    model_manifest = run_models(config, output_dir)
+    assert model_manifest["status"] == "complete"
+    metrics = pd.read_csv(output_dir / "models" / "model_metrics.csv")
+    validate_metrics_schema(metrics)
+
+
+def test_model_smoke_single_class_skips_cleanly(tmp_path: Path) -> None:
+    legacy_root = tmp_path / "legacy"
+    _write_legacy_source_with_labels(legacy_root, {"P01": 0, "P02": 0})
+    config = {
+        "dataset": {
+            "legacy_root": str(legacy_root),
+            "extracted_features_glob": "ExtractedFeatures/P*.csv",
+            "participant_stats_path": "participant_stats.csv",
+            "excluded_participants": ["P14"],
+            "excluded_speech_ids": ["1327"],
+        },
+        "cv": {"participant_grouped_folds": 2, "random_seeds": [17]},
+        "models": {"families": {"A_gaze": ["gaze"]}},
+    }
+    output_dir = tmp_path / "run"
+    build_feature_tables(config, output_dir, repo_root=tmp_path, sample_participants=2, sample_speeches=1)
+    manifest = run_models(config, output_dir)
+    assert manifest["status"] == "skipped"
+    assert manifest["reason"] == "only_one_class_after_sampling"
+    assert manifest["message"] == "Model smoke skipped: only one class present after sampling"
+
+
+def test_class_aware_smoke_missing_label_column_fails(tmp_path: Path) -> None:
+    legacy_root = tmp_path / "legacy"
+    _write_legacy_source_with_labels(legacy_root, labels=None)
+    config = {
+        "sample": {"require_two_classes": True, "min_participants_per_class": 1},
+        "dataset": {
+            "legacy_root": str(legacy_root),
+            "extracted_features_glob": "ExtractedFeatures/P*.csv",
+            "participant_stats_path": "participant_stats.csv",
+            "excluded_participants": ["P14"],
+            "excluded_speech_ids": ["1327"],
+        },
+        "cv": {"participant_grouped_folds": 2, "random_seeds": [17]},
+    }
+    with pytest.raises(ValueError, match="requires a dyslexia or dyslexia_labeled column"):
+        build_feature_tables(
+            config, tmp_path / "run", repo_root=tmp_path, sample_participants=2, sample_speeches=1
+        )
+
+
 def test_slurm_launcher_activates_copco_env_and_uses_cpu_mode(tmp_path: Path) -> None:
     command = launcher_command("copco-build-features --config config.yaml", repo_root=tmp_path, mode="cpu")
     assert "~/bin/claim_best_immediate_resource.sh --mode cpu" in command
     assert "conda activate copco" in command
     assert "SLURM_JOB_ID" in command
+
+
+def test_slurm_launcher_uses_gpu_mode_for_lm_features(tmp_path: Path) -> None:
+    command = launcher_command(
+        "copco-run-lm-features --config config.yaml --output-dir results/run --real-run --require-gpu",
+        repo_root=tmp_path,
+        mode="gpu",
+    )
+    assert "~/bin/claim_best_immediate_resource.sh --mode gpu" in command
+    assert "--candidate" in command
+    assert "set -euo pipefail" in command
+    assert "conda activate copco" in command
+    assert "copco-run-lm-features" in command
