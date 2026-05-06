@@ -1,0 +1,13 @@
+split_name,fold_id,train_samples,test_samples,train_participants,test_participants,train_texts,test_texts,train_positive,test_positive
+unseen_reader,0,1181,884,26,15,13,23,328,212
+unseen_reader,1,1167,906,27,13,14,16,321,204
+unseen_reader,2,1254,799,29,13,15,18,380,122
+unseen_reader,3,1129,965,27,14,17,19,261,229
+unseen_reader_and_text,0,1181,321,26,11,13,6,328,81
+unseen_reader_and_text,1,1167,269,27,10,14,7,321,75
+unseen_reader_and_text,2,1254,404,29,9,15,5,380,178
+unseen_reader_and_text,3,1129,234,27,9,17,7,261,74
+unseen_text,0,1181,913,26,36,13,6,328,204
+unseen_text,1,1167,861,27,29,14,9,321,183
+unseen_text,2,1254,797,29,23,15,5,380,108
+unseen_text,3,1129,983,27,25,17,10,261,272

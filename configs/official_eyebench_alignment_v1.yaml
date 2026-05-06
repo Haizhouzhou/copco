@@ -1,0 +1,123 @@
+run:
+  name: official_eyebench_alignment_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+official_eyebench_alignment:
+  version: v1
+  eyebench:
+    path: eyebench
+    repository_url: https://github.com/EyeBench/eyebench.git
+    expected_submodule: true
+    environment_name: eyebench
+    allow_data_download: true
+    processed_copco_dir: eyebench/data/CopCo/processed
+    folds_metadata_dir: eyebench/data/CopCo/folds_metadata
+    labels_dir: eyebench/data/CopCo/labels
+    benchmark_results_dir: eyebench/results/formatted_eyebench_benchmark_results
+  frozen_inputs:
+    prepared_dataset_dir: results/label_release_v1_1_20260506_0041/prepared_dataset
+    label_release_dir: results/label_release_v1_1_20260506_0041
+    benchmark_bridge_dir: results/benchmark_bridge_v1_20260506_1836
+  output_dir_pattern: results/official_eyebench_alignment_v1_<timestamp>
+  output_layout:
+    analysis: analysis/official_eyebench_alignment_v1
+    tables: analysis/official_eyebench_alignment_v1/tables
+  repo_analysis_dir: analysis/official_eyebench_alignment_v1
+  deterministic_seed: 131
+  no_new_labels: true
+  no_feature_engineering_search: true
+  no_broad_model_search: true
+  forbid_random_word_level_split: true
+
+  tasks:
+    - CopCo_TYP
+    - CopCo_RCS
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+  evaluation_levels:
+    - participant_text_trial
+    - reader_aggregated
+
+  evaluation_modes:
+    official_eyebench_subset:
+      model_name: D3_EyeBench_Lite
+      claim_type_if_success: official_compatible
+      requires_processed_eyebench_data: true
+      requires_official_folds: true
+      requires_official_evaluator: true
+    eyebench_folds_full_feature_intersection:
+      model_name: D3_FullFeature_EyeBenchFolds
+      claim_type: EyeBench-fold-aligned_full-feature_non-official
+      uses_official_fold_metadata: true
+      uses_our_prepared_features: true
+    full_data_eyebench_style:
+      model_name: D3_FullData_EyeBenchStyle
+      claim_type: internal_EyeBench-style_benchmark-relative
+      source: BenchmarkBridge_v1
+
+  primary_model:
+    feature_group: D3_dfm_residual_gaze_only
+    typ_model: logistic_regression
+    rcs_model: ridge_regression
+
+  prohibited_features:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - speech_id
+    - text_id
+    - unique_trial_id
+    - unique_paragraph_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia_labeled
+    - group_label
+    - dyslexia
+    - RCS_score
+    - comprehension_score
+    - eyebench_rcs_score
+
+  residualization:
+    mode: cross_fitted_within_official_fold
+    min_words_for_slope: 8
+    max_parallel_folds: 8
+    reader_group_never_used: true
+    no_held_out_reader_rows_used_for_residual_fitting: true
+    no_held_out_text_rows_used_for_residual_fitting: true
+    outcomes:
+      - first_fixation_duration
+      - first_pass_duration
+      - go_past_time
+      - total_fixation_duration
+      - skipping
+      - fixation_count
+
+  official_regime_mapping:
+    seen_subject_unseen_item: unseen_text
+    unseen_subject_seen_item: unseen_reader
+    unseen_subject_unseen_item: unseen_reader_and_text
+
+  rcs:
+    target_column: eyebench_rcs_score
+    missing_target_value: -1
+    scale: EyeBench_RCS_score
+
+  decision_gates:
+    CopCo_TYP:
+      compare_against_formatted_eyebench_table: true
+      formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_TYP_test.csv
+    CopCo_RCS:
+      formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_RCS_test.csv
+
+  slurm:
+    cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+    cpu_candidate: >-
+      --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+      --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00

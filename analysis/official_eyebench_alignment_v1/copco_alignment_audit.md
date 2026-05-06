@@ -1,0 +1,39 @@
+# CopCo Alignment Audit
+
+| field | value |
+| --- | --- |
+| participants_in_eyebench | 58 |
+| participants_in_our_dataset | 57 |
+| n_common_participants | 57 |
+| participants_only_in_eyebench | P14 |
+| participants_only_in_our_dataset |  |
+| n_common_dyslexia_labeled | 19 |
+| n_common_typical_control | 38 |
+| n_label_mismatches | 0 |
+| speech_item_ids_in_eyebench | 33 |
+| speech_item_ids_in_our_dataset | 32 |
+| n_common_texts | 32 |
+| n_common_trials | 4782 |
+| n_common_word_rows | 31986 |
+| n_unmapped_eyebench_trials | 0 |
+| n_unmapped_our_trials | 0 |
+| can_run_exact_official_eyebench_subset_evaluation | False |
+| can_run_eyebench_fold_full_feature_intersection_evaluation | True |
+| can_reproduce_benchmark_bridge_full_data_evaluation | True |
+| official_result_label | blocked_by_processed_data_or_environment |
+| fold_aligned_result_label | EyeBench-fold-aligned, full-feature, non-official |
+| full_data_result_label | internal EyeBench-style, benchmark-relative |
+
+## Answers
+- Can we run exact official EyeBench subset evaluation? False
+- Can we run EyeBench-fold full-feature intersection evaluation? True
+- Can we reproduce the BenchmarkBridge full-data evaluation? True
+- Official results require exact processed EyeBench data, official folds, and official evaluator.
+- EyeBench-fold full-feature results use official fold metadata with CopCo prepared features.
+- BenchmarkBridge full-data results remain internal EyeBench-style and benchmark-relative.
+
+## ID Mapping
+- EyeBench `subject ID` maps to CopCo `participant_id`.
+- EyeBench `item ID` maps to CopCo `speech_id`.
+- EyeBench `unique_paragraph_id` maps to CopCo `speech_id` + parsed `paragraph_id`.
+- EyeBench `trial ID` maps to CopCo `participant_id` + `unique_paragraph_id`.

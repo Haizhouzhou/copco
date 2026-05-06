@@ -84,6 +84,8 @@ copco-run-manuscript-audit = "copco_eye_bench.cli:run_manuscript_audit_main"
 copco-validate-manuscript-audit = "copco_eye_bench.cli:validate_manuscript_audit_main"
 copco-run-benchmark-bridge = "copco_eye_bench.cli:run_benchmark_bridge_main"
 copco-validate-benchmark-bridge = "copco_eye_bench.cli:validate_benchmark_bridge_main"
+copco-run-official-eyebench-alignment = "copco_eye_bench.cli:run_official_eyebench_alignment_main"
+copco-validate-official-eyebench-alignment = "copco_eye_bench.cli:validate_official_eyebench_alignment_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

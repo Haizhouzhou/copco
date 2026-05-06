@@ -1,0 +1,3 @@
+[submodule "eyebench"]
+	path = eyebench
+	url = https://github.com/EyeBench/eyebench.git
