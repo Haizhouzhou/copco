@@ -13,6 +13,13 @@ confirmatory candidates (D3 ROC-AUC 0.8947), and adding exposure variables does 
 improve it (D4 ROC-AUC 0.8726). This ordering supports the interpretation that
 participant-level predictability sensitivity, not text exposure, drives the result.
 
+BenchmarkBridge v1 re-evaluates the locked D3 model under internal EyeBench-style
+regimes (Table~\ref{tab:benchmark-bridge-typ}). In reader-aggregated evaluation, D3
+remains above the request-specified AhnCNN CopCo TYP reference values for Unseen Reader
+(AUROC 0.8961; balanced accuracy 0.8158) and Unseen Reader + Text (AUROC 0.8542;
+balanced accuracy 0.7458). These are benchmark-relative internal results, not official
+EyeBench leaderboard results, because exact EyeBench folds were not available locally.
+
 Robustness checks support the locked model. The permutation test uses 1,000 valid
 permutations and gives $p=0.000999$. Bootstrap intervals are [0.7765, 0.9841] for
 ROC-AUC and [0.7083, 0.9728] for PR-AUC (Table~\ref{tab:robustness},
@@ -24,6 +31,7 @@ and Figure~\ref{fig:participant-error}.
 
 \input{tables/final_model_metrics.tex}
 \input{tables/dfm_exposure_vs_sensitivity.tex}
+\input{tables/benchmark_bridge_typ_comparison.tex}
 \input{tables/robustness_tests.tex}
 \input{tables/calibration_influence_summary.tex}
 

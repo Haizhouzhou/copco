@@ -1,0 +1,193 @@
+run:
+  name: benchmark_bridge_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+benchmark_bridge:
+  version: v1
+  frozen_inputs:
+    feature_release_dir: results/feature_release_v1_20260505_2155
+    label_release_dir: results/label_release_v1_1_20260506_0041
+    prepared_dataset_dir: results/label_release_v1_1_20260506_0041/prepared_dataset
+    phase3_dir: results/research_exploration_v1_20260506_0149
+    phase3_analysis_dir: results/research_exploration_v1_20260506_0149/analysis/research_exploration
+    phase4_dir: results/phase4_confirmatory_sensitivity_v1_20260506_0715
+    phase4_analysis_dir: results/phase4_confirmatory_sensitivity_v1_20260506_0715/analysis/phase4_confirmatory
+    submission_package_dir: results/submission_v1_20260506_0936
+    final_manuscript_audit_dir: results/final_manuscript_audit_v1_20260506_1438
+  prepared_dataset_path: results/label_release_v1_1_20260506_0041/prepared_dataset
+  output_dir_pattern: results/benchmark_bridge_v1_<timestamp>
+  output_layout:
+    analysis: analysis/benchmark_bridge_v1
+    tables: analysis/benchmark_bridge_v1/tables
+  repo_analysis_dir: analysis/benchmark_bridge_v1
+  deterministic_seed: 97
+  no_new_labels: true
+  no_feature_engineering_search: true
+  forbid_random_word_level_split: true
+
+  tasks:
+    - name: CopCo_TYP
+      enabled: true
+      role: primary
+    - name: CopCo_RCS
+      enabled: true
+      role: optional_auxiliary
+
+  primary_model:
+    feature_group: D3_dfm_residual_gaze_only
+    model: logistic_regression
+    evaluation_units:
+      - participant_text_trial
+      - reader_aggregated
+
+  comparison_feature_groups:
+    - D1_dfm_exposure_only
+    - D2_dfm_sensitivity_only
+    - D3_dfm_residual_gaze_only
+    - D4_dfm_exposure_plus_sensitivity
+    - raw_gaze_baseline
+    - reading_speed_baseline
+    - no_dfm_baseline
+    - no_segmentation_baseline
+
+  typ_feature_groups:
+    - chance_majority
+    - reading_speed
+    - raw_gaze_baseline
+    - D1_dfm_exposure_only
+    - D2_dfm_sensitivity_only
+    - D3_dfm_residual_gaze_only
+    - D4_dfm_exposure_plus_sensitivity
+    - no_dfm_baseline
+    - no_segmentation_baseline
+    - all_allowed_non_exposure
+
+  rcs_feature_groups:
+    - reading_speed
+    - raw_gaze_baseline
+    - D1_dfm_exposure_only
+    - D2_dfm_sensitivity_only
+    - D3_dfm_residual_gaze_only
+    - D4_dfm_exposure_plus_sensitivity
+    - all_allowed_non_exposure
+
+  models:
+    typ:
+      primary: logistic_regression
+      optional:
+        - linear_svm
+        - random_forest
+    rcs:
+      primary: ridge_regression
+      optional:
+        - elastic_net
+        - random_forest
+
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+    - text_balanced_unseen_reader
+    - leave_one_speech_out
+    - participant_grouped_kfold
+  split_policy:
+    participant_grouped_kfold_folds: 5
+    text_balanced_unseen_reader_folds: 5
+    unseen_reader_and_text_folds: 5
+    text_id_column: speech_id
+    sample_unit: participant_x_speech
+    no_random_word_level_split: true
+
+  evaluation_units:
+    - participant_text_trial
+    - reader_aggregated
+
+  prohibited_features:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - speech_id
+    - text_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia_labeled
+    - group_label
+
+  primary_benchmark_prohibited_predictors:
+    participant_id: numeric_or_categorical_predictor_forbidden
+    speech_id: direct_predictor_for_primary_model_forbidden
+    text_id: direct_predictor_for_primary_model_forbidden
+
+  residualization:
+    mode: cross_fitted_within_each_split
+    min_words_for_slope: 8
+    max_parallel_folds: 8
+    regularized_unstable_slopes_to_zero: true
+    no_held_out_reader_rows_used_for_residual_fitting: true
+    no_held_out_text_rows_used_for_residual_fitting_in_unseen_text: true
+    no_held_out_text_rows_used_for_residual_fitting_in_unseen_reader_and_text: true
+    reader_group_never_used: true
+    outcomes:
+      - first_fixation_duration
+      - first_pass_duration
+      - go_past_time
+      - total_fixation_duration
+      - skipping
+      - fixation_count
+    predictors:
+      - word_length
+      - log_frequency
+      - DFM_surprisal
+      - DFM_entropy
+      - sentence_length
+      - word_position
+      - previous_boundary_opacity
+      - V#V_indicator
+      - quality_flags
+
+  metrics:
+    CopCo_TYP:
+      - balanced_accuracy
+      - AUROC
+      - PR_AUC
+      - macro_F1
+      - Brier
+    CopCo_RCS:
+      - RMSE
+      - MAE
+      - R2
+
+  bootstrap_permutation:
+    enabled: false
+    mode: optional_light
+    bootstrap_count: 0
+    permutation_count: 0
+
+  decision_gates:
+    CopCo_TYP:
+      unseen_reader:
+        baseline_model: AhnCNN
+        test_AUROC: 0.853
+        test_balanced_accuracy: 0.777
+      unseen_reader_and_text:
+        baseline_model: AhnCNN
+        test_AUROC: 0.749
+        test_balanced_accuracy: 0.656
+    CopCo_RCS:
+      baseline_model: Random Forest
+      average_test_R2_approx: 0.08
+      validation_R2_approx: 0.07
+
+  official_eyebench_mode: enabled_if_available
+  internal_matched_mode: always_enabled
+
+  slurm:
+    cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+    cpu_candidate: >-
+      --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+      --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00
