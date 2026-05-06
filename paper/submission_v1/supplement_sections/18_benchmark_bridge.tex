@@ -16,3 +16,6 @@ signal for the main paper story (best reader-aggregated $R^2=0.0116$).
 
 \paragraph{Official EyeBench alignment.}
 We additionally vendored the official EyeBench repository and aligned CopCo identifiers, fold metadata, and result formats. Exact official evaluation was not run because the local EyeBench environment did not import and the official processed CopCo files were absent. Accordingly, the benchmark statement remains benchmark-relative rather than an official EyeBench leaderboard or state-of-the-art claim.
+
+\paragraph{Official EyeBench SOTA check.}
+OfficialEyeBenchSOTACheck v1 attempted to move the benchmark-relative result to an official EyeBench state-of-the-art claim by creating a clean official EyeBench environment, checking official processed CopCo data, and requiring local reproduction of an official CopCo_TYP baseline before evaluating D3_EyeBench_Lite. The official environment and/or processed data gates did not pass, so the manuscript retains benchmark-relative wording and does not claim official EyeBench SOTA.

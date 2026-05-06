@@ -1,0 +1,132 @@
+run:
+  name: official_eyebench_sota_check_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+official_eyebench_sota_check:
+  version: v1
+  eyebench:
+    path: eyebench
+    repository_url: https://github.com/EyeBench/eyebench.git
+    commit: ce87f38a3083aeed029c255716a1a51e6ae51167
+    global_processed_dir: eyebench/data/processed
+    processed_copco_dir: eyebench/data/CopCo/processed
+    folds_metadata_dir: eyebench/data/CopCo/folds_metadata
+    labels_dir: eyebench/data/CopCo/labels
+    benchmark_results_dir: eyebench/results/formatted_eyebench_benchmark_results
+    allow_data_download: true
+    run_preprocessing_if_environment_ok: true
+    preprocessing_timeout_seconds: 7200
+
+  environment:
+    name: eyebench_official
+    legacy_broken_env_name: eyebench
+    environment_yml: eyebench/environment.yml
+    auto_create_in_cli: false
+    manual_exact_create_attempt:
+      command: mamba env create -n eyebench_official -f eyebench/environment.yml
+      status: failed
+      reason: strict-priority solve failed; libmamba reported incompatible packages and missing CUDA virtual package on the login node
+    manual_flexible_retry_attempt:
+      command: CONDA_OVERRIDE_CUDA=12.4 mamba env create --channel-priority flexible -n eyebench_official -f eyebench/environment.yml
+      status: failed
+      reason: transaction selected packages but exited nonzero with libmamba callback invocation failure; resulting empty prefix was removed
+
+  frozen_inputs:
+    benchmark_bridge_dir: results/benchmark_bridge_v1_20260506_1836
+    official_alignment_dir: results/official_eyebench_alignment_v1_20260506_2232
+
+  output_dir_pattern: results/official_eyebench_sota_check_v1_<timestamp>
+  output_layout:
+    analysis: analysis/official_eyebench_sota_check_v1
+    tables: analysis/official_eyebench_sota_check_v1/tables
+  repo_analysis_dir: analysis/official_eyebench_sota_check_v1
+
+  deterministic_seed: 173
+  no_new_labels: true
+  no_feature_engineering_search: true
+  no_broad_model_search: true
+  forbid_random_word_level_split: true
+
+  tasks:
+    - CopCo_TYP
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+  evaluation_levels:
+    - official_trial_level_fold_mean
+    - participant_text_trial_pooled
+    - reader_aggregated
+
+  primary_model:
+    model_name: D3_EyeBench_Lite
+    classifier: logistic_regression
+    feature_source: official_EyeBench_processed_CopCo_only
+
+  baseline_reproduction:
+    preferred_model: LogisticRegressionMLArgs
+    fallback_model: RandomForestMLArgs
+    require_before_sota_claim: true
+
+  residualization:
+    mode: official_fold_cross_fitted
+    reader_group_never_used: true
+    no_held_out_reader_rows_used_for_residual_fitting: true
+    no_held_out_text_rows_used_for_residual_fitting: true
+    outcomes:
+      - first_fixation_duration
+      - first_pass_duration
+      - go_past_time
+      - total_fixation_duration
+      - skipping
+      - fixation_count
+    predictors:
+      - word_length
+      - wordfreq_frequency
+      - gpt2_surprisal
+      - TRIAL_IA_COUNT
+      - normalized_ID
+      - start_of_line
+      - end_of_line
+      - is_content_word
+
+  official_regime_mapping:
+    seen_subject_unseen_item: unseen_text
+    unseen_subject_seen_item: unseen_reader
+    unseen_subject_unseen_item: unseen_reader_and_text
+
+  prohibited_features:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - speech_id
+    - text_id
+    - unique_trial_id
+    - unique_paragraph_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia_labeled
+    - group_label
+    - dyslexia
+    - RCS_score
+    - comprehension_score
+    - eyebench_rcs_score
+
+  decision_gates:
+    CopCo_TYP:
+      formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_TYP_test.csv
+      strongest_baselines:
+        unseen_reader:
+          AUROC: 0.853
+          balanced_accuracy: 0.777
+        unseen_text:
+          AUROC: 0.915
+          balanced_accuracy: 0.815
+        unseen_reader_and_text:
+          AUROC: 0.749
+          balanced_accuracy: 0.656

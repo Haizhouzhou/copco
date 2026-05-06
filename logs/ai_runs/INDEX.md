@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-06 | [official_eyebench_sota_check_v1](2026-05-06_2313_official_eyebench_sota_check_v1.md) | Add official EyeBench SOTA verification gates and blocked-status reports. |
 | 2026-05-06 | [official_eyebench_alignment_v1](2026-05-06_2130_official_eyebench_alignment_v1.md) | Add official EyeBench vendoring, alignment audit, and fold-aligned evaluation layer. |
 | 2026-05-06 | [benchmark_bridge_v1](2026-05-06_1800_benchmark_bridge_v1.md) | Add EyeBench-style BenchmarkBridge v1 evaluation for frozen DFM residual gaze profiles. |
 | 2026-05-06 | [final_manuscript_audit_v1](2026-05-06_1438_final_manuscript_audit_v1.md) | Audit and harden the SubmissionSprint v1 manuscript package for coauthor review. |
