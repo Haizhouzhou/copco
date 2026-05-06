@@ -78,6 +78,8 @@ copco-run-autoresearch = "copco_eye_bench.cli:run_autoresearch_main"
 copco-validate-autoresearch = "copco_eye_bench.cli:validate_autoresearch_main"
 copco-build-paper-package = "copco_eye_bench.cli:build_paper_package_main"
 copco-validate-paper-package = "copco_eye_bench.cli:validate_paper_package_main"
+copco-build-submission-package = "copco_eye_bench.cli:build_submission_package_main"
+copco-validate-submission-package = "copco_eye_bench.cli:validate_submission_package_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

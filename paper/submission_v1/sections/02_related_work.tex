@@ -1,0 +1,19 @@
+\section{Related Work}
+Natural-reading eye-tracking corpora support analyses of reading behavior under
+connected text rather than isolated word presentation \cite{kennedy2003d,kliegl2006tracking}.
+CopCo provides Danish natural-reading material that can be aligned with gaze,
+linguistic, and language-model features. We treat the current labels as operational
+research labels and do not claim clinical diagnosis.
+
+Reader-level prediction from eye movements has been explored in dyslexia and reading
+difficulty settings, including Danish work on gaze-based prediction. Our contribution is
+not a broader model search, but an interpretable confirmatory package that separates
+text exposure from participant-level predictability sensitivity. LM surprisal has long
+been connected to reading time and processing difficulty \cite{hale2001probabilistic,
+levy2008expectation,smith2013effect}. We use DFM surprisal and entropy as contextual
+predictability features, then ask whether participant gaze costs vary with these
+features. Danish vocalic and boundary-opacity literature motivates the secondary
+orthographic boundary-opacity analysis, but the current labels are orthographic proxies
+rather than pronunciation-aware phonological labels. Explainable reader-level prediction
+requires grouped validation, leakage controls, and feature-stability analysis rather
+than random word-level splits.

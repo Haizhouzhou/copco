@@ -1,0 +1,143 @@
+run:
+  name: submission_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+submission:
+  version: v1
+  frozen_inputs:
+    autoresearch_dir: results/autoresearch_v1_20260506_0917
+    autoresearch_analysis_dir: analysis/autoresearch_v1
+    feature_release_dir: results/feature_release_v1_20260505_2155
+    label_release_dir: results/label_release_v1_1_20260506_0041
+    phase3_dir: results/research_exploration_v1_20260506_0149
+    phase4_dir: results/phase4_confirmatory_sensitivity_v1_20260506_0715
+
+  output_layout:
+    paper_dir: paper/submission_v1
+    analysis_dir: analysis/submission_v1
+    result_pattern: results/submission_v1_<timestamp>
+
+  no_new_core_labels: true
+  no_new_feature_families: true
+  no_broad_models: true
+  no_uncontrolled_experiments: true
+  no_new_modeling_unless_consistency_check: true
+
+  selected_model:
+    feature_group: D3_dfm_residual_gaze_only
+    model: logistic_regression
+    split_name: leave_one_participant_out
+    prediction_unit: participant
+
+  final_title: Predictability-Sensitive Gaze Profiles for Dyslexia-Labeled Reader Prediction in Danish Natural Reading
+  final_main_claim: Participant-level DFM predictability sensitivity and cross-fitted residualized gaze-cost profiles distinguish dyslexia-labeled and typical/control readers in Danish natural reading.
+  contributions:
+    - A prepared Danish natural-reading gaze, linguistic, LM, and label pipeline for dyslexia-labeled reader analysis.
+    - A cross-fitted residualized participant sensitivity-profile method.
+    - Evidence that DFM predictability sensitivity, not DFM exposure, drives strong participant-level prediction.
+    - Secondary evidence that reader-group differences involve word length, DFM surprisal, and previous-boundary opacity.
+
+  scientific_decisions:
+    main_paper_result:
+      - participant-level DFM predictability sensitivity and cross-fitted residualized gaze-cost profiles
+    secondary_result:
+      - boundary-opacity interaction / interpretability
+      - DFM surprisal and word-length interaction synthesis
+    appendix_result:
+      - DFM exposure-only comparisons
+      - word-level secondary ladder
+      - segmentation main-effect null result
+      - calibration, bootstrap, permutation, and influence diagnostics
+    defer:
+      - parser-syntax claims
+      - Gemma sensitivity
+      - pronunciation-aware segmentation labels
+      - independent external validation
+    drop:
+      - random word-level prediction
+      - standalone segmentation main-effect framing
+      - clinical screening or diagnostic claims
+
+  expected_metrics:
+    roc_auc: 0.8947368421
+    pr_auc: 0.8640879081
+    balanced_accuracy: 0.8421052632
+    macro_f1: 0.8421052632
+    brier_score: 0.1159416341
+    calibration_intercept: -0.5321293913
+    calibration_slope: 0.8693048814
+    n_predictions: 57
+    skipped_folds: 0
+    tolerance: 0.0005
+
+  prohibited_variables:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - reader_group
+    - reader_group_binary
+    - dyslexia_labeled
+    - group_label
+
+  table_sources:
+    dataset_summary: tables/dataset_summary_table.csv
+    feature_release_summary: tables/feature_release_summary_table.csv
+    label_release_summary: tables/label_release_summary_table.csv
+    final_model_metrics: final_model/final_model_metrics.csv
+    dfm_exposure_vs_sensitivity: stress_tests/dfm_exposure_vs_sensitivity.csv
+    robustness_summary: tables/robustness_summary_table.csv
+    calibration_summary: stress_tests/calibration_summary.csv
+    influence_analysis: stress_tests/influence_analysis.csv
+    feature_stability: stress_tests/feature_stability.csv
+    interaction_synthesis: tables/interaction_synthesis_table.csv
+    reviewer_risk: tables/reviewer_risk_table.csv
+    final_claim_support: tables/final_claim_support_table.csv
+
+  figure_sources:
+    pipeline_overview: figures/pipeline_overview.png
+    dfm_exposure_vs_sensitivity: figures/dfm_exposure_vs_sensitivity_auc.png
+    final_roc: figures/final_model_roc_curve.png
+    final_pr: figures/final_model_pr_curve.png
+    permutation_null: figures/permutation_null_distribution.png
+    bootstrap_auc: figures/bootstrap_auc_distribution.png
+    feature_stability: figures/feature_stability_coefficients.png
+    calibration: figures/calibration_plot.png
+    interaction_summary: figures/interaction_effects_summary.png
+    participant_error: figures/participant_error_analysis.png
+    text_exposure_audit: figures/text_exposure_vs_prediction_audit.png
+
+  manuscript:
+    output_dir: paper/submission_v1
+    markdown_mirror_dir: analysis/submission_v1/manuscript
+    main_tex: paper/submission_v1/main.tex
+    references_bib: paper/submission_v1/references.bib
+
+  supplement:
+    output_dir: paper/submission_v1
+    markdown_mirror_dir: analysis/submission_v1/supplement
+    supplement_tex: paper/submission_v1/supplement.tex
+
+  citation_policy:
+    use_bibliography_file: paper/submission_v1/references.bib
+    unresolved_citations_fail_validation: true
+    placeholder_citations_allowed: false
+    no_deadline_dates_without_lookup: true
+
+  validation_gates:
+    final_selected_model_remains_locked: true
+    metrics_match_autoresearch_within_tolerance: true
+    no_random_word_level_split: true
+    no_prohibited_exposure_count_variables_in_primary_model: true
+    dfm_exposure_only_comparison_present: true
+    cross_fitted_residualization_described: true
+    permutation_bootstrap_reported: true
+    limitations_section_exists: true
+    claim_evidence_ledger_exists: true
+    all_selected_features_have_interpretations: true
+    all_figures_tables_referenced_exist: true
+    supplement_exists: true
+    reproducibility_commands_exist: true

@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-06 | [submission_v1](2026-05-06_0936_submission_v1.md) | Build submission-ready manuscript package from frozen AutoResearch v1. |
 | 2026-05-06 | [autoresearch_v1](2026-05-06_0859_autoresearch_v1.md) | Add end-to-end AutoResearch v1 publication decision loop. |
 | 2026-05-06 | [phase4_confirmatory_sensitivity](2026-05-06_0658_phase4_confirmatory_sensitivity.md) | Add confirmatory Phase 4 sensitivity and residualized gaze-cost analyses. |
 | 2026-05-06 | [phase3_research_exploration](2026-05-06_0159_phase3_research_exploration.md) | Add controlled Phase 3 research exploration analyses from Label Release v1.1. |

@@ -1,0 +1,16 @@
+# Abstract
+We study whether Danish natural-reading eye movements can distinguish dyslexia-labeled
+and typical/control readers at the participant level. Using the frozen CopCo
+dyslexia-labeled reader package, we evaluate participant-level prediction from
+Danish Foundation Models (DFM) predictability sensitivity and cross-fitted
+residualized gaze-cost profiles. The locked final model is a logistic regression over
+`D3_dfm_residual_gaze_only` features evaluated with leave-one-participant-out
+validation. It obtains ROC-AUC 0.8947, PR-AUC 0.8641, balanced accuracy 0.8421, macro F1 0.8421, Brier score 0.1159, calibration intercept -0.5321, and calibration slope 0.8693 over 57 participants. A DFM exposure-only model
+is weak (ROC-AUC 0.4238, PR-AUC 0.3685), while DFM sensitivity-only and residual gaze
+models are strong, indicating that prediction is driven by participant sensitivity
+rather than text exposure. Robustness checks include 1,000 label permutations
+(p=0.000999), participant bootstrap intervals for ROC-AUC [0.7765, 0.9841] and PR-AUC
+[0.7083, 0.9728], and leave-one-dyslexia-labeled sensitivity. Boundary-opacity
+interactions are retained as secondary interpretability evidence. The study remains
+limited by 57 participants, operational label provenance, and the absence of an
+independent external validation dataset.

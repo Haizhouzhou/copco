@@ -27,6 +27,7 @@ from .release import (
 )
 from .research_exploration import run_research_exploration, validate_research_exploration
 from .slurm import launcher_command
+from .submission import build_submission_package, validate_submission_package
 from .validation import validate_run
 
 
@@ -506,5 +507,45 @@ def validate_paper_package_main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_autoresearch(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def build_submission_package_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build SubmissionSprint v1 manuscript package.")
+    parser.add_argument("--config", default="configs/submission_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--allow-existing-output", action="store_true")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-build-submission-package --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.allow_existing_output:
+        command += " --allow-existing-output"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(
+        build_submission_package(
+            config,
+            output_dir=args.output_dir,
+            repo_root=args.repo_root,
+            allow_existing_output=args.allow_existing_output,
+        )
+    )
+    return 0
+
+
+def validate_submission_package_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate SubmissionSprint v1 manuscript package.")
+    parser.add_argument("--config", default="configs/submission_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_submission_package(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1

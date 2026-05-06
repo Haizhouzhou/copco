@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\small
+\caption{DFM exposure-only and sensitivity/residual gaze comparisons.}
+\label{tab:dfm-exposure-sensitivity}
+\begin{tabular}{llllll}
+\toprule
+analysis & split\_name & feature\_group & model & n\_features & n\_predictions \\
+\midrule
+phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D1\_dfm\_exposure\_only & logistic\_regression & 3 & 57 \\
+phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D2\_dfm\_sensitivity\_only & logistic\_regression & 16 & 57 \\
+phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D3\_dfm\_residual\_gaze\_only & logistic\_regression & 12 & 57 \\
+phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D4\_dfm\_exposure\_plus\_sensitivity & logistic\_regression & 19 & 57 \\
+\bottomrule
+\end{tabular}
+\end{table}

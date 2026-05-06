@@ -1,0 +1,2 @@
+# Participant Influence and Error Analysis
+Participant-level misclassification and high-leverage audits are included in the generated tables and figures.

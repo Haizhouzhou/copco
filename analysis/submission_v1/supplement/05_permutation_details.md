@@ -1,0 +1,2 @@
+# Permutation Details
+The permutation test reuses the frozen AutoResearch v1 output with 1,000 valid label permutations and the standard +1 correction.

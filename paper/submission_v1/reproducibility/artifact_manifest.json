@@ -1,0 +1,13 @@
+{
+  "analysis_dir": "/home/haizhe/copco/analysis/submission_v1",
+  "committed_expected": [
+    "paper/submission_v1",
+    "analysis/submission_v1"
+  ],
+  "not_committed_expected": [
+    "results/submission_v1_*",
+    "large Parquet/model artifacts"
+  ],
+  "paper_dir": "/home/haizhe/copco/paper/submission_v1",
+  "result_dir": "/home/haizhe/copco/results/submission_v1_20260506_0936"
+}

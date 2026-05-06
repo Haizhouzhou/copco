@@ -1,0 +1,2 @@
+# Bootstrap Details
+The bootstrap intervals are participant-level uncertainty summaries for ROC-AUC and PR-AUC.

@@ -1,0 +1,17 @@
+# Methods
+The locked primary model is `D3_dfm_residual_gaze_only`: a standardized
+logistic regression trained and evaluated with leave-one-participant-out validation.
+The prediction unit is the participant, and each fold produces one held-out participant
+prediction.
+
+Cross-fitted residualization is performed inside the held-out participant split
+(Figure (fig:crossfit-schematic)). For each held-out participant, expected gaze
+models are fit using only training participants, then used to predict expected gaze for
+the held-out participant's word rows. Residual gaze costs are aggregated into
+participant-level DFM surprisal and entropy sensitivity slopes. Reader group is never
+used in residualization.
+
+The confirmatory stress tests separate DFM exposure from DFM sensitivity, remove
+exposure-count and raw-speed/global-duration variables, audit text exposure, estimate
+calibration, run permutation and bootstrap uncertainty checks, assess participant
+influence, and summarize coefficient stability. No random word-level split is used.

@@ -1,0 +1,11 @@
+# Features and Labels
+The feature package combines gaze measures, lexical covariates, DFM word-level
+surprisal and entropy, orthographic boundary-opacity proxies, and participant-level
+sensitivity profiles. The DFM features are based on
+`danish-foundation-models/dfm-decoder-open-v0-7b-pt`. Participant labels are
+operational research labels with two groups: dyslexia-labeled and typical/control.
+
+The final model uses only cross-fitted DFM residual gaze-cost features. It excludes
+direct exposure-count variables such as number of words read, number of speeches,
+number of word rows, total word rows, and word-observation count. All selected final
+features are documented in the supplement and in Table (tab:feature-stability).

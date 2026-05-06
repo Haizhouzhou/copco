@@ -1,0 +1,18 @@
+# Introduction
+Eye movements provide a time-resolved behavioral trace of reading. Fixation durations,
+refixations, skipping, and go-past measures respond to lexical, contextual, and reader
+factors, making natural-reading gaze data a useful setting for studying how linguistic
+pressure differs across reader groups [rayner1998eye,duchowski2017eye].
+Danish natural reading is especially relevant because orthography, morphology, and
+vocalic boundary patterns create pressures that are not identical to English-centered
+benchmarks. Prior Danish dyslexia-reader prediction from eye movements has shown that
+reader group can be predicted from gaze behavior, but the interpretability of such
+predictions and the linguistic pressures driving them remain underdeveloped.
+
+Language-model predictability offers a bridge between psycholinguistic reading-time
+theory and modern NLP. The central question in this paper is not only whether
+dyslexia-labeled and typical/control readers can be distinguished, but whether the
+distinction is carried by text exposure, global reading speed, or participant-level
+sensitivity to DFM predictability. We answer this with a frozen confirmatory analysis:
+DFM predictability sensitivity and cross-fitted residualized gaze-cost profiles provide
+the main predictive signal.

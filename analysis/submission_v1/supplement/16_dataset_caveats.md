@@ -1,0 +1,2 @@
+# Dataset Caveats
+The package has 57 participants, operational labels, Danish-only material, and no independent external validation dataset.

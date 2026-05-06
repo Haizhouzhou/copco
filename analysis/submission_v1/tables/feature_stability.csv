@@ -1,0 +1,13 @@
+feature_group,feature,mean_coefficient,sd_coefficient,n_folds,positive_rate,negative_rate,sign_stability,abs_mean_coefficient,feature_family
+D3_dfm_residual_gaze_only,crossfit_total_fixation_residual_dfm_entropy_slope,1.0863153327259223,0.0640564250571306,57,1.0,0.0,1.0,1.0863153327259223,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_first_pass_residual_dfm_entropy_slope,0.9849459368749088,0.0429653100819341,57,1.0,0.0,1.0,0.9849459368749088,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_go_past_residual_dfm_surprisal_slope,0.9176858585613245,0.0496140577142617,57,1.0,0.0,1.0,0.9176858585613245,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_fixation_count_residual_dfm_surprisal_slope,0.6403730628177999,0.0598671528334357,57,1.0,0.0,1.0,0.6403730628177999,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_total_fixation_residual_dfm_surprisal_slope,0.5938273664669652,0.0606321523856735,57,1.0,0.0,1.0,0.5938273664669652,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_ffd_residual_dfm_entropy_slope,-0.5886394508461859,0.068189772129333,57,0.0,1.0,1.0,0.5886394508461859,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_go_past_residual_dfm_entropy_slope,0.196975408707457,0.053498032809715,57,1.0,0.0,1.0,0.196975408707457,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_fixation_count_residual_dfm_entropy_slope,-0.1904188596286581,0.0531604992028435,57,0.0175438596491228,0.9824561403508772,0.9824561403508772,0.1904188596286581,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_skipping_residual_dfm_entropy_slope,0.159582690237401,0.048948681498175,57,1.0,0.0,1.0,0.159582690237401,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_skipping_residual_dfm_surprisal_slope,0.1297920626268186,0.0480631363170152,57,0.9824561403508772,0.0175438596491228,0.9824561403508772,0.1297920626268186,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_ffd_residual_dfm_surprisal_slope,-0.1228834708440301,0.0684274538658593,57,0.0526315789473684,0.9473684210526316,0.9473684210526316,0.1228834708440301,DFM residual sensitivity
+D3_dfm_residual_gaze_only,crossfit_first_pass_residual_dfm_surprisal_slope,0.0911375388657118,0.0459600220163693,57,0.9473684210526316,0.0526315789473684,0.9473684210526316,0.0911375388657118,DFM residual sensitivity

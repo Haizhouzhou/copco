@@ -1,0 +1,2 @@
+brier_score,calibration_intercept,calibration_slope,misclassified_participants,high_leverage_participants,calibration_bins,mean_predicted,observed_rate
+0.115941634094159,-0.5321293912845885,0.8693048814460835,8,6,5,0.3923969364987124,0.3333333333333333
