@@ -17,6 +17,10 @@ from .lm_features import run_lm_features
 from .manuscript_audit import run_manuscript_audit, validate_manuscript_audit
 from .mixed_effects import fit_mixed_effects
 from .modeling import run_models
+from .official_eyebench_alignment import (
+    run_official_eyebench_alignment,
+    validate_official_eyebench_alignment,
+)
 from .phase4_confirmatory import run_phase4_confirmatory, validate_phase4_confirmatory
 from .release import (
     build_modeling_tables,
@@ -619,5 +623,35 @@ def validate_benchmark_bridge_main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_benchmark_bridge(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_official_eyebench_alignment_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run OfficialEyeBenchAlignment v1.")
+    parser.add_argument("--config", default="configs/official_eyebench_alignment_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-official-eyebench-alignment --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_official_eyebench_alignment(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_official_eyebench_alignment_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate OfficialEyeBenchAlignment v1 outputs.")
+    parser.add_argument("--config", default="configs/official_eyebench_alignment_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_official_eyebench_alignment(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1
