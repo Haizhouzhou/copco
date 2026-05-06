@@ -1,0 +1,56 @@
+# DFM Feature Group Dictionary
+
+Phase 4 separates text-level DFM exposure from participant-level DFM sensitivity. Exposure-only groups are comparison analyses, not the preferred publication model.
+
+| feature_group | feature_name | feature_family | could_encode_text_assignment | allowed_in_primary_publication_model | sensitivity_only |
+| --- | --- | --- | --- | --- | --- |
+| D1_dfm_exposure_only | mean_dfm_surprisal_exposure | text_exposure | True | False | False |
+| D1_dfm_exposure_only | mean_dfm_entropy_exposure | text_exposure | True | False | False |
+| D1_dfm_exposure_only | lm_missing_rate_phase3 | text_exposure | True | False | False |
+| D2_dfm_sensitivity_only | surprisal_sensitivity | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | entropy_sensitivity | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | surprisal_sensitivity_phase3 | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | entropy_sensitivity_phase3 | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_ffd_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_ffd_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_first_pass_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_first_pass_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_go_past_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_go_past_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_total_fixation_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_total_fixation_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_skipping_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_skipping_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_fixation_count_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D2_dfm_sensitivity_only | crossfit_fixation_count_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_ffd_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_ffd_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_first_pass_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_first_pass_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_go_past_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_go_past_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_total_fixation_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_total_fixation_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_skipping_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_skipping_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_fixation_count_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D3_dfm_residual_gaze_only | crossfit_fixation_count_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | True | True |
+| D4_dfm_exposure_plus_sensitivity | mean_dfm_surprisal_exposure | text_exposure | True | False | False |
+| D4_dfm_exposure_plus_sensitivity | mean_dfm_entropy_exposure | text_exposure | True | False | False |
+| D4_dfm_exposure_plus_sensitivity | lm_missing_rate_phase3 | text_exposure | True | False | False |
+| D4_dfm_exposure_plus_sensitivity | surprisal_sensitivity | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | entropy_sensitivity | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | surprisal_sensitivity_phase3 | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | entropy_sensitivity_phase3 | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_ffd_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_ffd_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_first_pass_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_first_pass_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_go_past_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_go_past_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_total_fixation_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_total_fixation_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_skipping_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_skipping_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_fixation_count_residual_dfm_surprisal_slope | dfm_sensitivity_or_exposure | False | False | False |
+| D4_dfm_exposure_plus_sensitivity | crossfit_fixation_count_residual_dfm_entropy_slope | dfm_sensitivity_or_exposure | False | False | False |

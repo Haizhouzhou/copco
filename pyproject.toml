@@ -72,6 +72,8 @@ copco-validate-label-release = "copco_eye_bench.cli:validate_label_release_main"
 copco-freeze-prepared-dataset = "copco_eye_bench.cli:freeze_prepared_dataset_main"
 copco-run-research-exploration = "copco_eye_bench.cli:run_research_exploration_main"
 copco-validate-research-exploration = "copco_eye_bench.cli:validate_research_exploration_main"
+copco-run-phase4-confirmatory = "copco_eye_bench.cli:run_phase4_confirmatory_main"
+copco-validate-phase4-confirmatory = "copco_eye_bench.cli:validate_phase4_confirmatory_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

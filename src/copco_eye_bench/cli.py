@@ -13,6 +13,7 @@ from .label_release import build_label_release, freeze_prepared_dataset, validat
 from .lm_features import run_lm_features
 from .mixed_effects import fit_mixed_effects
 from .modeling import run_models
+from .phase4_confirmatory import run_phase4_confirmatory, validate_phase4_confirmatory
 from .release import (
     build_modeling_tables,
     finalize_feature_release,
@@ -382,5 +383,35 @@ def validate_research_exploration_main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_research_exploration(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_phase4_confirmatory_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run Phase 4 confirmatory sensitivity analysis.")
+    parser.add_argument("--config", default="configs/phase4_confirmatory_sensitivity_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-phase4-confirmatory --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_phase4_confirmatory(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_phase4_confirmatory_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate Phase 4 confirmatory analysis outputs.")
+    parser.add_argument("--config", default="configs/phase4_confirmatory_sensitivity_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_phase4_confirmatory(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1

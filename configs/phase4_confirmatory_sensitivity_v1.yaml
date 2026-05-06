@@ -1,0 +1,65 @@
+run:
+  name: phase4_confirmatory_sensitivity_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+phase4_confirmatory:
+  version: v1
+  label_release_dir: results/label_release_v1_1_20260506_0041
+  prepared_dataset_dir: results/label_release_v1_1_20260506_0041/prepared_dataset
+  phase3_dir: results/research_exploration_v1_20260506_0149
+  phase3_analysis_dir: results/research_exploration_v1_20260506_0149/analysis/research_exploration
+  output_layout:
+    analysis: analysis/phase4_confirmatory
+  repo_analysis_dir: analysis/phase4_confirmatory
+  deterministic_seed: 41
+  no_new_core_labels: true
+  no_broad_exploratory_feature_expansion: true
+  use_prepared_dataset_only: true
+  forbid_random_word_level_split: true
+  parser_status_expected: surface_heuristic_fallback
+  expected_row_counts:
+    word_level: 335203
+    participant_level: 57
+    participant_labels: 57
+    participant_sensitivity_profiles_phase3: 57
+  modeling:
+    participant_prediction_models:
+      - logistic_regression
+      - linear_svm
+    permutation_count: 1000
+    bootstrap_count: 2000
+    mixed_effects_max_rows: 335203
+    mixed_effects_bootstrap_count: 0
+  leakage_policy:
+    excluded_primary_prediction_features:
+      - n_words_read
+      - n_speeches
+      - n_word_rows
+      - word_observation_count
+      - total_word_rows
+      - participant_id
+      - reader_group
+      - reader_group_binary
+      - dyslexia_labeled
+      - group_label
+    exposure_only_features:
+      - mean_word_length_exposure
+      - mean_log_frequency_exposure
+      - mean_sentence_length_exposure
+      - mean_dfm_surprisal_exposure
+      - mean_dfm_entropy_exposure
+      - mean_boundary_opacity_exposure
+      - vv_boundary_exposure_rate
+      - lm_missing_rate_phase3
+      - embedding_missing_rate_phase3
+    legal_split_names:
+      - leave_one_participant_out
+      - participant_grouped_kfold
+      - sensitivity_exclude_uncertain_labels
+      - text_balanced_sensitivity_lopo
+  slurm:
+    cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+    cpu_candidate: >-
+      --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+      --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00
