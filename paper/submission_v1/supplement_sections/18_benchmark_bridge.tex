@@ -1,0 +1,15 @@
+\section{BenchmarkBridge v1}
+BenchmarkBridge v1 evaluated the frozen D3 DFM residual gaze-profile model under
+internal EyeBench-style split regimes. The run produced participant-by-speech sample
+features, deterministic unseen-reader, unseen-text, unseen-reader-plus-text,
+text-balanced unseen-reader, leave-one-speech-out, and participant-grouped folds, and
+split-specific residualization diagnostics. Held-out reader rows and held-out text rows
+were not used for residual fitting in the regimes where they were prohibited, and
+reader group was never a residualization predictor.
+
+In reader-aggregated CopCo TYP evaluation, D3 reached AUROC 0.8961 and balanced
+accuracy 0.8158 for Unseen Reader, and AUROC 0.8542 and balanced accuracy 0.7458 for
+Unseen Reader + Text. Exact official EyeBench folds were not available locally, so
+these results are internal benchmark-relative comparisons rather than official
+leaderboard results. CopCo RCS was run as an auxiliary target and did not show useful
+signal for the main paper story (best reader-aggregated $R^2=0.0116$).

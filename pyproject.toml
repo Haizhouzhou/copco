@@ -82,6 +82,8 @@ copco-build-submission-package = "copco_eye_bench.cli:build_submission_package_m
 copco-validate-submission-package = "copco_eye_bench.cli:validate_submission_package_main"
 copco-run-manuscript-audit = "copco_eye_bench.cli:run_manuscript_audit_main"
 copco-validate-manuscript-audit = "copco_eye_bench.cli:validate_manuscript_audit_main"
+copco-run-benchmark-bridge = "copco_eye_bench.cli:run_benchmark_bridge_main"
+copco-validate-benchmark-bridge = "copco_eye_bench.cli:validate_benchmark_bridge_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

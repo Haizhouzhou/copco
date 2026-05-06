@@ -1,0 +1,11 @@
+model,unseen_reader_balanced_accuracy,unseen_text_balanced_accuracy,unseen_reader_text_balanced_accuracy,average_balanced_accuracy,unseen_reader_AUROC,unseen_text_AUROC,unseen_reader_text_AUROC,average_AUROC,evaluation_level,official_mode,notes
+D3_dfm_residual_gaze_only,0.8157894736842105,0.7443850267379679,0.7458333333333333,0.7686692779185039,0.8961218836565096,0.8284880894506563,0.8541666666666666,0.8595922132579442,reader_aggregated,False,BenchmarkBridge internal EyeBench-style split.
+Chance,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,EyeBench reported central value,True,Analytic chance reference.
+Reading Speed,,,,,,,,,EyeBench reported central value,True,Central value not present in frozen BenchmarkBridge prompt/config.
+Logistic Regression,,,,,,,,,EyeBench reported central value,True,Central value not present in frozen BenchmarkBridge prompt/config.
+SVM,,,,,,,,,EyeBench reported central value,True,Central value not present in frozen BenchmarkBridge prompt/config.
+Random Forest,,,,,,,,,EyeBench reported central value,True,Central value not present in frozen BenchmarkBridge prompt/config.
+AhnCNN,0.777,,0.656,0.7165,0.853,,0.749,0.8009999999999999,EyeBench reported central value,True,Gate central values supplied in BenchmarkBridge v1 request.
+BEyeLSTM,,,,,,,,,EyeBench reported central value,True,Central value not present in frozen BenchmarkBridge prompt/config.
+RoBERTEye-W,,,,,,,,,EyeBench reported central value,True,Central value not present in frozen BenchmarkBridge prompt/config.
+best_reported_baseline,0.777,,0.656,0.7165,0.853,,0.749,0.8009999999999999,EyeBench reported central value,True,Gate central values supplied in BenchmarkBridge v1 request.

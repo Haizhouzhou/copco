@@ -10,6 +10,7 @@ from typing import Any
 
 from .config import get_nested, load_config, timestamped_output_dir
 from .autoresearch import build_paper_package, run_autoresearch, validate_autoresearch
+from .benchmark_bridge import run_benchmark_bridge, validate_benchmark_bridge
 from .features import build_feature_tables
 from .label_release import build_label_release, freeze_prepared_dataset, validate_label_release
 from .lm_features import run_lm_features
@@ -588,5 +589,35 @@ def validate_manuscript_audit_main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_manuscript_audit(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_benchmark_bridge_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run BenchmarkBridge v1 EyeBench-style evaluation.")
+    parser.add_argument("--config", default="configs/benchmark_bridge_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-benchmark-bridge --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_benchmark_bridge(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_benchmark_bridge_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate BenchmarkBridge v1 outputs.")
+    parser.add_argument("--config", default="configs/benchmark_bridge_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_benchmark_bridge(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1
