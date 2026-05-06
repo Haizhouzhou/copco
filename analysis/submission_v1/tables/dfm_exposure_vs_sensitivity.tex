@@ -1,16 +1,18 @@
 \begin{table}[t]
 \centering
-\small
+\scriptsize
 \caption{DFM exposure-only and sensitivity/residual gaze comparisons.}
 \label{tab:dfm-exposure-sensitivity}
-\begin{tabular}{llllll}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllllll}
 \toprule
-analysis & split\_name & feature\_group & model & n\_features & n\_predictions \\
+feature\_group & n\_features & n\_predictions & roc\_auc & pr\_auc & balanced\_accuracy & brier\_score \\
 \midrule
-phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D1\_dfm\_exposure\_only & logistic\_regression & 3 & 57 \\
-phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D2\_dfm\_sensitivity\_only & logistic\_regression & 16 & 57 \\
-phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D3\_dfm\_residual\_gaze\_only & logistic\_regression & 12 & 57 \\
-phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D4\_dfm\_exposure\_plus\_sensitivity & logistic\_regression & 19 & 57 \\
+D1\_dfm\_exposure\_only & 3 & 57 & 0.4238 & 0.3685 & 0.4474 & 0.2684 \\
+D2\_dfm\_sensitivity\_only & 16 & 57 & 0.8892 & 0.8611 & 0.8421 & 0.1130 \\
+D3\_dfm\_residual\_gaze\_only & 12 & 57 & 0.8947 & 0.8641 & 0.8421 & 0.1159 \\
+D4\_dfm\_exposure\_plus\_sensitivity & 19 & 57 & 0.8726 & 0.8561 & 0.8158 & 0.1206 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}

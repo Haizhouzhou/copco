@@ -1,19 +1,24 @@
 \section{Analysis and Interpretation}
-DFM sensitivity matters because it captures how participants' residual gaze costs vary
-with contextual predictability after lexical and text-level covariates are controlled
-within the cross-fitted residualization pipeline. The exposure-only comparison rejects
-the simpler explanation that participants are separated merely by reading different
-text. The primary model also excludes direct exposure-count variables, and the
-raw-speed/global-duration family is not the selected feature family.
+The main interpretation is that participant groups differ in how residual gaze costs
+respond to contextual predictability. Because residual gaze features are computed from
+held-out participant rows after residual models are fit only on training participants,
+the profile is not a direct copy of the label or a random word-level split artifact.
+The exposure-only comparison rejects the simpler explanation that participants are
+separated merely by reading different text. The primary model also excludes direct
+exposure-count variables, and raw-speed/global-duration features are not the selected
+feature family.
 
-Focused reader-group interactions provide interpretability rather than the central
-claim. DFM surprisal interactions provide the strongest explanatory support, word-length
+Feature stability supports this interpretation: the stable features are DFM residual
+gaze slopes rather than direct row-count or speech-count variables
+(Table~\ref{tab:feature-stability}, Figure~\ref{fig:feature-stability}). Focused
+reader-group interactions provide interpretability rather than the central claim. DFM
+surprisal interactions provide the strongest explanatory support, word-length
 interactions provide secondary support, and previous-boundary opacity is retained as a
 secondary interpretability feature (Table~\ref{tab:interaction-synthesis},
 Figure~\ref{fig:interaction-summary}). Text-exposure audits are shown in
-Figure~\ref{fig:text-exposure-audit}. The claim ledger in Table~\ref{tab:claims-evidence}
-defines which results are main, secondary, appendix-only, deferred, or dropped.
-
+Figure~\ref{fig:text-exposure-audit}. The claim ledger in
+Table~\ref{tab:claims-evidence} defines which results are main, secondary,
+appendix-only, deferred, or dropped.
 
 \input{tables/feature_stability.tex}
 \input{tables/interaction_synthesis.tex}
@@ -21,18 +26,18 @@ defines which results are main, secondary, appendix-only, deferred, or dropped.
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/cross_fitted_residualization_schematic.png}
-\caption{Cross-fitted residualization inside the participant-held-out split.}
+\caption{Cross-fitted residualization protects the held-out participant in each LOPO fold.}
 \label{fig:crossfit-schematic}
 \end{figure}
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/interaction_summary.png}
-\caption{Focused controlled interaction estimates.}
+\caption{Focused reader-group interactions retained for interpretation, not model selection.}
 \label{fig:interaction-summary}
 \end{figure}
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/text_exposure_audit.png}
-\caption{Text exposure and prediction audit.}
+\caption{Text-exposure audit for prediction scores and participant-level errors.}
 \label{fig:text-exposure-audit}
 \end{figure}

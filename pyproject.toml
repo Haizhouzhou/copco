@@ -80,6 +80,8 @@ copco-build-paper-package = "copco_eye_bench.cli:build_paper_package_main"
 copco-validate-paper-package = "copco_eye_bench.cli:validate_paper_package_main"
 copco-build-submission-package = "copco_eye_bench.cli:build_submission_package_main"
 copco-validate-submission-package = "copco_eye_bench.cli:validate_submission_package_main"
+copco-run-manuscript-audit = "copco_eye_bench.cli:run_manuscript_audit_main"
+copco-validate-manuscript-audit = "copco_eye_bench.cli:validate_manuscript_audit_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

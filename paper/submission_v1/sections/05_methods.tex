@@ -1,17 +1,32 @@
 \section{Methods}
-The locked primary model is \texttt{D3\_dfm\_residual\_gaze\_only}: a standardized
-logistic regression trained and evaluated with leave-one-participant-out validation.
-The prediction unit is the participant, and each fold produces one held-out participant
-prediction.
+The prediction unit is the participant because the target label is participant-level.
+Word-level rows provide repeated observations for estimating gaze profiles, but they
+are not independent prediction targets. The primary validation split is
+leave-one-participant-out (LOPO): each fold trains on 56 participants and predicts the
+single held-out participant, producing 57 predictions and zero skipped folds.
+
+DFM base-model features are extracted at the word level using surprisal and entropy as
+contextual predictability measures. The locked primary model is
+\texttt{D3\_dfm\_residual\_gaze\_only}: a standardized logistic regression over
+participant-level residual gaze sensitivity features. No random word-level split is
+used, and no deep model or broad feature expansion is introduced.
 
 Cross-fitted residualization is performed inside the held-out participant split
-(Figure~\ref{fig:crossfit-schematic}). For each held-out participant, expected gaze
-models are fit using only training participants, then used to predict expected gaze for
-the held-out participant's word rows. Residual gaze costs are aggregated into
-participant-level DFM surprisal and entropy sensitivity slopes. Reader group is never
-used in residualization.
+(Figure~\ref{fig:crossfit-schematic}). For each LOPO fold, expected gaze models are fit
+using only the training participants. Predictors include lexical, positional, DFM, text,
+boundary-opacity, and quality covariates available in the frozen package. Those models
+predict expected gaze for the held-out participant's word rows, and held-out residuals
+are aggregated into participant-level DFM surprisal and entropy sensitivity slopes.
+Reader group is never used in residualization, and the held-out participant's rows are
+never used to fit that fold's residual model.
 
-The confirmatory stress tests separate DFM exposure from DFM sensitivity, remove
-exposure-count and raw-speed/global-duration variables, audit text exposure, estimate
-calibration, run permutation and bootstrap uncertainty checks, assess participant
-influence, and summarize coefficient stability. No random word-level split is used.
+The confirmatory comparisons separate DFM exposure from DFM sensitivity. Exposure-only
+features summarize the text a participant saw; sensitivity features summarize how a
+participant's residual gaze costs vary with DFM predictability. The primary model also
+excludes direct exposure-count variables, including number of words read, number of
+speeches, number of word rows, total word rows, and word-observation count. Ablations
+remove exposure-count variables and raw-speed/global-duration features. Robustness is
+evaluated with label permutation, participant bootstrap intervals, calibration
+statistics, influence analysis, and coefficient sign stability. Focused interaction
+models are used only for interpretation of reader-group differences involving word
+length, DFM surprisal, and previous-boundary opacity.

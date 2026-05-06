@@ -1,13 +1,15 @@
 \begin{table}[t]
 \centering
-\small
+\scriptsize
 \caption{Locked final participant-level model metrics.}
 \label{tab:final-model-metrics}
-\begin{tabular}{llllll}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllllllll}
 \toprule
-analysis & split\_name & feature\_group & model & n\_features & n\_predictions \\
+feature\_group & model & n\_predictions & skipped\_folds & roc\_auc & pr\_auc & balanced\_accuracy & macro\_f1 & brier\_score \\
 \midrule
-phase4\_confirmatory\_participant\_prediction & leave\_one\_participant\_out & D3\_dfm\_residual\_gaze\_only & logistic\_regression & 12 & 57 \\
+D3\_dfm\_residual\_gaze\_only & logistic\_regression & 57 & 0 & 0.8947 & 0.8641 & 0.8421 & 0.8421 & 0.1159 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}

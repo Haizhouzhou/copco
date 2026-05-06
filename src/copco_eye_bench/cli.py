@@ -13,6 +13,7 @@ from .autoresearch import build_paper_package, run_autoresearch, validate_autore
 from .features import build_feature_tables
 from .label_release import build_label_release, freeze_prepared_dataset, validate_label_release
 from .lm_features import run_lm_features
+from .manuscript_audit import run_manuscript_audit, validate_manuscript_audit
 from .mixed_effects import fit_mixed_effects
 from .modeling import run_models
 from .phase4_confirmatory import run_phase4_confirmatory, validate_phase4_confirmatory
@@ -547,5 +548,45 @@ def validate_submission_package_main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_submission_package(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_manuscript_audit_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run Final Manuscript Audit v1.")
+    parser.add_argument("--config", default="configs/final_manuscript_audit_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--allow-existing-output", action="store_true")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-manuscript-audit --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.allow_existing_output:
+        command += " --allow-existing-output"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(
+        run_manuscript_audit(
+            config,
+            output_dir=args.output_dir,
+            repo_root=args.repo_root,
+            allow_existing_output=args.allow_existing_output,
+        )
+    )
+    return 0
+
+
+def validate_manuscript_audit_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate Final Manuscript Audit v1 outputs.")
+    parser.add_argument("--config", default="configs/final_manuscript_audit_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_manuscript_audit(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1

@@ -1,0 +1,91 @@
+run:
+  name: final_manuscript_audit_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+manuscript_audit:
+  version: v1
+  frozen_inputs:
+    submission_result_dir: results/submission_v1_20260506_0936
+    paper_dir: paper/submission_v1
+    analysis_dir: analysis/submission_v1
+    claim_ledger_csv: analysis/submission_v1/claim_evidence_ledger.csv
+    claim_ledger_md: analysis/submission_v1/claim_evidence_ledger.md
+    references_bib: paper/submission_v1/references.bib
+
+  output_layout:
+    audit_analysis_dir: analysis/final_manuscript_audit_v1
+    result_pattern: results/final_manuscript_audit_v1_<timestamp>
+    compiled_dir: compiled
+
+  frozen_title: Predictability-Sensitive Gaze Profiles for Dyslexia-Labeled Reader Prediction in Danish Natural Reading
+  frozen_main_claim: Participant-level DFM predictability sensitivity and cross-fitted residualized gaze-cost profiles distinguish dyslexia-labeled and typical/control readers in Danish natural reading.
+
+  selected_model:
+    feature_group: D3_dfm_residual_gaze_only
+    model: logistic_regression
+    split_name: leave_one_participant_out
+    prediction_unit: participant
+    n_predictions: 57
+    skipped_folds: 0
+
+  expected_metrics:
+    roc_auc: 0.8947368421
+    pr_auc: 0.8640879081
+    balanced_accuracy: 0.8421052632
+    macro_f1: 0.8421052632
+    brier_score: 0.1159416341
+    calibration_intercept: -0.5321293913
+    calibration_slope: 0.8693048814
+    tolerance: 0.0005
+
+  expected_diagnostics:
+    permutation_count: 1000
+    permutation_p_value: 0.000999
+    bootstrap_roc_auc_ci: [0.7765, 0.9841]
+    bootstrap_pr_auc_ci: [0.7083, 0.9728]
+    dfm_auc:
+      D1_dfm_exposure_only: 0.4238
+      D2_dfm_sensitivity_only: 0.8892
+      D3_dfm_residual_gaze_only: 0.8947
+      D4_dfm_exposure_plus_sensitivity: 0.8726
+
+  required_contributions:
+    - A prepared Danish natural-reading gaze, linguistic, LM, and label pipeline for dyslexia-labeled reader analysis.
+    - A cross-fitted residualized participant sensitivity-profile method.
+    - Evidence that DFM predictability sensitivity, not DFM exposure, drives strong participant-level prediction.
+    - Secondary evidence that reader-group differences involve word length, DFM surprisal, and previous-boundary opacity.
+
+  prohibited_primary_framing:
+    - random word-level prediction
+    - standalone segmentation main-effect framing
+    - parser-syntax claims
+    - clinical screening
+    - clinical diagnosis
+    - medical utility
+
+  limitations_required:
+    - small participant count
+    - operational label provenance
+    - no external dataset
+    - Danish-only generalization
+    - text/speech exposure imbalance
+    - LM alignment warnings
+    - segmentation labels as orthographic proxies
+    - parser fallback
+    - Gemma pending
+    - calibration limitations
+    - possible participant influence
+
+  validation_gates:
+    metrics_match_frozen_values: true
+    claim_ledger_complete: true
+    manuscript_claims_supported: true
+    tables_and_figures_exist: true
+    citations_resolve: true
+    limitations_cover_required_items: true
+    no_new_scientific_result: true
+    no_random_word_level_split_as_result: true
+    no_segmentation_main_effect_as_central_claim: true
+    no_parser_syntax_central_claim: true
+    latex_compile_or_source_validation: true

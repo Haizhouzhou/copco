@@ -1,81 +1,77 @@
 \section{Results}
-The final participant-level model obtains ROC-AUC 0.8947, PR-AUC 0.8641, balanced accuracy 0.8421, macro F1 0.8421, Brier score 0.1159, calibration intercept -0.5321, and calibration slope 0.8693 with 57 predictions and zero
+The locked participant-level model obtains ROC-AUC 0.8947, PR-AUC 0.8641, balanced accuracy 0.8421, macro F1 0.8421, Brier score 0.1159, calibration intercept -0.5321, and calibration slope 0.8693 with 57 predictions and zero
 skipped folds (Table~\ref{tab:final-model-metrics}, Figure~\ref{fig:final-roc},
-Figure~\ref{fig:final-pr}). The DFM exposure-only model is weak, while sensitivity
-and residual gaze models are strong (Table~\ref{tab:dfm-exposure-sensitivity},
-Figure~\ref{fig:dfm-exposure-sensitivity}). This supports the interpretation that
-the signal reflects participant-level predictability sensitivity rather than the text
-assigned to a participant.
+Figure~\ref{fig:final-pr}). The selected feature group is
+\texttt{D3\_dfm\_residual\_gaze\_only}, and the model is a standardized logistic
+regression evaluated with LOPO.
 
-The permutation test uses 1,000 valid permutations and gives $p=0.000999$.
-Bootstrap intervals are [0.7765, 0.9841] for ROC-AUC and [0.7083, 0.9728] for PR-AUC
-(Table~\ref{tab:robustness}, Figure~\ref{fig:permutation-null},
-Figure~\ref{fig:bootstrap-auc}). Calibration and influence summaries are reported in
-Table~\ref{tab:calibration-influence}, Figure~\ref{fig:calibration}, and
-Figure~\ref{fig:participant-error}. Feature stability is shown in
-Table~\ref{tab:feature-stability} and Figure~\ref{fig:feature-stability}.
+The DFM exposure-versus-sensitivity comparison is the key ablation
+(Table~\ref{tab:dfm-exposure-sensitivity}, Figure~\ref{fig:dfm-exposure-sensitivity}).
+DFM exposure-only is weak (D1 ROC-AUC 0.4238), while DFM sensitivity-only is strong
+(D2 ROC-AUC 0.8892). The residual gaze-only model is strongest among the frozen
+confirmatory candidates (D3 ROC-AUC 0.8947), and adding exposure variables does not
+improve it (D4 ROC-AUC 0.8726). This ordering supports the interpretation that
+participant-level predictability sensitivity, not text exposure, drives the result.
 
+Robustness checks support the locked model. The permutation test uses 1,000 valid
+permutations and gives $p=0.000999$. Bootstrap intervals are [0.7765, 0.9841] for
+ROC-AUC and [0.7083, 0.9728] for PR-AUC (Table~\ref{tab:robustness},
+Figure~\ref{fig:permutation-null}, Figure~\ref{fig:bootstrap-auc}). Feature
+stability is summarized in Table~\ref{tab:feature-stability} and
+Figure~\ref{fig:feature-stability}. Calibration and participant influence are
+reported in Table~\ref{tab:calibration-influence}, Figure~\ref{fig:calibration},
+and Figure~\ref{fig:participant-error}.
 
 \input{tables/final_model_metrics.tex}
-
 \input{tables/dfm_exposure_vs_sensitivity.tex}
-
 \input{tables/robustness_tests.tex}
-
 \input{tables/calibration_influence_summary.tex}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/final_roc.png}
-\caption{Final participant-level ROC curve.}
+\caption{Participant-level ROC curve for the locked D3 model.}
 \label{fig:final-roc}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/final_pr.png}
-\caption{Final participant-level precision-recall curve.}
+\caption{Participant-level precision-recall curve for the locked D3 model.}
 \label{fig:final-pr}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/dfm_exposure_vs_sensitivity.png}
-\caption{DFM exposure-only versus DFM sensitivity and residual gaze models.}
+\caption{DFM exposure-only is weak, while DFM sensitivity and residual gaze models are strong.}
 \label{fig:dfm-exposure-sensitivity}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/permutation_null.png}
-\caption{Permutation null distribution for the locked final model.}
+\caption{Permutation null distribution with the observed AUC marked.}
 \label{fig:permutation-null}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/bootstrap_auc.png}
-\caption{Bootstrap uncertainty for the final model AUC estimates.}
+\caption{Participant bootstrap uncertainty for ROC-AUC and PR-AUC.}
 \label{fig:bootstrap-auc}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/calibration.png}
-\caption{Calibration summary for the final participant-level predictions.}
+\caption{Calibration summary for held-out participant predictions.}
 \label{fig:calibration}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/participant_error.png}
-\caption{Participant-level prediction error and influence audit.}
+\caption{Participant-level error and influence audit.}
 \label{fig:participant-error}
 \end{figure}
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/feature_stability.png}
-\caption{Coefficient stability for DFM residual gaze features.}
+\caption{Coefficient stability for the cross-fitted DFM residual gaze features.}
 \label{fig:feature-stability}
 \end{figure}
