@@ -1,0 +1,123 @@
+run:
+  name: autoresearch_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+autoresearch:
+  version: v1
+  frozen_inputs:
+    feature_release_dir: results/feature_release_v1_20260505_2155
+    label_release_dir: results/label_release_v1_1_20260506_0041
+    phase3_dir: results/research_exploration_v1_20260506_0149
+    phase4_dir: results/phase4_confirmatory_sensitivity_v1_20260506_0715
+  output_layout:
+    analysis: analysis/autoresearch_v1
+    tables: analysis/autoresearch_v1/tables
+    figures: analysis/autoresearch_v1/figures
+    manuscript: analysis/autoresearch_v1/manuscript
+    reproducibility: analysis/autoresearch_v1/reproducibility
+  repo_analysis_dir: analysis/autoresearch_v1
+  deterministic_seed: 83
+  no_new_core_labels: true
+  no_llm_generated_labels: true
+  no_broad_exploratory_feature_expansion: true
+  allow_rebuild_frozen_inputs: false
+  use_existing_phase4_heavy_results: true
+
+  primary_model:
+    feature_group: D3_dfm_residual_gaze_only
+    model: logistic_regression
+    split_name: leave_one_participant_out
+    validation: LOPO
+
+  allowed_feature_groups:
+    - D1_dfm_exposure_only
+    - D2_dfm_sensitivity_only
+    - D3_dfm_residual_gaze_only
+    - D4_dfm_exposure_plus_sensitivity
+    - G_all_allowed_non_exposure
+    - H_all_except_dfm
+    - I_all_except_segmentation
+    - J_all_except_raw_speed
+    - K_all_except_exposure_variables
+
+  allowed_feature_group_aliases:
+    all_allowed_non_exposure: G_all_allowed_non_exposure
+    all_except_dfm: H_all_except_dfm
+    all_except_segmentation: I_all_except_segmentation
+    all_except_raw_speed: J_all_except_raw_speed
+    all_except_exposure_variables: K_all_except_exposure_variables
+
+  prohibited_variables:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - reader_group
+    - reader_group_binary
+    - dyslexia_labeled
+    - group_label
+
+  split_policy:
+    primary: leave_one_participant_out
+    secondary: participant_grouped_kfold
+    forbid_random_word_level_split: true
+    require_one_prediction_per_participant: true
+
+  robustness:
+    permutations_default: 5000
+    permutations_minimum: 1000
+    bootstrap_default: 2000
+    bootstrap_minimum: 1000
+    influence_analysis_enabled: true
+    calibration_enabled: true
+    feature_stability_enabled: true
+    text_exposure_sensitivity_enabled: true
+
+  refinement_loop:
+    max_auc_negligible_gain: 0.01
+    minimum_interpretability_score: 0.70
+    candidates:
+      - D3_dfm_residual_gaze_only
+      - D2_dfm_sensitivity_only
+      - D3_without_raw_speed
+      - D3_stable_features_only
+      - D3_calibrated_if_brier_improves
+      - D3_inner_fold_regularization_if_supported
+
+  decision_gates:
+    roc_auc_bootstrap_lower_bound_min: 0.70
+    permutation_p_value_max: 0.01
+    dfm_sensitivity_must_outperform_exposure_only: true
+    primary_result_must_not_depend_on_exposure_counts: true
+    one_prediction_per_participant_required: true
+    no_leakage_validation_errors: true
+    require_stable_feature_interpretation: true
+
+  report_generation:
+    tables: true
+    figures: true
+    manuscript_skeleton: true
+    reviewer_risk_report: true
+    reproducibility_package: true
+    final_decision_report: true
+
+  expected:
+    word_level_rows: 335203
+    sentence_level_rows: 1986
+    participant_level_rows: 57
+    dyslexia_labeled: 19
+    typical_control: 38
+    parser_status: surface_heuristic_fallback
+    segmentation_label_version: segmentation_orthographic_v1
+    primary_roc_auc: 0.8947368421
+    primary_pr_auc: 0.8640879081
+    metric_tolerance: 0.0005
+
+  slurm:
+    cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+    cpu_candidate: >-
+      --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+      --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00

@@ -1,0 +1,5 @@
+item,value,note
+label_release_dir,/home/haizhe/copco/results/label_release_v1_1_20260506_0041,
+participant_labels,57,complete
+split_policy,participant-grouped only,no random word split
+segmentation_labels,orthographic boundary-opacity proxies,deterministic

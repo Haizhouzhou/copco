@@ -74,6 +74,10 @@ copco-run-research-exploration = "copco_eye_bench.cli:run_research_exploration_m
 copco-validate-research-exploration = "copco_eye_bench.cli:validate_research_exploration_main"
 copco-run-phase4-confirmatory = "copco_eye_bench.cli:run_phase4_confirmatory_main"
 copco-validate-phase4-confirmatory = "copco_eye_bench.cli:validate_phase4_confirmatory_main"
+copco-run-autoresearch = "copco_eye_bench.cli:run_autoresearch_main"
+copco-validate-autoresearch = "copco_eye_bench.cli:validate_autoresearch_main"
+copco-build-paper-package = "copco_eye_bench.cli:build_paper_package_main"
+copco-validate-paper-package = "copco_eye_bench.cli:validate_paper_package_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

@@ -1,0 +1,3 @@
+phase,feature_group,roc_auc,pr_auc,note
+Phase 3 exploration,D_dfm_exposure_and_sensitivity,0.9058171745152356,0.8685918364191791,exploratory controlled result
+Phase 4 confirmatory,D3_dfm_residual_gaze_only,0.8947368421052632,0.8640879080588109,cross-fitted residualized DFM gaze-cost sensitivity

@@ -1,0 +1,8 @@
+# Final Claim Support Table
+
+| claim | category | evidence |
+| --- | --- | --- |
+| DFM residual gaze sensitivity distinguishes participant groups | main_paper_result | LOPO ROC-AUC 0.8947, permutation p=0.0010 |
+| DFM exposure is not the explanation | main_paper_result | D1 exposure-only below chance while D2/D3 strong |
+| Boundary opacity is interpretability support | secondary_result | 8 controlled focus interactions survived |
+| Standalone segmentation main effect | drop | not supported as the main story |

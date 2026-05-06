@@ -1,0 +1,9 @@
+# Segmentation Distribution Table
+
+| boundary_type | count | note |
+| --- | --- | --- |
+| C#C | 14055 | orthographic proxy |
+| V#C | 6412 | orthographic proxy |
+| C#V | 6280 | orthographic proxy |
+| unknown | 2833 | orthographic proxy |
+| V#V | 2406 | orthographic proxy |

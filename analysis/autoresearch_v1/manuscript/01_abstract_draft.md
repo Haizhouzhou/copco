@@ -1,0 +1,3 @@
+# Abstract Draft
+
+We analyze Danish natural-reading eye-tracking from dyslexia-labeled and typical/control readers using frozen gaze, linguistic, segmentation, and DFM language-model features. A cross-fitted residualized participant profile based on DFM predictability sensitivity distinguishes groups with LOPO ROC-AUC 0.8947 and PR-AUC 0.8641. DFM exposure alone is not predictive, supporting a sensitivity rather than text-assignment explanation. Secondary interactions with DFM surprisal, word length, and previous-boundary opacity provide interpretability. Results are operational research labels, not clinical screening evidence.

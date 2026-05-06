@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 from typing import Any
 
 from .config import get_nested, load_config, timestamped_output_dir
+from .autoresearch import build_paper_package, run_autoresearch, validate_autoresearch
 from .features import build_feature_tables
 from .label_release import build_label_release, freeze_prepared_dataset, validate_label_release
 from .lm_features import run_lm_features
@@ -29,7 +31,19 @@ from .validation import validate_run
 
 
 def _print(payload: dict[str, Any]) -> None:
-    print(json.dumps(payload, indent=2, sort_keys=True, default=str))
+    print(json.dumps(_json_safe(payload), indent=2, sort_keys=True, default=str))
+
+
+def _json_safe(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, tuple):
+        return [_json_safe(item) for item in value]
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    return value
 
 
 def _add_config_arg(parser: argparse.ArgumentParser) -> None:
@@ -413,5 +427,84 @@ def validate_phase4_confirmatory_main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_phase4_confirmatory(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_autoresearch_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run AutoResearch v1 publication decision loop.")
+    parser.add_argument("--config", default="configs/autoresearch_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    parser.add_argument("--skip-heavy-bootstrap", action="store_true")
+    parser.add_argument("--skip-heavy-permutation", action="store_true")
+    parser.add_argument("--fail-on-decision-gate-failure", action="store_true")
+    parser.add_argument("--allow-existing-output", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-autoresearch --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.dry_run:
+        command += " --dry-run"
+    if args.skip_heavy_bootstrap:
+        command += " --skip-heavy-bootstrap"
+    if args.skip_heavy_permutation:
+        command += " --skip-heavy-permutation"
+    if args.fail_on_decision_gate_failure:
+        command += " --fail-on-decision-gate-failure"
+    if args.allow_existing_output:
+        command += " --allow-existing-output"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(
+        run_autoresearch(
+            config,
+            output_dir=args.output_dir,
+            repo_root=args.repo_root,
+            dry_run=args.dry_run,
+            skip_heavy_bootstrap=args.skip_heavy_bootstrap,
+            skip_heavy_permutation=args.skip_heavy_permutation,
+            fail_on_decision_gate_failure=args.fail_on_decision_gate_failure,
+            allow_existing_output=args.allow_existing_output,
+        )
+    )
+    return 0
+
+
+def validate_autoresearch_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate AutoResearch v1 outputs.")
+    parser.add_argument("--config", default="configs/autoresearch_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_autoresearch(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def build_paper_package_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build AutoResearch paper-ready package files.")
+    parser.add_argument("--config", default="configs/autoresearch_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(build_paper_package(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_paper_package_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate AutoResearch paper-ready package files.")
+    parser.add_argument("--config", default="configs/autoresearch_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_autoresearch(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1
