@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-06 | [phase3_research_exploration](2026-05-06_0159_phase3_research_exploration.md) | Add controlled Phase 3 research exploration analyses from Label Release v1.1. |
 | 2026-05-06 | [label_release_v1_1](2026-05-06_0043_label_release_v1_1.md) | Build deterministic label release v1.1 and prepared dataset freeze from Feature Release v1. |
 | 2026-05-05 | [feature_release_v1](2026-05-05_2138_feature_release_v1.md) | Produce full feature release v1 and initial professional research analysis package. |
 | 2026-05-05 | [phase2_lm_smoke](2026-05-05_2011_phase2_lm_smoke.md) | Finish Phase 2 real LM scoring safeguards, alignment validation, and class-aware smoke sampling. |

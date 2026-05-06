@@ -22,6 +22,7 @@ from .release import (
     validate_feature_release,
     write_release_features,
 )
+from .research_exploration import run_research_exploration, validate_research_exploration
 from .slurm import launcher_command
 from .validation import validate_run
 
@@ -353,3 +354,33 @@ def freeze_prepared_dataset_main(argv: list[str] | None = None) -> int:
     config = load_config(args.config, repo_root=args.repo_root)
     _print(freeze_prepared_dataset(config, args.output_dir, repo_root=args.repo_root))
     return 0
+
+
+def run_research_exploration_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Run Phase 3 controlled research exploration.")
+    parser.add_argument("--config", default="configs/research_exploration_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-research-exploration --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_research_exploration(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_research_exploration_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate Phase 3 research exploration outputs.")
+    parser.add_argument("--config", default="configs/research_exploration_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_research_exploration(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1

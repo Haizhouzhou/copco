@@ -1,0 +1,58 @@
+run:
+  name: research_exploration_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+research_exploration:
+  version: v1
+  label_release_dir: results/label_release_v1_1_20260506_0041
+  prepared_dataset_dir: results/label_release_v1_1_20260506_0041/prepared_dataset
+  output_layout:
+    analysis: analysis/research_exploration
+    figures: analysis/research_exploration/figures
+  repo_analysis_dir: analysis/research_exploration
+  deterministic_seed: 17
+  no_new_core_labels: true
+  no_llm_generated_labels: true
+  require_participant_grouped_splits: true
+  forbid_random_word_level_split: true
+  parser_status_expected: surface_heuristic_fallback
+  expected_row_counts:
+    word_level: 335203
+    sentence_level: 1986
+    participant_level: 57
+    participant_labels: 57
+    segmentation_words: 31986
+    segmentation_boundaries: 31986
+    quality_labels: 335203
+  modeling:
+    max_word_model_rows: 100000
+    max_word_ladder_rows: 120000
+    participant_prediction_models:
+      - logistic_regression
+      - linear_svm
+      - random_forest
+    permutation_count: 100
+    bootstrap_count: 200
+    bootstrap_seed: 23
+  leakage_policy:
+    excluded_primary_prediction_features:
+      - n_words_read
+      - n_speeches
+      - n_word_rows
+      - word_observation_count
+      - total_word_rows
+      - participant_id
+      - reader_group
+      - reader_group_binary
+      - dyslexia_labeled
+      - group_label
+    legal_split_names:
+      - leave_one_participant_out
+      - participant_grouped_kfold
+      - sensitivity_exclude_uncertain_labels
+  slurm:
+    cpu_launcher: ~/bin/claim_best_immediate_resource.sh --mode cpu
+    cpu_candidate: >-
+      --partition=teaching --account=mlnlp2.pilot.s3it.uzh --qos=normal
+      --nodes=1 --ntasks=1 --cpus-per-task=32 --mem=128G --time=04:00:00

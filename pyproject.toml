@@ -70,8 +70,11 @@ copco-validate-feature-release = "copco_eye_bench.cli:validate_feature_release_m
 copco-build-label-release = "copco_eye_bench.cli:build_label_release_main"
 copco-validate-label-release = "copco_eye_bench.cli:validate_label_release_main"
 copco-freeze-prepared-dataset = "copco_eye_bench.cli:freeze_prepared_dataset_main"
+copco-run-research-exploration = "copco_eye_bench.cli:run_research_exploration_main"
+copco-validate-research-exploration = "copco_eye_bench.cli:validate_research_exploration_main"
 
 [tool.pytest.ini_options]
+addopts = "-p no:cacheprovider"
 pythonpath = ["src"]
 testpaths = ["tests"]
 
