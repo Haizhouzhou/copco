@@ -92,11 +92,19 @@ creating new core labels or rebuilding prior releases.
 
 ## Final Response Summary
 
-_Pending final response._
+- Implemented Phase 4 config, CLI, confirmatory runner, tests, analysis plan, and
+  generated Phase 4 reports/CSVs.
+- Output directory: `results/phase4_confirmatory_sensitivity_v1_20260506_0715`.
+- Main result: cross-fitted DFM residual gaze sensitivity (`D3`) logistic LOPO
+  ROC-AUC 0.8947, PR-AUC 0.8641.
+- Recommendation: main paper should focus on participant-level DFM predictability
+  sensitivity and cross-fitted residualized gaze-cost profiles; boundary opacity is
+  secondary interaction/interpretability only.
 
 ## Commit / Push Status
 
-_Pending commit/push._
+- Implementation commit: `8d1ceef` (`feat: add phase 4 confirmatory sensitivity analysis`).
+- Push status: pushed to `main` (`b24a166..8d1ceef`).
 
 ## Dependency / Environment Update
 
