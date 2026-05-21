@@ -1,0 +1,141 @@
+run:
+  name: official_eyebench_runtime_fix_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+official_eyebench_runtime_fix:
+  version: v1
+  eyebench:
+    path: eyebench
+    repository_url: https://github.com/EyeBench/eyebench.git
+    commit: ce87f38a3083aeed029c255716a1a51e6ae51167
+    global_processed_dir: eyebench/data/processed
+    processed_copco_dir: eyebench/data/CopCo/processed
+    folds_metadata_dir: eyebench/data/CopCo/folds_metadata
+    labels_dir: eyebench/data/CopCo/labels
+    benchmark_results_dir: eyebench/results/formatted_eyebench_benchmark_results
+    run_preprocessing_in_cli: false
+    preprocessing_timeout_seconds: 7200
+
+  runtime_workspace:
+    envs_dir: eyebench/.envs
+    conda_pkgs_dir: eyebench/.conda_pkgs
+    pip_cache_dir: eyebench/.pip_cache
+    cache_dir: eyebench/.cache
+    runtime_logs_dir: eyebench/.runtime_logs
+    wandb_dir: eyebench/wandb
+    environment_variables:
+      CONDA_PKGS_DIRS: eyebench/.conda_pkgs
+      PIP_CACHE_DIR: eyebench/.pip_cache
+      HF_HOME: eyebench/.cache/huggingface
+      TRANSFORMERS_CACHE: eyebench/.cache/huggingface
+      WANDB_DIR: eyebench/wandb
+      WANDB_MODE: offline
+      PYTHONNOUSERSITE: "1"
+
+  environment:
+    primary_conda_env: copco
+    primary_runtime_rule: use_copco_env_first
+    exact_environment_yml: eyebench/environment.yml
+    exact_environment_yml_attempt_allowed_first: false
+    py312_minimal_prefix: eyebench/.envs/eyebench_official_py312_minimal
+    py312_minimal_create_command: >
+      cd eyebench && CONDA_PKGS_DIRS=$PWD/.conda_pkgs PIP_CACHE_DIR=$PWD/.pip_cache
+      PYTHONNOUSERSITE=1 WANDB_MODE=offline
+      mamba create -p $PWD/.envs/eyebench_official_py312_minimal -c conda-forge python=3.12 pip -y
+    py312_minimal_reason: only_if_copco_env_hits_true_python_3_12_syntax_or_runtime_requirement
+    exact_prefix: eyebench/.envs/eyebench_official_py312
+    cpu_fallback_prefix: eyebench/.envs/eyebench_official_cpu_runtime
+
+  frozen_inputs:
+    benchmark_bridge_dir: results/benchmark_bridge_v1_20260506_1836
+    official_alignment_dir: results/official_eyebench_alignment_v1_20260506_2232
+    official_sota_check_dir: results/official_eyebench_sota_check_v1_20260506_2341
+
+  output_dir_pattern: results/official_eyebench_runtime_fix_v1_<timestamp>
+  output_layout:
+    analysis: analysis/official_eyebench_runtime_fix_v1
+    tables: analysis/official_eyebench_runtime_fix_v1/tables
+  repo_analysis_dir: analysis/official_eyebench_runtime_fix_v1
+
+  deterministic_seed: 173
+  no_new_labels: true
+  no_feature_engineering_search: true
+  no_broad_model_search: true
+  forbid_random_word_level_split: true
+
+  tasks:
+    - CopCo_TYP
+    - CopCo_RCS
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+  evaluation_levels:
+    - official_trial_level_fold_mean
+    - reader_aggregated
+
+  primary_model:
+    model_name: D3_EyeBench_Lite
+    classifier: logistic_regression
+    feature_source: official_EyeBench_processed_CopCo_only
+
+  baseline_reproduction:
+    preferred_model: LogisticRegressionMLArgs
+    fallback_model: RandomForestMLArgs
+    require_before_sota_claim: true
+    reasonable_tolerance: 0.05
+    official_command_required_for_sota_gate: true
+
+  residualization:
+    mode: official_fold_cross_fitted
+    reader_group_never_used: true
+    no_held_out_reader_rows_used_for_residual_fitting: true
+    no_held_out_text_rows_used_for_residual_fitting: true
+    outcomes:
+      - first_fixation_duration
+      - first_pass_duration
+      - go_past_time
+      - total_fixation_duration
+      - skipping
+      - fixation_count
+
+  official_regime_mapping:
+    seen_subject_unseen_item: unseen_text
+    unseen_subject_seen_item: unseen_reader
+    unseen_subject_unseen_item: unseen_reader_and_text
+
+  prohibited_features:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - speech_id
+    - text_id
+    - unique_trial_id
+    - unique_paragraph_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia_labeled
+    - group_label
+    - dyslexia
+    - RCS_score
+    - comprehension_score
+    - eyebench_rcs_score
+
+  decision_gates:
+    CopCo_TYP:
+      formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_TYP_test.csv
+      strongest_baselines:
+        unseen_reader:
+          AUROC: 0.853
+          balanced_accuracy: 0.777
+        unseen_text:
+          AUROC: 0.915
+          balanced_accuracy: 0.815
+        unseen_reader_and_text:
+          AUROC: 0.749
+          balanced_accuracy: 0.656

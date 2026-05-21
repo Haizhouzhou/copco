@@ -52,6 +52,28 @@ outputs/
 checkpoints/
 models/
 
+# Isolated EyeBench runtime artifacts. Keep the submodule pointer tracked, but
+# never checkpoint downloaded data, environments, caches, or generated outputs.
+eyebench/data/
+eyebench/results/
+eyebench/logs/
+eyebench/wandb/
+eyebench/.cache/
+eyebench/.conda_pkgs/
+eyebench/.pip_cache/
+eyebench/.envs/
+eyebench/.pytest_cache/
+eyebench/.runtime_logs/
+eyebench/environment.official_cpu_runtime.generated.yml
+eyebench/**/*.feather
+eyebench/**/*.parquet
+eyebench/**/*.pkl
+eyebench/**/*.pt
+eyebench/**/*.ckpt
+eyebench/data/**/*.csv
+eyebench/results/**/*.csv
+results/official_eyebench_runtime_fix_v1_*/
+
 # Local legacy/source-data workspaces that must not enter this clean checkpoint
 MECO/
 osf-copco/
