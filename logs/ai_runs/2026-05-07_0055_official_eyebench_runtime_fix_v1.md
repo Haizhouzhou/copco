@@ -139,4 +139,6 @@ baseline reproduction and D3 official SOTA gates did not pass.
 
 ## Commit / Push Status
 
-Pending.
+- Implementation commit: `7d8eaeb` (`fix: complete isolated official EyeBench runtime check`).
+- Branch pushed: `codex/official-eyebench-runtime-fix-v1`.
+- Push status: succeeded.
