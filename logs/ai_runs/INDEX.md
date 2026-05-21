@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-22 | [official_eyebench_baseline_evaluator_closure_v1](2026-05-22_0117_official_eyebench_baseline_evaluator_closure_v1.md) | Close official EyeBench baseline command-source and evaluator gates for CopCo_TYP. |
 | 2026-05-07 | [official_eyebench_runtime_fix_v1](2026-05-07_0055_official_eyebench_runtime_fix_v1.md) | Add isolated official EyeBench runtime repair gates and blocker reporting. |
 | 2026-05-06 | [official_eyebench_sota_check_v1](2026-05-06_2313_official_eyebench_sota_check_v1.md) | Add official EyeBench SOTA verification gates and blocked-status reports. |
 | 2026-05-06 | [official_eyebench_alignment_v1](2026-05-06_2130_official_eyebench_alignment_v1.md) | Add official EyeBench vendoring, alignment audit, and fold-aligned evaluation layer. |

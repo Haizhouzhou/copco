@@ -90,6 +90,8 @@ copco-run-official-eyebench-sota-check = "copco_eye_bench.cli:run_official_eyebe
 copco-validate-official-eyebench-sota-check = "copco_eye_bench.cli:validate_official_eyebench_sota_check_main"
 copco-run-official-eyebench-runtime-fix = "copco_eye_bench.cli:run_official_eyebench_runtime_fix_main"
 copco-validate-official-eyebench-runtime-fix = "copco_eye_bench.cli:validate_official_eyebench_runtime_fix_main"
+copco-run-official-eyebench-baseline-evaluator-closure = "copco_eye_bench.cli:run_official_eyebench_baseline_evaluator_closure_main"
+copco-validate-official-eyebench-baseline-evaluator-closure = "copco_eye_bench.cli:validate_official_eyebench_baseline_evaluator_closure_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

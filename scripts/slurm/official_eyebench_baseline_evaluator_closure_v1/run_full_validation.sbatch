@@ -1,0 +1,81 @@
+#!/usr/bin/bash -l
+#SBATCH --job-name=oe_closure_full
+#SBATCH --partition=teaching
+#SBATCH --account=mlnlp2.pilot.s3it.uzh
+#SBATCH --qos=normal
+#SBATCH --gres=gpu:0
+#SBATCH --cpus-per-task=64
+#SBATCH --mem=256G
+#SBATCH --time=04:00:00
+#SBATCH --output=results/official_eyebench_baseline_evaluator_closure_v1_sbatch/slurm/%x_%j.out
+#SBATCH --error=results/official_eyebench_baseline_evaluator_closure_v1_sbatch/slurm/%x_%j.err
+
+set -euxo pipefail
+cd /home/haizhe/copco
+
+TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
+OUTDIR="${CLOSURE_OUTDIR:-results/official_eyebench_baseline_evaluator_closure_v1_${TIMESTAMP}}"
+mkdir -p "$OUTDIR/slurm" results/official_eyebench_baseline_evaluator_closure_v1_sbatch/slurm
+
+echo "SLURM_JOB_ID=$SLURM_JOB_ID"
+echo "SLURM_JOB_NAME=$SLURM_JOB_NAME"
+echo "HOSTNAME=$(hostname)"
+echo "SLURM_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK:-}"
+date
+
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-64}"
+export MKL_NUM_THREADS="${SLURM_CPUS_PER_TASK:-64}"
+export OPENBLAS_NUM_THREADS="${SLURM_CPUS_PER_TASK:-64}"
+export NUMEXPR_NUM_THREADS="${SLURM_CPUS_PER_TASK:-64}"
+
+export PYTHONNOUSERSITE=1
+export WANDB_MODE=disabled
+export WANDB_DISABLED=true
+export WANDB_SILENT=true
+export WANDB_DIR="$PWD/eyebench/wandb"
+export HF_HOME="$PWD/eyebench/.cache/huggingface"
+export TRANSFORMERS_CACHE="$PWD/eyebench/.cache/huggingface"
+export PIP_CACHE_DIR="$PWD/eyebench/.pip_cache"
+export PYTHONPATH="$PWD/eyebench:$PWD/eyebench/src:${PYTHONPATH:-}"
+
+START_TS="$(date --iso-8601=seconds)"
+set +e
+{
+  conda run -n copco python -m pip install -e .
+  conda run -n copco python scripts/validate_env.py
+  conda run -n copco python -m pytest tests/ -q
+  conda run -n copco python -m ruff check .
+  conda run -n copco copco-validate-benchmark-bridge \
+    --config configs/benchmark_bridge_v1.yaml \
+    --output-dir results/benchmark_bridge_v1_20260506_1836
+  conda run -n copco copco-run-official-eyebench-baseline-evaluator-closure \
+    --config configs/official_eyebench_baseline_evaluator_closure_v1.yaml \
+    --output-dir "$OUTDIR"
+  conda run -n copco copco-validate-official-eyebench-baseline-evaluator-closure \
+    --config configs/official_eyebench_baseline_evaluator_closure_v1.yaml \
+    --output-dir "$OUTDIR"
+  conda run -p eyebench/.envs/eyebench_official_py312_minimal \
+    python -c "import sys; print(sys.version)"
+  conda run -p eyebench/.envs/eyebench_official_py312_minimal \
+    python -c "import pandas, numpy, pyarrow, sklearn, hydra, omegaconf, beartype, loguru; print('core imports ok')"
+  conda run -p eyebench/.envs/eyebench_official_py312_minimal \
+    bash -lc 'cd eyebench && PYTHONPATH=$PWD:$PWD/src python -c "import src; print(\"eyebench src import ok\")"'
+}
+RC=$?
+set -e
+END_TS="$(date --iso-8601=seconds)"
+
+cat > "$OUTDIR/slurm/${SLURM_JOB_NAME}_${SLURM_JOB_ID}_manifest.json" <<EOF
+{
+  "job_id": "${SLURM_JOB_ID}",
+  "job_name": "${SLURM_JOB_NAME}",
+  "command": "full validation plus closure run",
+  "start_time": "${START_TS}",
+  "end_time": "${END_TS}",
+  "exit_code": ${RC},
+  "stdout_path": "results/official_eyebench_baseline_evaluator_closure_v1_sbatch/slurm/%x_%j.out",
+  "stderr_path": "results/official_eyebench_baseline_evaluator_closure_v1_sbatch/slurm/%x_%j.err",
+  "output_dir": "${OUTDIR}"
+}
+EOF
+exit "$RC"

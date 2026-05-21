@@ -73,6 +73,8 @@ eyebench/**/*.ckpt
 eyebench/data/**/*.csv
 eyebench/results/**/*.csv
 results/official_eyebench_runtime_fix_v1_*/
+results/official_eyebench_baseline_evaluator_closure_v1_*/
+results/official_eyebench_baseline_evaluator_closure_v1_sbatch/
 
 # Local legacy/source-data workspaces that must not enter this clean checkpoint
 MECO/

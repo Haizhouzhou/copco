@@ -1,0 +1,149 @@
+run:
+  name: official_eyebench_baseline_evaluator_closure_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M"
+
+official_eyebench_baseline_evaluator_closure:
+  version: v1
+  require_slurm_job: true
+  no_new_labels: true
+  no_feature_engineering_search: true
+  no_broad_model_search: true
+  forbid_random_word_level_split: true
+
+  eyebench:
+    path: eyebench
+    repository_url: https://github.com/EyeBench/eyebench.git
+    commit: ce87f38a3083aeed029c255716a1a51e6ae51167
+    global_processed_dir: eyebench/data/processed
+    processed_copco_dir: eyebench/data/CopCo/processed
+    folds_metadata_dir: eyebench/data/CopCo/folds_metadata
+    labels_dir: eyebench/data/CopCo/labels
+    benchmark_results_dir: eyebench/results/formatted_eyebench_benchmark_results
+    official_command_markdown: eyebench/run_commands/CopCo_TYP.md
+    official_logistic_sweep_config: eyebench/sweeps/CopCo_TYP_20251104/configs/LogisticRegressionMLArgs_CopCo_TYP.yaml
+    official_logistic_bash_script: eyebench/sweeps/CopCo_TYP_20251104/bash/lacc/LogisticRegressionMLArgs/LogisticRegressionMLArgs_CopCo_TYP_folds_0_1_2_3.sh
+    official_random_forest_bash_script: eyebench/sweeps/CopCo_TYP_20251104/bash/lacc/RandomForestMLArgs/RandomForestMLArgs_CopCo_TYP_folds_0_1_2_3.sh
+    official_ml_test_script: eyebench/src/run/single_run/test_ml.py
+    official_evaluator_script: eyebench/src/run/multi_run/raw_to_processed_results.py
+
+  runtime_workspace:
+    runtime_logs_dir: eyebench/.runtime_logs
+    wandb_dir: eyebench/wandb
+    cache_dir: eyebench/.cache
+    pip_cache_dir: eyebench/.pip_cache
+    envs_dir: eyebench/.envs
+
+  runtime:
+    copco_conda_env: copco
+    py312_minimal_prefix: eyebench/.envs/eyebench_official_py312_minimal
+    kind: python312_minimal_runtime_compatible
+    exact_environment_yml_used: false
+    allow_import_driven_pip_repair: true
+    import_check_modules:
+      - pandas
+      - numpy
+      - pyarrow
+      - sklearn
+      - hydra
+      - omegaconf
+      - wandb
+      - beartype
+      - loguru
+      - yaml
+      - tqdm
+      - joblib
+      - torch
+      - lightning
+      - lightning_fabric
+      - tap
+      - pytorch_metric_learning
+      - transformers
+      - seaborn
+      - matplotlib
+    pip_repair_packages:
+      wandb: wandb==0.23.1
+      lightning: lightning==2.5.1
+      lightning_fabric: lightning==2.5.1
+      pytorch_metric_learning: pytorch-metric-learning==2.9.0
+      tap: typed-argument-parser==1.11.0
+      transformers: transformers==4.47.1
+      seaborn: seaborn==0.13.2
+      matplotlib: matplotlib==3.10.1
+      packaging: packaging==24.2
+
+  previous_runtime_fix:
+    branch: codex/official-eyebench-runtime-fix-v1
+    latest_known_commit: 22bf63e
+    main_implementation_commit: 7d8eaeb
+    output_dir: results/official_eyebench_runtime_fix_v1_20260522_0005
+    decision_json: results/official_eyebench_runtime_fix_v1_20260522_0005/official_sota_decision.json
+    d3_trial_metrics: results/official_eyebench_runtime_fix_v1_20260522_0005/typ/d3_lite_trial_metrics.csv
+    d3_reader_metrics: results/official_eyebench_runtime_fix_v1_20260522_0005/typ/d3_lite_reader_aggregated_metrics.csv
+    d3_predictions: results/official_eyebench_runtime_fix_v1_20260522_0005/typ/d3_lite_trial_predictions.csv
+    d3_trial_result_format: results/official_eyebench_runtime_fix_v1_20260522_0005/typ/trial_level_test_results.csv
+    d3_leakage_report: results/official_eyebench_runtime_fix_v1_20260522_0005/analysis/official_eyebench_runtime_fix_v1/d3_eyebench_lite_leakage_report.md
+    local_diagnostic_baseline_metrics: results/official_eyebench_runtime_fix_v1_20260522_0005/baseline/official_baseline_reproduction_metrics.csv
+
+  output_dir_pattern: results/official_eyebench_baseline_evaluator_closure_v1_<timestamp>
+  output_layout:
+    analysis: analysis/official_eyebench_baseline_evaluator_closure_v1
+    tables: analysis/official_eyebench_baseline_evaluator_closure_v1/tables
+  repo_analysis_dir: analysis/official_eyebench_baseline_evaluator_closure_v1
+
+  tasks:
+    - CopCo_TYP
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+  fold_count_per_regime: 4
+  baseline:
+    preferred_model: LogisticRegressionMLArgs
+    fallback_models:
+      - RandomForestMLArgs
+      - DummyClassifierMLArgs
+    wandb_project: CopCo_TYP_20251104
+    wandb_entity: EyeRead
+    reasonable_tolerance: 0.05
+    official_command_source_required_for_sota_gate: true
+    command_timeout_seconds: 900
+    agent_timeout_seconds: 120
+  evaluator:
+    require_official_evaluator_or_exact_format: true
+    import_timeout_seconds: 180
+
+  decision_gates:
+    CopCo_TYP:
+      formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_TYP_test.csv
+      strongest_baselines:
+        unseen_reader:
+          AUROC: 0.853
+          balanced_accuracy: 0.777
+        unseen_text:
+          AUROC: 0.915
+          balanced_accuracy: 0.815
+        unseen_reader_and_text:
+          AUROC: 0.749
+          balanced_accuracy: 0.656
+
+  prohibited_features:
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - participant_id
+    - speech_id
+    - text_id
+    - unique_trial_id
+    - unique_paragraph_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia_labeled
+    - group_label
+    - dyslexia
+    - RCS_score
+    - comprehension_score
+    - eyebench_rcs_score

@@ -1,0 +1,4 @@
+model,mode,claim_type,metric_basis,official_mode,exact_folds,exact_processed_data,split_name,roc_auc,balanced_accuracy,notes
+D3_EyeBench_Lite,official_processed_data_folds_lite,official_compatible_candidate,official_trial_level_fold_mean,False,True,True,unseen_reader,0.8085072099153234,0.7274042284242905,D3 lite reused from runtime-fix output.
+D3_EyeBench_Lite,official_processed_data_folds_lite,official_compatible_candidate,official_trial_level_fold_mean,False,True,True,unseen_text,0.8318508349893763,0.7340753226678249,D3 lite reused from runtime-fix output.
+D3_EyeBench_Lite,official_processed_data_folds_lite,official_compatible_candidate,official_trial_level_fold_mean,False,True,True,unseen_reader_and_text,0.7153850766030332,0.6341592735430082,D3 lite reused from runtime-fix output.
