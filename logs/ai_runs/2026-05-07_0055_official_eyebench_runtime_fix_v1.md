@@ -49,6 +49,9 @@ caches, and runtime logs isolated under `eyebench/` or ignored runtime results.
 
 - Slurm allocation: `SLURM_JOB_ID=3366552`, node `u24-chiivm0-607`, `gpu:0`,
   64 CPUs, 256G requested memory.
+- Slurm post-run accounting: job `3366552` completed, elapsed `01:18:15`,
+  exit code `0:0`; step `3366552.0` MaxRSS `18028104K`, AveCPU `08:29:07`.
+  `seff` was not available on the node.
 - CopCo env first: missing imports were repaired with `beartype==0.20.2`,
   `pymovements==0.25.0`, `rdata==1.0.0`, `loguru==0.7.2`, and
   `hydra-core==1.3.2`; `pip check` passed after each repair.
