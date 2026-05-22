@@ -1,0 +1,9 @@
+{
+  "analysis_dir": "/home/haizhe/copco/analysis/d3_online_targeted_optimization_v1",
+  "errors": [],
+  "nested_prediction_rows": 306376,
+  "output_dir": "/home/haizhe/copco/results/d3_online_targeted_optimization_v1_fast5_20260523_012750",
+  "prefix_rows": 1145,
+  "status": "passed",
+  "warnings": []
+}

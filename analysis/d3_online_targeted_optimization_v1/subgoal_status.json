@@ -1,0 +1,146 @@
+{
+  "run_name": "d3_online_targeted_optimization_v1",
+  "subgoals": {
+    "GOAL_0": {
+      "blocker": "",
+      "evidence_paths": [
+        "docs/d3_online_targeted_optimization_v1.md",
+        "docs/d3_online_detection_goal_contract_v1.md",
+        "docs/d3_online_testing_standard_v1.md",
+        "analysis/d3_online_targeted_optimization_v1/subgoal_status.md",
+        "analysis/d3_online_targeted_optimization_v1/subgoal_status.json"
+      ],
+      "name": "execution docs",
+      "status": "completed"
+    },
+    "GOAL_1": {
+      "blocker": "",
+      "evidence_paths": [
+        "results/d3_online_targeted_optimization_v1_fast5_20260523_012750/prefix_data/prefix_features.parquet",
+        "analysis/d3_online_targeted_optimization_v1/prefix_feature_dictionary.md",
+        "analysis/d3_online_targeted_optimization_v1/prefix_dataset_report.md"
+      ],
+      "name": "prefix datasets",
+      "status": "completed"
+    },
+    "GOAL_10": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/online_offline_comparison_table.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_offline_comparison_table.md",
+        "analysis/d3_online_targeted_optimization_v1/final_online_targeted_decision_report.md"
+      ],
+      "name": "online/offline comparison and final decision",
+      "status": "completed"
+    },
+    "GOAL_11": {
+      "blocker": "",
+      "evidence_paths": [
+        "paper/submission_v1/supplement_sections/18_benchmark_bridge.tex",
+        "analysis/submission_v1/claim_evidence_ledger.csv",
+        "analysis/submission_v1/claim_evidence_ledger.md"
+      ],
+      "name": "manuscript and supplement update",
+      "status": "completed"
+    },
+    "GOAL_12": {
+      "blocker": "",
+      "evidence_paths": [
+        "results/d3_online_targeted_optimization_v1_fast5_20260523_012750/d3_online_targeted_optimization_validation_report.json",
+        "analysis/d3_online_targeted_optimization_v1/d3_online_targeted_optimization_validation_report.json"
+      ],
+      "name": "validator and tests",
+      "status": "completed"
+    },
+    "GOAL_13": {
+      "blocker": "",
+      "evidence_paths": [
+        "git commit: feat: deploy targeted online D3 detection evaluation",
+        "git push: codex/d3-online-targeted-optimization-v1"
+      ],
+      "name": "commit and push",
+      "status": "completed"
+    },
+    "GOAL_2": {
+      "blocker": "",
+      "evidence_paths": [
+        "results/d3_online_targeted_optimization_v1_fast5_20260523_012750/nested_predictions",
+        "analysis/d3_online_targeted_optimization_v1/nested_prediction_artifact_report.md"
+      ],
+      "name": "nested prediction artifacts",
+      "status": "completed"
+    },
+    "GOAL_3": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/online_prefix_model_metrics.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_prefix_model_report.md"
+      ],
+      "name": "D3 online prefix models",
+      "status": "completed"
+    },
+    "GOAL_4": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/legal_calibration_metrics.csv",
+        "analysis/d3_online_targeted_optimization_v1/legal_threshold_metrics.csv",
+        "analysis/d3_online_targeted_optimization_v1/legal_thresholds_learned.csv",
+        "analysis/d3_online_targeted_optimization_v1/calibration_threshold_report.md"
+      ],
+      "name": "legal calibration and threshold learning",
+      "status": "completed"
+    },
+    "GOAL_5": {
+      "blocker": "",
+      "evidence_paths": [
+        "results/d3_online_targeted_optimization_v1_fast5_20260523_012750/online_probabilities/online_probabilities.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_evidence_accumulation_metrics.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_evidence_accumulation_report.md"
+      ],
+      "name": "online evidence accumulation",
+      "status": "completed"
+    },
+    "GOAL_6": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/online_stopping_policy_metrics.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_stopping_policy_report.md",
+        "analysis/d3_online_targeted_optimization_v1/online_earliness_performance_curve.csv"
+      ],
+      "name": "online stopping policies",
+      "status": "completed"
+    },
+    "GOAL_7": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/online_candidate_search_space.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_candidate_validation_ranking.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_locked_test_results.csv",
+        "analysis/d3_online_targeted_optimization_v1/online_targeted_optimization_report.md"
+      ],
+      "name": "targeted online optimization loop",
+      "status": "completed"
+    },
+    "GOAL_8": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/oracle_upper_bound_metrics.csv",
+        "analysis/d3_online_targeted_optimization_v1/oracle_information_budget.csv",
+        "analysis/d3_online_targeted_optimization_v1/oracle_upper_bound_report.md"
+      ],
+      "name": "oracle upper-bound diagnostics",
+      "status": "completed"
+    },
+    "GOAL_9": {
+      "blocker": "",
+      "evidence_paths": [
+        "analysis/d3_online_targeted_optimization_v1/reader_probability_trajectories.csv",
+        "analysis/d3_online_targeted_optimization_v1/persistent_error_readers.csv",
+        "analysis/d3_online_targeted_optimization_v1/error_trajectory_report.md"
+      ],
+      "name": "error trajectory analysis",
+      "status": "completed"
+    }
+  },
+  "updated_at": "2026-05-23T01:47:52"
+}

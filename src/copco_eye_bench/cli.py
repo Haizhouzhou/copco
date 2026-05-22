@@ -45,6 +45,10 @@ from .d3_eyebench_own_method_score_max import (
     run_d3_eyebench_own_method_score_max,
     validate_d3_eyebench_own_method_score_max,
 )
+from .d3_online_targeted_optimization import (
+    run_d3_online_targeted_optimization,
+    validate_d3_online_targeted_optimization,
+)
 from .phase4_confirmatory import run_phase4_confirmatory, validate_phase4_confirmatory
 from .release import (
     build_modeling_tables,
@@ -905,5 +909,41 @@ def validate_operating_point_adaptation_main(argv: list[str] | None = None) -> i
     args = parser.parse_args(argv)
     config = load_config(args.config, repo_root=args.repo_root)
     report = validate_operating_point_adaptation(config, args.output_dir, repo_root=args.repo_root)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_d3_online_targeted_optimization_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Run D3OnlineTargetedOptimization v1 sequential detection evaluation."
+    )
+    parser.add_argument("--config", default="configs/d3_online_targeted_optimization_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-d3-online-targeted-optimization --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_d3_online_targeted_optimization(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_d3_online_targeted_optimization_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate D3OnlineTargetedOptimization v1 outputs."
+    )
+    parser.add_argument("--config", default="configs/d3_online_targeted_optimization_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_d3_online_targeted_optimization(
+        config, args.output_dir, repo_root=args.repo_root
+    )
     _print(report)
     return 0 if report["status"] == "passed" else 1

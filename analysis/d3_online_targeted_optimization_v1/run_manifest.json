@@ -1,0 +1,14 @@
+{
+  "accumulation_metric_rows": 1232,
+  "analysis_dir": "/home/haizhe/copco/analysis/d3_online_targeted_optimization_v1",
+  "candidate_rows": 36,
+  "locked_test_rows": 5,
+  "manuscript_changed": [],
+  "official_sota_claim_changed": false,
+  "online_probability_rows": 243656,
+  "oracle_rows": 3785,
+  "output_dir": "/home/haizhe/copco/results/d3_online_targeted_optimization_v1_fast5_20260523_012750",
+  "status": "complete",
+  "stopping_metric_rows": 2128,
+  "trajectory_rows": 4222
+}

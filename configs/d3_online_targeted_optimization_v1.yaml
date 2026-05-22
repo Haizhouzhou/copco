@@ -1,0 +1,62 @@
+run:
+  name: d3_online_targeted_optimization_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M%S"
+
+d3_online_targeted_optimization:
+  version: v1
+  prepared_dataset_dir: results/label_release_v1_1_20260506_0041/prepared_dataset
+  word_level_file: analysis_ready_word_level_v1_1.parquet
+  repo_analysis_dir: analysis/d3_online_targeted_optimization_v1
+  deterministic_seed: 173
+  outer_folds: 4
+  inner_folds: 3
+
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+    - text_balanced_unseen_reader
+    - participant_grouped_kfold
+
+  word_count_budgets:
+    - 50
+    - 100
+    - 250
+    - 500
+    - 1000
+  text_count_budgets:
+    - 1
+    - 2
+    - 3
+    - 5
+    - 10
+
+  min_stable_words: 50
+  min_slope_words: 50
+
+  model_families:
+    - raw_gaze_prefix
+    - residual_gaze_prefix
+    - dfm_exposure_prefix
+    - dfm_sensitivity_prefix
+    - dfm_residual_gaze_prefix
+    - dfm_residual_plus_uncertainty_prefix
+    - all_allowed_online
+
+  adaptation_feature_groups:
+    - dfm_residual_plus_uncertainty_prefix
+    - all_allowed_online
+
+  primary_regimes:
+    - unseen_reader
+    - unseen_reader_and_text
+
+  evidence_cost:
+    word_weight: 0.5
+    text_weight: 0.5
+
+  clean_oracle_policy:
+    clean_results_use_outer_test_labels_for_selection: false
+    oracle_official_claim_allowed: false
+    official_sota_claim_changed: false

@@ -28,3 +28,6 @@ OfficialEyeBenchBaselineEvaluatorClosure v1 repaired the minimal Python 3.12 run
 
 \paragraph{Operating-point analysis.}
 OperatingPointAdaptation v1 re-analyzed existing D3-family prediction probabilities without rerunning leaderboard methods or changing features. Fixed-threshold D3\_EyeBench\_Lite fold-mean trial metrics reproduced the prior official-compatible values, while reader-level probability aggregation preserved stronger secondary AUROC/PR-AUC evidence. Legal threshold learning and fitted calibration were not computed because train/inner-validation calibration predictions were unavailable in the archived artifacts. Test-oracle thresholds were used only as diagnostic upper bounds and are not used for benchmark or SOTA claims.
+
+\paragraph{D3 online targeted optimization.}
+D3OnlineTargetedOptimization v1 evaluated D3 as an online sequential detector over prefix evidence from the prepared Label Release v1.1 data. D3 is strongest as an offline reader-profile model. In online sequential detection, probability evidence accumulates across prefixes; targeted calibration, thresholding, and stopping policies provide a deployment-oriented secondary analysis. The analysis keeps oracle rows diagnostic only and does not change the official EyeBench SOTA status.
