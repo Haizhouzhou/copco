@@ -62,4 +62,5 @@ yet.
 
 - Commit message: `docs: add D3 EyeBench own-method score maximization goal`.
 - Push target: `origin codex/d3-eyebench-own-method-score-max-v2`.
-- Push status: to be attempted after final amended commit.
+- Initial push status: succeeded; created remote branch
+  `codex/d3-eyebench-own-method-score-max-v2`.
