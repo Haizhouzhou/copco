@@ -96,6 +96,8 @@ copco-run-d3-eyebench-protocol-optimization = "copco_eye_bench.cli:run_d3_eyeben
 copco-validate-d3-eyebench-protocol-optimization = "copco_eye_bench.cli:validate_d3_eyebench_protocol_optimization_main"
 copco-run-d3-eyebench-own-method-score-max = "copco_eye_bench.cli:run_d3_eyebench_own_method_score_max_main"
 copco-validate-d3-eyebench-own-method-score-max = "copco_eye_bench.cli:validate_d3_eyebench_own_method_score_max_main"
+copco-run-operating-point-adaptation = "copco_eye_bench.cli:run_operating_point_adaptation_main"
+copco-validate-operating-point-adaptation = "copco_eye_bench.cli:validate_operating_point_adaptation_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

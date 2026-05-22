@@ -1,0 +1,10 @@
+{
+  "decision_category": "supplement_supporting_result",
+  "legal_threshold_metrics_available": false,
+  "official_sota_claim_allowed": false,
+  "official_sota_claim_changed": false,
+  "reader_probability_aggregation_available": true,
+  "safe_wording": "Threshold and calibration analyses show that D3 is probability-first and reader-profile oriented. Test-oracle thresholds provide an upper bound but are not used for benchmark or SOTA claims.",
+  "test_oracle_metrics_available": true,
+  "test_oracle_official_claim_allowed": false
+}

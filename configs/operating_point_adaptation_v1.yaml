@@ -1,0 +1,113 @@
+run:
+  name: operating_point_adaptation_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M%S"
+
+operating_point_adaptation:
+  version: v1
+  repo_analysis_dir: analysis/operating_point_adaptation_v1
+  output_layout:
+    analysis: analysis/operating_point_adaptation_v1
+
+  no_new_feature_search: true
+  no_leaderboard_method_reruns: true
+  no_wandb_online_api: true
+  no_official_sota_claim_from_oracle_thresholds: true
+  no_test_label_threshold_tuning_reported_as_legal: true
+  reader_aggregation_probability_first: true
+  threshold_curve_grid_size: 101
+
+  primary_questions:
+    - probability_ranking
+    - calibration
+    - threshold_choice
+    - reader_probability_aggregation
+    - test_oracle_upper_bound
+
+  prediction_sources:
+    - name: d3_eyebench_lite_candidate_0000
+      source_type: official_compatible_d3_lite
+      prediction_path: results/d3_eyebench_own_method_score_max_v2_20260522_115731/typ/candidate_0000_trial_predictions.csv
+      metrics_path: analysis/d3_eyebench_own_method_score_max_v2/trial_metrics.csv
+      model_name: D3_EyeBench_Lite
+      candidate_id: candidate_0000
+      task: CopCo_TYP
+      evaluation_level: trial_level
+      role: test
+      include_feature_groups:
+        - D3_EyeBench_Lite
+      include_split_regimes:
+        - unseen_reader
+        - unseen_text
+        - unseen_reader_and_text
+
+    - name: benchmark_bridge_d3_full_data
+      source_type: benchmark_bridge_full_data
+      prediction_path: results/benchmark_bridge_v1_20260506_1836/typ/typ_benchmark_predictions.csv
+      metrics_path: results/benchmark_bridge_v1_20260506_1836/typ/typ_benchmark_metrics.csv
+      model_name: BenchmarkBridge_D3_FullData
+      candidate_id: benchmark_bridge_d3_full_data
+      task: CopCo_TYP
+      evaluation_level: trial_level
+      role: test
+      include_feature_groups:
+        - D3_dfm_residual_gaze_only
+      include_models:
+        - logistic_regression
+      include_split_regimes:
+        - unseen_reader
+        - unseen_text
+        - unseen_reader_and_text
+
+    - name: official_alignment_d3_full_feature
+      source_type: official_eyebench_alignment
+      prediction_path: results/official_eyebench_alignment_v1_20260506_2232/typ/typ_official_alignment_predictions.csv
+      metrics_path: results/official_eyebench_alignment_v1_20260506_2232/typ/typ_official_alignment_metrics.csv
+      model_name: D3_FullFeature_EyeBenchFolds
+      candidate_id: official_alignment_d3_full_feature
+      task: CopCo_TYP
+      evaluation_level: trial_level
+      role: test
+      include_feature_groups:
+        - D3_dfm_residual_gaze_only
+      include_models:
+        - logistic_regression
+      include_split_regimes:
+        - unseen_reader
+        - unseen_text
+        - unseen_reader_and_text
+
+    - name: phase4_d3_reader_profile
+      source_type: phase4_confirmatory_reader_profile
+      prediction_path: results/phase4_confirmatory_sensitivity_v1_20260506_0715/analysis/phase4_confirmatory/confirmatory_predictions.csv
+      metrics_path: results/phase4_confirmatory_sensitivity_v1_20260506_0715/analysis/phase4_confirmatory/confirmatory_prediction_metrics.csv
+      model_name: Phase4_D3_ReaderProfile
+      candidate_id: phase4_d3_reader_profile
+      evaluation_level: reader_aggregated
+      role: test
+      include_feature_groups:
+        - D3_dfm_residual_gaze_only
+      include_models:
+        - logistic_regression
+      include_split_regimes:
+        - leave_one_participant_out
+
+    - name: autoresearch_d3_final_reader_profile
+      source_type: autoresearch_reader_profile
+      prediction_path: results/autoresearch_v1_20260506_0917/final_model/final_model_predictions.csv
+      metrics_path: results/autoresearch_v1_20260506_0917/final_model/final_model_metrics.csv
+      model_name: AutoResearch_D3_FinalReaderProfile
+      candidate_id: autoresearch_d3_final_reader_profile
+      evaluation_level: reader_aggregated
+      role: test
+      include_feature_groups:
+        - D3_dfm_residual_gaze_only
+      include_models:
+        - logistic_regression
+      include_split_regimes:
+        - leave_one_participant_out
+
+  official_claim_policy:
+    simple_mean_not_official_average: true
+    test_oracle_thresholds_diagnostic_only: true
+    official_sota_claim_changed: false

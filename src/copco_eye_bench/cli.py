@@ -33,6 +33,10 @@ from .official_eyebench_baseline_evaluator_closure import (
     run_official_eyebench_baseline_evaluator_closure,
     validate_official_eyebench_baseline_evaluator_closure,
 )
+from .operating_point_adaptation import (
+    run_operating_point_adaptation,
+    validate_operating_point_adaptation,
+)
 from .d3_eyebench_protocol_optimization import (
     run_d3_eyebench_protocol_optimization,
     validate_d3_eyebench_protocol_optimization,
@@ -867,5 +871,39 @@ def validate_d3_eyebench_own_method_score_max_main(argv: list[str] | None = None
     report = validate_d3_eyebench_own_method_score_max(
         config, args.output_dir, repo_root=args.repo_root
     )
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def run_operating_point_adaptation_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Run OperatingPointAdaptation v1 probability-first analysis."
+    )
+    parser.add_argument("--config", default="configs/operating_point_adaptation_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = f"copco-run-operating-point-adaptation --config {args.config}"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    config = load_config(args.config, repo_root=args.repo_root)
+    _print(run_operating_point_adaptation(config, args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_operating_point_adaptation_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate OperatingPointAdaptation v1 outputs."
+    )
+    parser.add_argument("--config", default="configs/operating_point_adaptation_v1.yaml")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args(argv)
+    config = load_config(args.config, repo_root=args.repo_root)
+    report = validate_operating_point_adaptation(config, args.output_dir, repo_root=args.repo_root)
     _print(report)
     return 0 if report["status"] == "passed" else 1
