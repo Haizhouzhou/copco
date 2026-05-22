@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-22 | [d3_eyebench_goal_audit_v1](2026-05-22_1036_d3_eyebench_goal_audit_v1.md) | Audit whether the D3 EyeBench optimization goal was D3-anchored, metric-consistent, leaderboard-directed, and algorithm-faithful. |
 | 2026-05-22 | [d3_eyebench_protocol_optimization_campaign_v1](2026-05-22_0742_d3_eyebench_protocol_optimization_campaign_v1.md) | Build and run the bounded official-fold D3 EyeBench optimization campaign. |
 | 2026-05-22 | [d3_eyebench_protocol_aligned_optimization_v1](2026-05-22_0734_d3_eyebench_protocol_aligned_optimization_v1.md) | Add the bounded official EyeBench CopCo_TYP D3 optimization protocol and decision gates. |
 | 2026-05-22 | [official_eyebench_baseline_evaluator_closure_v1](2026-05-22_0117_official_eyebench_baseline_evaluator_closure_v1.md) | Close official EyeBench baseline command-source and evaluator gates for CopCo_TYP. |

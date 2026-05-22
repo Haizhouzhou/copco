@@ -1,0 +1,26 @@
+{
+  "algorithm_optimized": "d3_reduced_wrapper",
+  "audit_conclusion": "goal_not_d3_algorithm_faithful",
+  "audited_base_commit": "270f86d",
+  "branch": "codex/d3-eyebench-goal-audit-v1",
+  "candidate_search_rerun": false,
+  "goal_was_not_d3_anchor_monotonic": true,
+  "leaderboard_directed_optimization": "partially_true",
+  "metric_matches_logistic_anchor": false,
+  "metric_matches_official_leaderboard_average": "unknown",
+  "metric_matches_previous_d3_lite": false,
+  "model_tuning_performed": false,
+  "previous_d3_lite_candidate_id": null,
+  "previous_d3_lite_included_as_candidate": false,
+  "root_causes": [
+    "previous D3_Lite omitted from candidates",
+    "best_so_far initialized from generated candidates, not prior D3_Lite",
+    "threshold policy differs from previous D3_Lite and local Logistic anchor",
+    "final average BA is a simple mean, not a reproduced official leaderboard average",
+    "selected candidate used reduced residual wrapper features, not full D3 or exact D3_Lite"
+  ],
+  "scores_changed": false,
+  "selected_candidate": "d3opt_0024_2d9a9f9c46",
+  "selected_candidate_average_ba": 0.679915506990474,
+  "should_treat_06799_as_evidence_against_d3_potential": false
+}
