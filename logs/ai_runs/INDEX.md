@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-22 | [d3_eyebench_own_method_score_max_v2_execution](2026-05-22_1136_d3_eyebench_own_method_score_max_v2_execution.md) | Execute the D3 EyeBench own-method score maximization v2 contract with candidate_0000 anchor gating and Slurm-backed search. |
 | 2026-05-22 | [d3_eyebench_own_method_score_max_v2](2026-05-22_1119_d3_eyebench_own_method_score_max_v2.md) | Add the D3 EyeBench own-method score maximization v2 goal specification with anchor preservation and no leaderboard reruns. |
 | 2026-05-22 | [d3_eyebench_goal_audit_v1](2026-05-22_1036_d3_eyebench_goal_audit_v1.md) | Audit whether the D3 EyeBench optimization goal was D3-anchored, metric-consistent, leaderboard-directed, and algorithm-faithful. |
 | 2026-05-22 | [d3_eyebench_protocol_optimization_campaign_v1](2026-05-22_0742_d3_eyebench_protocol_optimization_campaign_v1.md) | Build and run the bounded official-fold D3 EyeBench optimization campaign. |

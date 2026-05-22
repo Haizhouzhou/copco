@@ -1,0 +1,12 @@
+{
+  "best_candidate_id": "candidate_0000",
+  "candidate_0000_reproduced": true,
+  "candidate_count_evaluated": 24,
+  "created_at": "2026-05-22T15:31:50",
+  "final_decision_category": "d3_method_not_improved",
+  "official_leaderboard_methods_rerun": false,
+  "official_sota_claimed": false,
+  "output_dir": "/home/haizhe/copco/results/d3_eyebench_own_method_score_max_v2_20260522_115731",
+  "run_name": "d3_eyebench_own_method_score_max_v2",
+  "status": "complete"
+}

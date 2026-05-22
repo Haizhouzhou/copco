@@ -1,0 +1,192 @@
+run:
+  name: d3_eyebench_own_method_score_max_v2
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M%S"
+
+d3_eyebench_own_method_score_max:
+  version: v2
+  protocol_path: docs/goals/d3_eyebench_own_method_score_maximization_v2.md
+  require_slurm_job: true
+
+  official_eyebench_data_folds_only: true
+  no_leaderboard_method_reruns: true
+  no_wandb_online_api: true
+  no_test_label_tuning: true
+  no_synthetic_outputs: true
+  no_random_predictions: true
+  no_full_prepared_copco_joins: true
+  candidate_0000_required: true
+  monotonic_best_so_far: true
+  preserve_d3_lite_features_first: true
+
+  eyebench:
+    path: eyebench
+    repository_url: https://github.com/EyeBench/eyebench.git
+    commit: ce87f38a3083aeed029c255716a1a51e6ae51167
+    global_processed_dir: eyebench/data/processed
+    processed_copco_dir: eyebench/data/CopCo/processed
+    folds_metadata_dir: eyebench/data/CopCo/folds_metadata
+    labels_dir: eyebench/data/CopCo/labels
+    benchmark_results_dir: eyebench/results/formatted_eyebench_benchmark_results
+
+  published_leaderboard_snapshot:
+    source_url: https://eyebench.github.io/eyebench/results/copco_typ/
+    source_name: EyeBench V1.0 CopCo_TYP Test leaderboard
+    retrieval_date: "2026-05-22"
+    local_formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_TYP_test.csv
+    use_as_fixed_reference_only: true
+    target_metric: visible_published_average_balanced_accuracy_reference
+    target_model: AhnCNN
+    target_balanced_accuracy: 0.750
+    note: >-
+      The internal campaign primary metric is per-regime trial-level BA plus
+      internal simple mean. The visible EyeBench Average BA is retained only as
+      a fixed reference because the official average formula is not reproduced.
+    split_targets:
+      unseen_reader:
+        model: AhnCNN
+        balanced_accuracy: 0.777
+      unseen_text:
+        model: Random Forest
+        balanced_accuracy: 0.815
+      unseen_reader_and_text:
+        model: AhnCNN
+        balanced_accuracy: 0.656
+
+  prior_d3_lite_anchor:
+    candidate_id: candidate_0000
+    adapter: exact_previous_D3_EyeBench_Lite
+    metrics_path: results/official_eyebench_runtime_fix_v1_20260522_0005/typ/d3_lite_trial_metrics.csv
+    predictions_path: results/official_eyebench_runtime_fix_v1_20260522_0005/typ/d3_lite_trial_predictions.csv
+    tolerance: 0.001
+    expected_metrics:
+      unseen_reader:
+        balanced_accuracy: 0.7274
+        roc_auc: 0.8085
+      unseen_text:
+        balanced_accuracy: 0.7341
+        roc_auc: 0.8319
+      unseen_reader_and_text:
+        balanced_accuracy: 0.6342
+        roc_auc: 0.7154
+
+  local_logistic_anchor:
+    source: reproduced local official-derived LogisticRegressionMLArgs pipeline anchor
+    metrics_path: results/official_eyebench_baseline_evaluator_closure_v1_20260522_015211/baseline/logistic/local_official_derived_extended_metrics.csv
+    predictions_path: results/official_eyebench_baseline_evaluator_closure_v1_20260522_015211/baseline/logistic/local_official_derived_predictions.csv
+    rerun_allowed: false
+
+  output_layout:
+    analysis: analysis/d3_eyebench_own_method_score_max_v2
+  repo_analysis_dir: analysis/d3_eyebench_own_method_score_max_v2
+
+  tasks:
+    - CopCo_TYP
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+
+  deterministic_seed: 20260522
+  n_jobs: 64
+
+  budget:
+    max_candidates: 24
+    test_eval_top_k: 6
+    no_improvement_rounds: 12
+    minimum_improvement_delta: 0.001
+
+  inner_validation:
+    fraction: 0.25
+    split_strategy: match_official_split
+    threshold_grid_size: 99
+    threshold_selection_metric: balanced_accuracy
+
+  candidate_grid:
+    feature_recipes:
+      - d3_lite_exact
+      - d3_lite_robust
+      - d3_lite_raw_summary
+      - d3_lite_interactions
+      - d3_lite_all
+    models:
+      - name: logistic_l2
+        params:
+          C: 0.1
+          solver: lbfgs
+          class_weight: balanced
+          max_iter: 3000
+      - name: logistic_l2
+        params:
+          C: 1.0
+          solver: lbfgs
+          class_weight: balanced
+          max_iter: 3000
+      - name: logistic_l2
+        params:
+          C: 3.0
+          solver: lbfgs
+          class_weight: balanced
+          max_iter: 3000
+      - name: logistic_elasticnet
+        params:
+          C: 1.0
+          l1_ratio: 0.5
+          class_weight: balanced
+          max_iter: 5000
+      - name: random_forest_d3
+        params:
+          n_estimators: 500
+          min_samples_leaf: 2
+          max_features: sqrt
+          class_weight: balanced_subsample
+      - name: extra_trees_d3
+        params:
+          n_estimators: 700
+          min_samples_leaf: 2
+          max_features: sqrt
+          class_weight: balanced
+    threshold_methods:
+      - fixed_0_5
+      - inner_balanced_accuracy
+    calibration_methods:
+      - none
+      - sigmoid_cv3
+
+  prohibited_features:
+    - participant_id
+    - speech_id
+    - text_id
+    - fold_id
+    - split_name
+    - split_role
+    - official_regime
+    - sample_id
+    - unique_trial_id
+    - unique_paragraph_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia
+    - dyslexia_labeled
+    - group_label
+    - labels
+    - label
+    - y_true
+    - target
+    - targets
+    - prediction
+    - prediction_prob
+    - binary_prediction
+    - RCS_score
+    - comprehension_score
+    - eyebench_rcs_score
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - exposure_count
+    - participant_exposure_count
+    - text_exposure_count
+    - speech_exposure_count

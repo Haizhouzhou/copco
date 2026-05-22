@@ -1,0 +1,17 @@
+{
+  "best_so_far_initialized_from_candidate_0000": true,
+  "candidate_0000_preserved": true,
+  "denied_predictors_present": [],
+  "heldout_reader_rows_used_for_feature_fit": false,
+  "heldout_text_rows_used_for_feature_fit": false,
+  "no_full_prepared_copco_join": true,
+  "no_leaderboard_method_reruns": true,
+  "no_random_predictions": true,
+  "no_synthetic_predictions": true,
+  "no_test_label_tuning": true,
+  "official_eyebench_data_folds_only": true,
+  "official_test_labels_used_for_threshold_or_hyperparameters": false,
+  "reader_group_used_in_residualization": false,
+  "selection_source": "train_inner_validation_only_for_new_candidates",
+  "status": "passed"
+}
