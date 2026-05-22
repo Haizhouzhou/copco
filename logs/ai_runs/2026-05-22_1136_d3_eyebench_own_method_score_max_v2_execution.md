@@ -138,4 +138,7 @@ commit/push validated code and small reports.
 
 ## Commit / Push
 
-Pending.
+- Commit `d173dfd`: `feat: optimize D3 EyeBench own-method score evidence`
+- Push status: pushed to `origin/codex/d3-eyebench-own-method-score-max-v2`
+- Follow-up log-only commit is expected to record this final push status without
+  rewriting the already-pushed modeling commit.
