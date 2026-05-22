@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-22 | [d3_eyebench_protocol_aligned_optimization_v1](2026-05-22_0734_d3_eyebench_protocol_aligned_optimization_v1.md) | Add the bounded official EyeBench CopCo_TYP D3 optimization protocol and decision gates. |
 | 2026-05-22 | [official_eyebench_baseline_evaluator_closure_v1](2026-05-22_0117_official_eyebench_baseline_evaluator_closure_v1.md) | Close official EyeBench baseline command-source and evaluator gates for CopCo_TYP. |
 | 2026-05-07 | [official_eyebench_runtime_fix_v1](2026-05-07_0055_official_eyebench_runtime_fix_v1.md) | Add isolated official EyeBench runtime repair gates and blocker reporting. |
 | 2026-05-06 | [official_eyebench_sota_check_v1](2026-05-06_2313_official_eyebench_sota_check_v1.md) | Add official EyeBench SOTA verification gates and blocked-status reports. |
