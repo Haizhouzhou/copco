@@ -1,0 +1,7 @@
+extends: configs/d3_eyebench_protocol_aligned_optimization_v1.yaml
+
+d3_eyebench_protocol_optimization:
+  repo_analysis_dir: analysis/d3_eyebench_protocol_aligned_optimization_v1_accelerated
+  output_layout:
+    analysis: analysis/d3_eyebench_protocol_aligned_optimization_v1_accelerated
+    tables: analysis/d3_eyebench_protocol_aligned_optimization_v1_accelerated/tables

@@ -1,0 +1,18 @@
+{
+  "best_candidate_id": "d3opt_0024_2d9a9f9c46",
+  "best_inner_validation_balanced_accuracy": 0.7703242921042901,
+  "candidate_count_evaluated": 56,
+  "config_validation_status": "passed",
+  "created_at": "2026-05-22T09:11:23",
+  "decision_category": "official_compatible_but_not_sota",
+  "final_average_balanced_accuracy": 0.679915506990474,
+  "git_sha": "0680363da9ee9fa5bee8b702dd7588c27465321b",
+  "official_sota_claim_allowed": false,
+  "output_dir": "/home/haizhe/copco/results/d3_eyebench_protocol_aligned_optimization_v1_20260522_074957",
+  "repo_root": "/home/haizhe/copco",
+  "run_name": "d3_eyebench_protocol_aligned_optimization_v1",
+  "slurm_job_id": "3368826",
+  "split_validation_errors": [],
+  "status": "complete",
+  "stop_reason": "no_improvement_stopping_rule"
+}

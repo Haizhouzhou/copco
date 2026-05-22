@@ -1,0 +1,171 @@
+run:
+  name: d3_eyebench_protocol_aligned_optimization_v1
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M%S"
+
+d3_eyebench_protocol_optimization:
+  version: v1
+  protocol_path: docs/goals/d3_eyebench_protocol_aligned_optimization_v1.md
+  require_slurm_job: true
+  official_eyebench_data_folds_only: true
+  no_official_baseline_reruns: true
+  no_test_label_tuning: true
+  no_synthetic_outputs: true
+  no_random_predictions: true
+  no_full_prepared_copco_joins: true
+
+  eyebench:
+    path: eyebench
+    repository_url: https://github.com/EyeBench/eyebench.git
+    commit: ce87f38a3083aeed029c255716a1a51e6ae51167
+    global_processed_dir: eyebench/data/processed
+    processed_copco_dir: eyebench/data/CopCo/processed
+    folds_metadata_dir: eyebench/data/CopCo/folds_metadata
+    labels_dir: eyebench/data/CopCo/labels
+    benchmark_results_dir: eyebench/results/formatted_eyebench_benchmark_results
+
+  published_leaderboard_snapshot:
+    source_url: https://eyebench.github.io/eyebench/results/copco_typ/
+    source_name: EyeBench V1.0 CopCo TYP Test leaderboard
+    retrieval_date: "2026-05-22"
+    local_formatted_table: eyebench/results/formatted_eyebench_benchmark_results/CopCo_TYP_test.csv
+    target_metric: average_trial_level_balanced_accuracy
+    target_model: AhnCNN
+    target_balanced_accuracy: 0.750
+    split_targets:
+      unseen_reader:
+        model: AhnCNN
+        balanced_accuracy: 0.777
+      unseen_text:
+        model: Random Forest
+        balanced_accuracy: 0.815
+      unseen_reader_and_text:
+        model: AhnCNN
+        balanced_accuracy: 0.656
+
+  local_logistic_anchor:
+    source: reproduced local official-derived LogisticRegressionMLArgs pipeline anchor
+    metrics_path: results/official_eyebench_baseline_evaluator_closure_v1_20260522_015211/baseline/logistic/local_official_derived_extended_metrics.csv
+    predictions_path: results/official_eyebench_baseline_evaluator_closure_v1_20260522_015211/baseline/logistic/local_official_derived_predictions.csv
+    rerun_allowed: false
+
+  output_layout:
+    analysis: analysis/d3_eyebench_protocol_aligned_optimization_v1
+    tables: analysis/d3_eyebench_protocol_aligned_optimization_v1/tables
+  repo_analysis_dir: analysis/d3_eyebench_protocol_aligned_optimization_v1
+
+  tasks:
+    - CopCo_TYP
+  split_regimes:
+    - unseen_reader
+    - unseen_text
+    - unseen_reader_and_text
+
+  deterministic_seed: 20260522
+  n_jobs: 16
+
+  budget:
+    max_candidates: 96
+    no_improvement_rounds: 32
+    minimum_improvement_delta: 0.001
+
+  inner_validation:
+    fraction: 0.25
+    split_strategy: match_official_split
+    threshold_grid_size: 99
+    threshold_selection_metric: balanced_accuracy
+
+  candidate_grid:
+    residual_alphas:
+      - 0.1
+      - 1.0
+      - 10.0
+      - 100.0
+    predictor_sets:
+      - surface
+      - surface_surprisal
+      - surface_surprisal_syntax
+    outcome_sets:
+      - duration_core
+      - duration_plus_count
+      - all_gaze
+    aggregation_sets:
+      - central_spread
+      - robust_full
+    transforms:
+      - raw
+      - log1p_duration
+    classifiers:
+      - name: logistic_regression
+        params:
+          C: 0.1
+          penalty: l2
+          solver: liblinear
+          class_weight: balanced
+          max_iter: 2000
+      - name: logistic_regression
+        params:
+          C: 1.0
+          penalty: l2
+          solver: liblinear
+          class_weight: balanced
+          max_iter: 2000
+      - name: logistic_regression
+        params:
+          C: 10.0
+          penalty: l2
+          solver: liblinear
+          class_weight: balanced
+          max_iter: 2000
+      - name: random_forest
+        params:
+          n_estimators: 600
+          min_samples_leaf: 1
+          max_features: sqrt
+          class_weight: balanced_subsample
+      - name: extra_trees
+        params:
+          n_estimators: 800
+          min_samples_leaf: 1
+          max_features: sqrt
+          class_weight: balanced
+      - name: gradient_boosting
+        params:
+          n_estimators: 180
+          learning_rate: 0.05
+          max_depth: 2
+    seeds:
+      - 20260522
+
+  prohibited_features:
+    - participant_id
+    - speech_id
+    - text_id
+    - fold_id
+    - split_name
+    - split_role
+    - official_regime
+    - sample_id
+    - unique_trial_id
+    - unique_paragraph_id
+    - reader_group
+    - reader_group_binary
+    - reader_group_binary_num
+    - dyslexia
+    - dyslexia_labeled
+    - group_label
+    - labels
+    - y_true
+    - target
+    - RCS_score
+    - comprehension_score
+    - eyebench_rcs_score
+    - n_words_read
+    - n_speeches
+    - n_word_rows
+    - total_word_rows
+    - word_observation_count
+    - exposure_count
+    - participant_exposure_count
+    - text_exposure_count
+    - speech_exposure_count

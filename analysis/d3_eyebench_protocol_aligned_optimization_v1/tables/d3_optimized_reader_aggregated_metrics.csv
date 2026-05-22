@@ -1,0 +1,4 @@
+mode,model_name,claim_type,task,split_name,evaluation_level,n_features,n_predictions,usable_folds,skipped_folds,roc_auc,pr_auc,balanced_accuracy,macro_f1,brier_score,threshold,status,skip_reason
+official_eyebench_subset,D3_EyeBench_Optimized,official_compatible_candidate,CopCo_TYP,unseen_reader,reader_aggregated,,55,4,0,0.86,0.799047619047619,0.6340277777777777,0.6223139782922391,0.17877395345898664,0.605,complete,
+official_eyebench_subset,D3_EyeBench_Optimized,official_compatible_candidate,CopCo_TYP,unseen_text,reader_aggregated,,113,4,0,0.8953366873065015,0.7320460131366596,0.815113284548269,0.7248027185208594,0.17078373614598974,0.4475,complete,
+official_eyebench_subset,D3_EyeBench_Optimized,official_compatible_candidate,CopCo_TYP,unseen_reader_and_text,reader_aggregated,,39,4,0,0.7291666666666667,0.6801587301587301,0.6264880952380952,0.59375,0.19805670268867479,0.5475,complete,

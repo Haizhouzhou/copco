@@ -75,6 +75,8 @@ eyebench/results/**/*.csv
 results/official_eyebench_runtime_fix_v1_*/
 results/official_eyebench_baseline_evaluator_closure_v1_*/
 results/official_eyebench_baseline_evaluator_closure_v1_sbatch/
+results/d3_eyebench_protocol_aligned_optimization_v1_*/
+results/d3_eyebench_protocol_aligned_optimization_v1_sbatch/
 
 # Local legacy/source-data workspaces that must not enter this clean checkpoint
 MECO/

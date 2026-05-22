@@ -1,0 +1,1582 @@
+[
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0001_a08ea0296c",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0002_936d309e0b",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0003_1f254e5426",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0004_2d99f94fd4",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0005_6fb3131758",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0006_20828c33ee",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0007_0760b780a3",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0008_df66566550",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0009_29325c8105",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0010_b5068dc8e0",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0011_ccc45f5128",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0012_3fccec14be",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0013_6bc9656667",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0014_c5981f7cbf",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0015_8485500590",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0016_c954743bc7",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0017_e55ad47811",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0018_4da761e7b1",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0019_db64537535",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0020_4cedcabbba",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0021_31a9b65c57",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0022_deefc5fa58",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0023_00a1bd2fb4",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0024_2d9a9f9c46",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0025_469a50d0c3",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0026_c9db41188b",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0027_6cc400601a",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0028_d6eb5fcefc",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0029_7543248d5b",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0030_e8bea8ca86",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0031_b7fdcc6b8a",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0032_88981a3799",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0033_cf4caf03e7",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0034_425f2da47d",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0035_92d5ab1bac",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0036_1d46253469",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0037_184391d30e",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0038_ed918b23b4",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0039_97b00482d8",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0040_b8b1235c58",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0041_6ecadbe8b2",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0042_e758812d52",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0043_d9b707329a",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0044_efe78d1272",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0045_4aa380f3b4",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0046_f9179e50ce",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0047_0d323c92a7",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0048_fb5f9ca843",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0049_82e78bf1f7",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0050_da2ee20fe6",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0051_aa68f8cc4d",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0052_ae9e0f3b67",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0053_c603c730a3",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0054_be5ccbbec5",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0055_f928b3668b",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0056_76e63ddcc9",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0057_3d214b496f",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0058_cd12a0a83c",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0059_7ce8fc6802",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0060_2d77e457c4",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0061_89433480ff",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0062_3ad5841f93",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0063_07671687b2",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0064_794dd529ea",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0065_4d6c13e188",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0066_2f38777575",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0067_91fdc59c73",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0068_282ba88afc",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0069_ad1ee11cfd",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0070_31eb48347f",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0071_36bffc74da",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0072_7e2fae8a43",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0073_90bcf9e0c8",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0074_6477a435a2",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0075_ab46a37c0f",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0076_4c8347c555",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0077_2e99cc9b49",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0078_55168ecf9f",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0079_e34c71995a",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 0.1,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0080_22ddcbc008",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0081_3f15e72459",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0082_1da1727c1c",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0083_891a840421",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0084_41ba37119f",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0085_8dc2921015",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 10.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0086_9bcea9922e",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0087_2bc74ec00b",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface_surprisal_syntax",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0088_fc34ef6d4e",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0089_b81410ecf4",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0090_81f488f920",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 10.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0091_529abddd60",
+    "classifier": "extra_trees",
+    "classifier_params": {
+      "class_weight": "balanced",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 800
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface_surprisal",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0092_2b9b658e2a",
+    "classifier": "gradient_boosting",
+    "classifier_params": {
+      "learning_rate": 0.05,
+      "max_depth": 2,
+      "n_estimators": 180
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 100.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0093_63a3755486",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 0.1,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0094_e2b686c994",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "duration_core",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  },
+  {
+    "aggregation_set": "central_spread",
+    "candidate_id": "d3opt_0095_65a0048038",
+    "classifier": "logistic_regression",
+    "classifier_params": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "max_iter": 2000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "outcome_set": "duration_plus_count",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "log1p_duration"
+  },
+  {
+    "aggregation_set": "robust_full",
+    "candidate_id": "d3opt_0096_ffaa9686df",
+    "classifier": "random_forest",
+    "classifier_params": {
+      "class_weight": "balanced_subsample",
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 600
+    },
+    "outcome_set": "all_gaze",
+    "predictor_set": "surface",
+    "residual_alpha": 1.0,
+    "seed": 20260522,
+    "transform": "raw"
+  }
+]

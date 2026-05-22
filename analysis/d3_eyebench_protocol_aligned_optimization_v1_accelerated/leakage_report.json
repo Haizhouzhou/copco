@@ -1,0 +1,14 @@
+{
+  "denied_predictors_present": [],
+  "heldout_reader_rows_used_for_residual_fit": false,
+  "heldout_text_rows_used_for_residual_fit": false,
+  "no_full_prepared_copco_join": true,
+  "no_random_predictions": true,
+  "no_synthetic_outputs": true,
+  "no_test_label_tuning": true,
+  "official_test_labels_used_for_selection": false,
+  "predictor_columns": [],
+  "reader_group_used_in_residualization": false,
+  "status": "passed",
+  "threshold_selection_source": "inner_validation_only"
+}
