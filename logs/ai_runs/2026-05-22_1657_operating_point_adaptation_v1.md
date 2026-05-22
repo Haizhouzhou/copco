@@ -93,4 +93,5 @@ false.
 
 ## Commit / Push
 
-Pending.
+Committed as `2b75423 feat: add probability-first operating point adaptation analysis`
+and pushed to `origin/codex/d3-eyebench-own-method-score-max-v2`.
