@@ -81,4 +81,9 @@ early, and stopping-detector online rows.
 
 ## Commit / Push Status
 
-Pending.
+- Primary v2 implementation commit: `8cd47dc` (`feat: audit and rerun strict online D3 targeted optimization`).
+- Pushed branch: `codex/d3-online-targeted-optimization-v1`.
+- Large/participant-level artifacts intentionally left uncommitted:
+  - `results/d3_online_targeted_optimization_v2_20260523_070506/`
+  - `analysis/d3_online_targeted_optimization_v2/error_source_by_prefix.csv`
+  - pre-existing v1 status drift and `analysis/d3_online_targeted_optimization_v1_fast2/`.
