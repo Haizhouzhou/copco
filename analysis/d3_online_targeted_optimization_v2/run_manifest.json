@@ -1,0 +1,12 @@
+{
+  "analysis_dir": "/home/haizhe/copco/analysis/d3_online_targeted_optimization_v2",
+  "audit_rows": 17,
+  "candidate_rows": 52,
+  "error_rows": 7076,
+  "final_model_rows": 24,
+  "locked_rows": 23,
+  "official_sota_claim_changed": false,
+  "output_dir": "/home/haizhe/copco/results/d3_online_targeted_optimization_v2_20260523_070506",
+  "per_prefix_rows": 1232,
+  "status": "complete"
+}

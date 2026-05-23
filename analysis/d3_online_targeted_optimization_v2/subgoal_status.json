@@ -1,0 +1,50 @@
+{
+  "items": {
+    "copco_typ_comparison": {
+      "rows": 56,
+      "status": "completed"
+    },
+    "error_source_analysis": {
+      "rows": 7076,
+      "status": "completed"
+    },
+    "final_decision": {
+      "categories": [
+        "offline_reader_profile_main_result",
+        "online_late_secondary_result",
+        "online_mid_secondary_result",
+        "full_table_sota_not_supported",
+        "reader_regime_sota_supported",
+        "online_early_secondary_result",
+        "online_stopping_not_ready",
+        "unseen_text_partially_improved"
+      ],
+      "status": "completed"
+    },
+    "final_models": {
+      "rows": 24,
+      "status": "completed"
+    },
+    "legal_threshold_calibration": {
+      "rows": 24,
+      "status": "completed"
+    },
+    "per_prefix_curves": {
+      "rows": 1232,
+      "status": "completed"
+    },
+    "strict_candidate_search": {
+      "candidates": 52,
+      "status": "completed"
+    },
+    "unseen_text_rescue": {
+      "rows": 4,
+      "status": "completed"
+    },
+    "v1_audit": {
+      "evidence": "v1_audit_report.md",
+      "status": "completed"
+    }
+  },
+  "status": "completed"
+}

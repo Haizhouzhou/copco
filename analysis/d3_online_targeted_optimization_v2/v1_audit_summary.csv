@@ -1,0 +1,18 @@
+audit_item,value
+v1_output_dir,/home/haizhe/copco/results/d3_online_targeted_optimization_v1_fast5_20260523_012750
+v1_was_fast_mode,True
+v1_candidate_search_truncated,True
+v1_candidates_evaluated,36
+prefix_budgets_evaluated,"word_count_prefix:50, chronological_prefix:50, chronological_prefix:100, word_count_prefix:100, word_count_prefix:250, chronological_prefix:250, word_count_prefix:500, chronological_prefix:500, word_count_prefix:1000, chronological_prefix:1000, trial_or_text_prefix:1, trial_or_text_prefix:2, trial_or_text_prefix:3, speech_prefix:1, speech_prefix:2, speech_prefix:3, previous_artifact:d3_eyebench_lite_candidate_0000, previous_artifact:autoresearch_d3_final_reader_profile, previous_artifact:benchmark_bridge_d3_full_data, speech_prefix:all, trial_or_text_prefix:all, chronological_prefix:all, word_count_prefix:all"
+v1_selected_prefix_value_all,not_explicit; selected no_stop final sequence
+v1_selected_no_stop,True
+all_allowed_predictor_count,201
+all_allowed_future_like_columns,none_detected
+best_candidate_uses_future_beyond_prefix,no for prefix rows; yes it consumes all prefixes via no_stop
+online_primary_score_includes_earliness,true
+v1_selected_candidate,online_d3_0021
+v1_validation_primary_score,0.7617221831076706
+v1_validation_no_earliness_score,0.8463579813048288
+v1_locked_primary_mean_AUROC,0.8786
+v1_locked_primary_mean_BA,0.8474
+v1_best_truly_online,offline_like_late_accumulation_not_early_detector

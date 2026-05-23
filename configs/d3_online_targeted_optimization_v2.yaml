@@ -1,0 +1,65 @@
+run:
+  name: d3_online_targeted_optimization_v2
+  output_root: results
+  timestamp_format: "%Y%m%d_%H%M%S"
+
+d3_online_targeted_optimization_v2:
+  version: v2
+  repo_analysis_dir: analysis/d3_online_targeted_optimization_v2
+  v1_output_dir: results/d3_online_targeted_optimization_v1_fast5_20260523_012750
+  v1_analysis_dir: analysis/d3_online_targeted_optimization_v1
+  copco_typ_baseline_table: analysis/official_eyebench_runtime_fix_v1/tables/copco_typ_official_sota_comparison.csv
+
+  primary_regimes:
+    - unseen_reader
+    - unseen_reader_and_text
+
+  feature_families:
+    - residual_gaze_prefix
+    - dfm_sensitivity_prefix
+    - dfm_residual_gaze_prefix
+    - dfm_residual_plus_uncertainty_prefix
+    - all_allowed_strict_online
+
+  accumulators:
+    - mean_probability
+    - logit_mean
+    - entropy_weighted
+    - learned_meta_aggregator
+
+  calibrators:
+    - identity
+    - sigmoid
+    - isotonic
+
+  thresholds:
+    - fixed_0_5
+    - inner_cv_global
+    - inner_cv_prefix_specific
+    - inner_cv_regime_specific
+
+  stopping_policies:
+    - confidence_stop
+    - cost_sensitive_stop
+    - target_sensitivity_stop
+    - coverage_constrained_stop
+
+  evidence_budgets:
+    early:
+      word_count_prefix: [50, 100, 250]
+      trial_or_text_prefix: [1]
+    mid:
+      word_count_prefix: [50, 100, 250, 500]
+      trial_or_text_prefix: [1, 2, 3]
+    late:
+      word_count_prefix: [250, 500, 1000]
+      trial_or_text_prefix: [2, 3, 5]
+
+  target_metric:
+    auroc_weight: 0.35
+    pr_auc_weight: 0.25
+    ba_weight: 0.20
+    one_minus_brier_weight: 0.10
+    earliness_weight: 0.10
+
+  official_sota_claim_changed: false

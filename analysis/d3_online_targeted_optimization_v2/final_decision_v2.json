@@ -1,0 +1,15 @@
+{
+  "decision_categories": [
+    "offline_reader_profile_main_result",
+    "online_late_secondary_result",
+    "online_mid_secondary_result",
+    "full_table_sota_not_supported",
+    "reader_regime_sota_supported",
+    "online_early_secondary_result",
+    "online_stopping_not_ready",
+    "unseen_text_partially_improved"
+  ],
+  "manuscript_wording": "D3 remains strongest as an offline reader-profile result. In stricter online analysis, late and mid prefix accumulation provide project-specific secondary evidence, while early and stopping detectors should be described with evidence budget and coverage qualifications. Full-table official SOTA is not supported.",
+  "official_claim_allowed": false,
+  "official_sota_claim_changed": false
+}
