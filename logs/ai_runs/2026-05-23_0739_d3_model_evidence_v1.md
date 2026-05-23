@@ -62,4 +62,13 @@ tables are generated.
 
 ## Commit / Push Status
 
-Pending.
+- Primary evidence vault commit: `0d701c9`
+  (`docs: add D3 model evidence vault v1`).
+- Primary commit pushed to `origin/codex/d3-online-targeted-optimization-v1`.
+- Generated output not committed:
+  `results/d3_model_evidence_v1_20260523_074726/`.
+- Pre-existing unrelated working-tree artifacts intentionally left unstaged:
+  `analysis/d3_online_targeted_optimization_v1/subgoal_status.json`,
+  `analysis/d3_online_targeted_optimization_v1/subgoal_status.md`,
+  `analysis/d3_online_targeted_optimization_v1_fast2/`, and
+  `analysis/d3_online_targeted_optimization_v2/error_source_by_prefix.csv`.
