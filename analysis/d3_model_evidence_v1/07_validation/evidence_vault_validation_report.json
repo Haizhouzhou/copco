@@ -1,0 +1,9 @@
+{
+  "analysis_dir": "/home/haizhe/copco/analysis/d3_model_evidence_v1",
+  "canonical_metric_rows": 160,
+  "claim_rows": 20,
+  "errors": [],
+  "number_registry_rows": 13,
+  "status": "passed",
+  "warnings": []
+}

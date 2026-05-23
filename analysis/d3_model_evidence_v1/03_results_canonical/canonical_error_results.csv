@@ -1,0 +1,4 @@
+notes,result,source_file,source_phase,value
+Learned meta persistent FP/FN rows from v2 summary.,learned_meta_persistent_fp_fn_rows,analysis/d3_online_targeted_optimization_v2/error_source_by_prefix_report.md,D3OnlineTargetedOptimization_v2,596
+Mean probability persistent FP/FN rows from v2 summary.,mean_probability_persistent_fp_fn_rows,analysis/d3_online_targeted_optimization_v2/error_source_by_prefix_report.md,D3OnlineTargetedOptimization_v2,720
+Held-out text with largest wrong-row concentration.,unseen_text_top_error_text,analysis/d3_online_targeted_optimization_v2/error_source_by_prefix_report.md,D3OnlineTargetedOptimization_v2,7905

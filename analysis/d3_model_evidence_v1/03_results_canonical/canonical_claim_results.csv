@@ -1,0 +1,21 @@
+claim_id,claim_text,claim_status,evidence_file,allowed_context,notes
+AC01,D3 is an explainable reader-profile method based on residualized DFM predictability-sensitive gaze features.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC02,Offline full-profile D3 is the main model and performs strongly under unseen-reader / reader-level evaluation.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC03,DFM sensitivity/residual gaze features outperform DFM exposure-only features.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC04,"BenchmarkBridge full-data reader-aggregated results are benchmark-relative/internal, not official EyeBench.",allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC05,D3 shows reader-regime SOTA-style performance in internal benchmark-relative evaluation.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC06,Online fixed-budget D3 shows meaningful performance after accumulated evidence.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC07,Online early / fixed-budget results can be reported as secondary when supported by v2 metrics.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC08,Unseen_text generalization remains a weakness.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC09,Stopping detector is not yet ready.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+AC10,Official EyeBench SOTA is not claimed.,allowed,03_results_canonical/canonical_metrics_long.csv,manuscript or supplement with stated caveats,Use exact metric rows and source files from the evidence vault.
+PC01,Official EyeBench SOTA.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC02,Full-table CopCo TYP domination.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC03,Trial-level D3_Lite SOTA.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC04,Online adaptive stopping detector is ready.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC05,Standalone segmentation-opacity main effect.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC06,Parser-syntax claims from surface_heuristic fallback.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC07,Test-oracle thresholds as clean benchmark evidence.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC08,Clinical diagnostic claims.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC09,Claiming unseen_text is solved by the general model.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.
+PC10,Claiming D3_Lite is equivalent to full D3.,prohibited,05_claims/prohibited_claims.md,not allowed,Do not use without a new validated protocol that supersedes this vault.

@@ -1,0 +1,45 @@
+# Metric Schema
+
+- `evidence_id`
+- `source_phase`
+- `source_file`
+- `model_family`
+- `model_name`
+- `candidate_id`
+- `algorithm_regime`
+- `task`
+- `evaluation_level`
+- `split_regime`
+- `prefix_type`
+- `prefix_value`
+- `evidence_budget`
+- `feature_family`
+- `calibrator`
+- `threshold_policy`
+- `threshold_source`
+- `accumulator`
+- `stopping_policy`
+- `clean_or_oracle`
+- `official_claim_allowed`
+- `benchmark_relative_claim_allowed`
+- `n_predictions`
+- `n_readers`
+- `n_trials`
+- `n_prefix_rows`
+- `coverage`
+- `AUROC`
+- `PR_AUC`
+- `balanced_accuracy`
+- `macro_F1`
+- `Brier`
+- `RMSE`
+- `MAE`
+- `R2`
+- `calibration_intercept`
+- `calibration_slope`
+- `CI_low`
+- `CI_high`
+- `p_value`
+- `notes`
+
+Enumerated regimes include offline_full_profile, benchmark_bridge_full_data, official_fold_full_feature, official_compatible_lite, operating_point_diagnostic, online_prefix, online_accumulator, online_stopping, oracle_diagnostic, and unseen_text_specialist.

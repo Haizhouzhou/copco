@@ -1,0 +1,15 @@
+{
+  "analysis_dir": "/home/haizhe/copco/analysis/d3_model_evidence_v1",
+  "canonical_metric_rows": 160,
+  "claim_ledger_rows": 20,
+  "figures_generated": false,
+  "final_paper_tables_generated": false,
+  "missing_sources": [],
+  "number_registry_rows": 13,
+  "online_prefix_rows": 2477,
+  "online_stopping_rows": 2133,
+  "output_dir": "/home/haizhe/copco/results/d3_model_evidence_v1_20260523_074726",
+  "source_artifact_inventory_rows": 42,
+  "status": "built",
+  "validation_status": "passed"
+}
