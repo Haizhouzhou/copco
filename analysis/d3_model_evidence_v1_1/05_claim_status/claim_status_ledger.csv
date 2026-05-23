@@ -1,0 +1,22 @@
+claim_id,claim_text,claim_status,evidence_metric_ids,source_files,notes
+IAC01,D3 is an explainable reader-profile method based on residualized DFM predictability-sensitive gaze features.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC02,Offline full-profile D3 is a completed main result in prior project outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC03,DFM sensitivity/residual gaze features outperform DFM exposure-only features in prior outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC04,"BenchmarkBridge full-data reader-aggregated results are internal benchmark-relative, not official EyeBench.",inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC05,Reader-regime benchmark-relative SOTA-style status is recorded in prior outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC06,Online fixed-budget D3 has meaningful secondary evidence in prior outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC07,General unseen_text remains weak in prior outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC08,Stopping detector is not ready in prior outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC09,Official EyeBench SOTA is not claimed in prior outputs.,inherited_allowed,,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IPC01,Official EyeBench SOTA.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC02,Full-table CopCo TYP domination.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC03,Trial-level D3_Lite SOTA.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC04,Online adaptive stopping detector ready.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC05,Standalone segmentation-opacity main effect.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC06,Parser-syntax claims from surface_heuristic fallback.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC07,Test-oracle thresholds as clean benchmark evidence.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC08,Clinical diagnostic claims.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC09,General unseen_text solved by the general model.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC10,D3_Lite equivalent to full D3.,inherited_prohibited,,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IDC01,Unseen_text specialist rows are diagnostic/supplementary in prior outputs.,inherited_diagnostic_only,,analysis/d3_online_targeted_optimization_v2/final_decision_report.md,Diagnostic-only status is preserved as source metadata.
+IDC02,Oracle thresholds are diagnostic-only upper-bound rows in prior outputs.,inherited_diagnostic_only,,analysis/d3_online_targeted_optimization_v2/final_decision_report.md,Diagnostic-only status is preserved as source metadata.

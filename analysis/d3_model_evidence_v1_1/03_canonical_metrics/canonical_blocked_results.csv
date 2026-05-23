@@ -1,0 +1,3 @@
+blocked_id,source_phase,source_file,blocked_result,status,official_claim_allowed,notes
+official_eyebench_subset_blocked,OfficialEyeBenchAlignment_v1,analysis/official_eyebench_alignment_v1/official_eyebench_decision_report.md,official_eyebench_subset,blocked_or_skipped,False,Official subset/evaluator path did not produce official D3 SOTA evidence.
+official_sota_check_blocked,OfficialEyeBenchSOTACheck_v1,analysis/official_eyebench_sota_check_v1/official_eyebench_sota_decision_report.md,official_sota_claim,blocked_or_skipped,False,Official SOTA status was not claimed in prior output.

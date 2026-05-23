@@ -104,6 +104,8 @@ copco-run-d3-online-targeted-optimization-v2 = "copco_eye_bench.cli:run_d3_onlin
 copco-validate-d3-online-targeted-optimization-v2 = "copco_eye_bench.cli:validate_d3_online_targeted_optimization_v2_main"
 copco-build-d3-model-evidence-v1 = "copco_eye_bench.cli:build_d3_model_evidence_v1_main"
 copco-validate-d3-model-evidence-v1 = "copco_eye_bench.cli:validate_d3_model_evidence_v1_main"
+copco-build-d3-model-evidence-v1-1 = "copco_eye_bench.cli:build_d3_model_evidence_v1_1_main"
+copco-validate-d3-model-evidence-v1-1 = "copco_eye_bench.cli:validate_d3_model_evidence_v1_1_main"
 
 [tool.pytest.ini_options]
 addopts = "-p no:cacheprovider"

@@ -1,0 +1,5 @@
+table_source_id,possible_content,source_files,required_filter,metric_columns,caution_notes,no_final_table_generated
+dataset_summary_source,Dataset and prepared-row counts,06_number_registry/paper_number_registry.csv;02_data_splits_features/dataset_summary.md,"value_type in count,row_count","number_id,value,value_type,source_file",Source material only; no final table generated.,True
+offline_d3_metrics_source,Offline D3 metric source rows,03_canonical_metrics/canonical_metrics_long.csv,algorithm_regime=offline_full_profile,"AUROC,PR_AUC,balanced_accuracy,macro_F1,Brier,p_value,CI_low,CI_high",Use source trace fields.,True
+online_prefix_source,Online prefix metric source rows,03_canonical_metrics/canonical_online_prefix_results.csv,source_phase=D3OnlineTargetedOptimization_v2 for strict v2 rows,"prefix_type,prefix_value,AUROC,PR_AUC,balanced_accuracy,Brier",v1 rows are marked deprecated_or_fast_run.,True
+claim_status_source,Inherited claim status,05_claim_status/claim_status_ledger.csv,claim_status,"claim_id,claim_text,claim_status,source_files",Inherited status only.,True

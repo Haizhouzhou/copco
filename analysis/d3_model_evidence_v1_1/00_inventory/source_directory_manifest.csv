@@ -1,0 +1,25 @@
+source_id,source_phase,directory_path,exists,file_count,size_bytes_if_available,referenced_only,notes
+source_0000,v1_evidence_vault,analysis/d3_model_evidence_v1,True,63,1703546,True,Directory recursively scanned for the source file manifest.
+source_0001,feature_release_v1,results/feature_release_v1_20260505_2155,True,81,84444777,True,Directory recursively scanned for the source file manifest.
+source_0002,label_release_v1_1,results/label_release_v1_1_20260506_0041,True,22,32326549,True,Directory recursively scanned for the source file manifest.
+source_0003,research_exploration_v1,results/research_exploration_v1_20260506_0149,True,20,566013,True,Directory recursively scanned for the source file manifest.
+source_0004,phase4_confirmatory_v1,results/phase4_confirmatory_sensitivity_v1_20260506_0715,True,20,872999,True,Directory recursively scanned for the source file manifest.
+source_0005,autoresearch_v1,results/autoresearch_v1_20260506_0917,True,106,963470,True,Directory recursively scanned for the source file manifest.
+source_0006,submission_v1,results/submission_v1_20260506_0936,True,93,782726,True,Directory recursively scanned for the source file manifest.
+source_0007,final_manuscript_audit_v1,results/final_manuscript_audit_v1_20260506_1438,True,12,17671,True,Directory recursively scanned for the source file manifest.
+source_0008,benchmark_bridge_v1,results/benchmark_bridge_v1_20260506_1836,True,23,2344600,True,Directory recursively scanned for the source file manifest.
+source_0009,official_eyebench_alignment_v1,results/official_eyebench_alignment_v1_20260506_2232,True,26,6250722,True,Directory recursively scanned for the source file manifest.
+source_0010,official_eyebench_sota_check_v1,results/official_eyebench_sota_check_v1_20260506_2341,True,20,28021,True,Directory recursively scanned for the source file manifest.
+source_0011,d3_lite_score_max_v2,analysis/d3_eyebench_own_method_score_max_v2,True,25,298299,True,Directory recursively scanned for the source file manifest.
+source_0012,operating_point_adaptation_v1,analysis/operating_point_adaptation_v1,True,22,713276,True,Directory recursively scanned for the source file manifest.
+source_0013,online_targeted_optimization_v1,analysis/d3_online_targeted_optimization_v1,True,32,17915933,True,Directory recursively scanned for the source file manifest.
+source_0014,online_targeted_optimization_v2,analysis/d3_online_targeted_optimization_v2,True,23,1936134,True,Directory recursively scanned for the source file manifest.
+source_0015,paper_submission_v1,paper/submission_v1,True,86,776102,True,Directory recursively scanned for the source file manifest.
+source_0016,configs,configs,True,20,69225,True,Directory recursively scanned for the source file manifest.
+source_0017,docs,docs,True,29,1616647,True,Directory recursively scanned for the source file manifest.
+source_0018,ai_run_logs,logs/ai_runs,True,29,152479,True,Directory recursively scanned for the source file manifest.
+source_0019,autoresearch_analysis,analysis/autoresearch_v1,True,58,695772,True,Directory recursively scanned for the source file manifest.
+source_0020,phase4_analysis,analysis/phase4_confirmatory,True,18,839264,True,Directory recursively scanned for the source file manifest.
+source_0021,benchmark_bridge_analysis,analysis/benchmark_bridge_v1,True,12,30234,True,Directory recursively scanned for the source file manifest.
+source_0022,official_alignment_analysis,analysis/official_eyebench_alignment_v1,True,14,27181,True,Directory recursively scanned for the source file manifest.
+source_0023,official_sota_analysis,analysis/official_eyebench_sota_check_v1,True,10,19683,True,Directory recursively scanned for the source file manifest.

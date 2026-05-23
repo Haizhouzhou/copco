@@ -2,6 +2,7 @@
 
 | Date | Run | Summary |
 | --- | --- | --- |
+| 2026-05-23 | [d3_model_evidence_v1_1](2026-05-23_1011_d3_model_evidence_v1_1.md) | Harden the D3 model evidence vault into a detailed factual v1.1 source-traceable evidence package. |
 | 2026-05-22 | [d3_online_targeted_optimization_v1](2026-05-22_2347_d3_online_targeted_optimization_v1.md) | Deploy targeted online D3 sequential detection evaluation, calibration, thresholding, accumulation, stopping, and reporting. |
 | 2026-05-22 | [operating_point_adaptation_v1](2026-05-22_1657_operating_point_adaptation_v1.md) | Add probability-first operating point, threshold, calibration, and reader aggregation analysis for D3-family predictions. |
 | 2026-05-22 | [d3_eyebench_own_method_score_max_v2_execution](2026-05-22_1136_d3_eyebench_own_method_score_max_v2_execution.md) | Execute the D3 EyeBench own-method score maximization v2 contract with candidate_0000 anchor gating and Slurm-backed search. |

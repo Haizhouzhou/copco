@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "judgements_generated": false,
+  "no_figures_generated": true,
+  "no_final_tables_generated": true,
+  "no_new_experiments": true,
+  "recommendations_generated": false,
+  "row_counts": {
+    "canonical_metrics": 486,
+    "claims": 21,
+    "number_registry": 108,
+    "unresolved_discrepancies": 1
+  },
+  "unresolved_discrepancy_count": 1,
+  "validation_status": "passed",
+  "vault_version": "d3_model_evidence_v1_1",
+  "warnings": []
+}

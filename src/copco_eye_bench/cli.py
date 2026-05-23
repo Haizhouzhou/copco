@@ -57,6 +57,10 @@ from .d3_model_evidence_v1 import (
     build_d3_model_evidence_v1,
     validate_evidence_vault,
 )
+from .d3_model_evidence_v1_1 import (
+    build_d3_model_evidence_v1_1,
+    validate_evidence_vault_v1_1,
+)
 from .phase4_confirmatory import run_phase4_confirmatory, validate_phase4_confirmatory
 from .release import (
     build_modeling_tables,
@@ -1015,5 +1019,31 @@ def validate_d3_model_evidence_v1_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir")
     args = parser.parse_args(argv)
     report = validate_evidence_vault(repo_root=args.repo_root, output_dir=args.output_dir)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def build_d3_model_evidence_v1_1_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build D3ModelEvidenceVault v1.1.")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = "copco-build-d3-model-evidence-v1-1"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    _print(build_d3_model_evidence_v1_1(args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_d3_model_evidence_v1_1_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate D3ModelEvidenceVault v1.1.")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    args = parser.parse_args(argv)
+    report = validate_evidence_vault_v1_1(repo_root=args.repo_root, output_dir=args.output_dir)
     _print(report)
     return 0 if report["status"] == "passed" else 1

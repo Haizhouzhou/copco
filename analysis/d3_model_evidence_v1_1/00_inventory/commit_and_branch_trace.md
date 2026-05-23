@@ -1,0 +1,146 @@
+# Commit and Branch Trace
+
+- Current branch: `codex/d3-model-evidence-v1-1`
+- Current commit at build time: `4d6604eeb04a8fe64cfca434b9fe2ff247a71373`
+- EyeBench submodule or checkout commit: `ce87f38a3083aeed029c255716a1a51e6ae51167`
+- Recent local commits:
+
+```text
+4d6604e docs: update D3 evidence vault run log
+0d701c9 docs: add D3 model evidence vault v1
+572ff6b docs: update D3 online v2 run log status
+8cd47dc feat: audit and rerun strict online D3 targeted optimization
+104fefb docs: record D3 online optimization push status
+d26ce99 feat: deploy targeted online D3 detection evaluation
+ff40d65 docs: record operating point adaptation push status
+2b75423 feat: add probability-first operating point adaptation analysis
+c315e44 docs: record D3 EyeBench score max push status
+d173dfd feat: optimize D3 EyeBench own-method score evidence
+7ece75a chore: record D3 EyeBench goal spec push status
+5c3d24b docs: add D3 EyeBench own-method score maximization goal
+```
+
+- Branches mentioned by current task and prior run logs:
+  - `codex/d3-eyebench-own-method-score-max-v2`
+  - `codex/d3-model-evidence-v1-1`
+  - `codex/d3-online-targeted-optimization-v1`
+- PR references found in local evidence logs: none recorded by this builder.
+
+- Working tree status at build time:
+
+```text
+## codex/d3-model-evidence-v1-1
+AD analysis/d3_model_evidence_v1_1/00_inventory/build_environment_summary.md
+AD analysis/d3_model_evidence_v1_1/00_inventory/commit_and_branch_trace.md
+AD analysis/d3_model_evidence_v1_1/00_inventory/missing_source_report.md
+AD analysis/d3_model_evidence_v1_1/00_inventory/source_artifact_inventory.csv
+AD analysis/d3_model_evidence_v1_1/00_inventory/source_artifact_inventory.md
+AD analysis/d3_model_evidence_v1_1/00_inventory/source_directory_manifest.csv
+AD analysis/d3_model_evidence_v1_1/00_inventory/source_file_manifest.csv
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/calibration_and_thresholding.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_algorithm_overview.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_benchmark_bridge_algorithm.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_model_family_taxonomy.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_official_compatible_lite_algorithm.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_offline_full_profile_algorithm.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_online_accumulation_algorithm.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_online_prefix_algorithm.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/d3_online_stopping_algorithm.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/dfm_predictability_features.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/leakage_controls.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/metric_definitions.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/oracle_diagnostics.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/participant_profile_features.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/prefix_feature_construction.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/prohibited_feature_policy.md
+AD analysis/d3_model_evidence_v1_1/01_algorithm_details/residualization_algorithm.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/benchmark_bridge_split_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/dataset_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/dfm_feature_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/embedding_feature_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/gaze_feature_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/nested_prediction_artifact_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/official_eyebench_alignment_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/online_prefix_dataset_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/parser_fallback_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/participant_label_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/quality_label_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/segmentation_feature_summary.md
+AD analysis/d3_model_evidence_v1_1/02_data_splits_features/split_policy_summary.md
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_blocked_results.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_external_baselines.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_metric_sources.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_metrics_long.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_metrics_long.jsonl
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_model_runs.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_model_runs.jsonl
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_online_prefix_results.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_online_stopping_results.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_oracle_results.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/canonical_result_scope.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/metric_schema.md
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/source_value_reconciliation.csv
+AD analysis/d3_model_evidence_v1_1/03_canonical_metrics/unresolved_metric_discrepancies.csv
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/benchmark_bridge_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/d3_lite_score_max_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/dfm_exposure_vs_sensitivity_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/official_eyebench_alignment_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/official_eyebench_sota_check_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/offline_phase4_autoresearch_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/online_stopping_result_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/online_targeted_v1_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/online_targeted_v2_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/operating_point_adaptation_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/result_scope_summary.md
+AD analysis/d3_model_evidence_v1_1/04_result_summaries/unseen_text_result_summary.md
+AD analysis/d3_model_evidence_v1_1/05_claim_status/claim_status_ledger.csv
+AD analysis/d3_model_evidence_v1_1/05_claim_status/claim_status_ledger.md
+AD analysis/d3_model_evidence_v1_1/05_claim_status/claim_to_metric_mapping.csv
+AD analysis/d3_model_evidence_v1_1/05_claim_status/claim_to_source_mapping.csv
+AD analysis/d3_model_evidence_v1_1/05_claim_status/claim_wording_source_templates.md
+AD analysis/d3_model_evidence_v1_1/05_claim_status/inherited_allowed_claims.md
+AD analysis/d3_model_evidence_v1_1/05_claim_status/inherited_prohibited_claims.md
+AD analysis/d3_model_evidence_v1_1/06_number_registry/key_number_glossary.md
+AD analysis/d3_model_evidence_v1_1/06_number_registry/number_consistency_report.md
+AD analysis/d3_model_evidence_v1_1/06_number_registry/number_source_trace.csv
+AD analysis/d3_model_evidence_v1_1/06_number_registry/paper_number_registry.csv
+AD analysis/d3_model_evidence_v1_1/06_number_registry/paper_number_registry.jsonl
+AD analysis/d3_model_evidence_v1_1/07_table_figure_source_material/figure_source_manifest.md
+AD analysis/d3_model_evidence_v1_1/07_table_figure_source_material/no_tables_or_figures_generated.md
+AD analysis/d3_model_evidence_v1_1/07_table_figure_source_material/source_data_for_future_figures.csv
+AD analysis/d3_model_evidence_v1_1/07_table_figure_source_material/source_data_for_future_tables.csv
+AD analysis/d3_model_evidence_v1_1/07_table_figure_source_material/table_source_manifest.md
+AD analysis/d3_model_evidence_v1_1/08_validation/discrepancy_validation_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/evidence_vault_validation_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/leakage_protocol_status_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/metric_schema_validation_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/no_figure_no_final_table_validation_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/no_recommendation_no_judgement_validation_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/number_consistency_validation_report.md
+AD analysis/d3_model_evidence_v1_1/08_validation/source_trace_validation_report.md
+AD analysis/d3_model_evidence_v1_1/09_appendix_source_material/future_work_items_from_previous_reports.md
+AD analysis/d3_model_evidence_v1_1/09_appendix_source_material/limitations_factual_notes.md
+AD analysis/d3_model_evidence_v1_1/09_appendix_source_material/reviewer_risk_factual_notes.md
+AD analysis/d3_model_evidence_v1_1/09_appendix_source_material/unresolved_items_factual_log.md
+AD analysis/d3_model_evidence_v1_1/10_machine_readable/claim_manifest.json
+AD analysis/d3_model_evidence_v1_1/10_machine_readable/evidence_manifest.json
+AD analysis/d3_model_evidence_v1_1/10_machine_readable/metric_manifest.json
+AD analysis/d3_model_evidence_v1_1/10_machine_readable/source_manifest.json
+AD analysis/d3_model_evidence_v1_1/10_machine_readable/validation_manifest.json
+AD analysis/d3_model_evidence_v1_1/EVIDENCE_CONTRACT.md
+AD analysis/d3_model_evidence_v1_1/INDEX.md
+AD analysis/d3_model_evidence_v1_1/README.md
+AD analysis/d3_model_evidence_v1_1/status.json
+ M analysis/d3_online_targeted_optimization_v1/subgoal_status.json
+ M analysis/d3_online_targeted_optimization_v1/subgoal_status.md
+A  logs/ai_runs/2026-05-23_1011_d3_model_evidence_v1_1.md
+M  logs/ai_runs/INDEX.md
+M  pyproject.toml
+M  src/copco_eye_bench/cli.py
+AM src/copco_eye_bench/d3_model_evidence_v1_1.py
+A  tests/test_d3_model_evidence_v1_1.py
+?? analysis/d3_online_targeted_optimization_v1_fast2/
+?? analysis/d3_online_targeted_optimization_v2/error_source_by_prefix.csv
+```
+
+- Staged files status: included in the working tree status block above.

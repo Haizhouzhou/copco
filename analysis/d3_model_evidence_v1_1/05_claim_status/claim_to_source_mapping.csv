@@ -1,0 +1,22 @@
+claim_id,claim_status,source_files,notes
+IAC01,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC02,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC03,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC04,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC05,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC06,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC07,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC08,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IAC09,inherited_allowed,analysis/d3_model_evidence_v1/05_claims/allowed_claims.md,Inherited status from prior D3 evidence and decision outputs.
+IPC01,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC02,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC03,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC04,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC05,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC06,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC07,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC08,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC09,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IPC10,inherited_prohibited,analysis/d3_model_evidence_v1/05_claims/prohibited_claims.md,Inherited prohibited status from prior D3 evidence and decision outputs.
+IDC01,inherited_diagnostic_only,analysis/d3_online_targeted_optimization_v2/final_decision_report.md,Diagnostic-only status is preserved as source metadata.
+IDC02,inherited_diagnostic_only,analysis/d3_online_targeted_optimization_v2/final_decision_report.md,Diagnostic-only status is preserved as source metadata.
