@@ -15,6 +15,10 @@ from .features import build_feature_tables
 from .label_release import build_label_release, freeze_prepared_dataset, validate_label_release
 from .lm_features import run_lm_features
 from .manuscript_audit import run_manuscript_audit, validate_manuscript_audit
+from .master_research_record_v1 import (
+    build_master_research_record_v1,
+    validate_master_research_record_v1,
+)
 from .mixed_effects import fit_mixed_effects
 from .modeling import run_models
 from .official_eyebench_alignment import (
@@ -1045,5 +1049,31 @@ def validate_d3_model_evidence_v1_1_main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir")
     args = parser.parse_args(argv)
     report = validate_evidence_vault_v1_1(repo_root=args.repo_root, output_dir=args.output_dir)
+    _print(report)
+    return 0 if report["status"] == "passed" else 1
+
+
+def build_master_research_record_v1_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build MasterResearchRecord v1.")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    parser.add_argument("--print-slurm-command", action="store_true")
+    args = parser.parse_args(argv)
+    command = "copco-build-master-research-record-v1"
+    if args.output_dir:
+        command += f" --output-dir {args.output_dir}"
+    if args.print_slurm_command:
+        print(launcher_command(command, repo_root=args.repo_root, mode="cpu"))
+        return 0
+    _print(build_master_research_record_v1(args.output_dir, repo_root=args.repo_root))
+    return 0
+
+
+def validate_master_research_record_v1_main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Validate MasterResearchRecord v1.")
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--output-dir")
+    args = parser.parse_args(argv)
+    report = validate_master_research_record_v1(repo_root=args.repo_root, output_dir=args.output_dir)
     _print(report)
     return 0 if report["status"] == "passed" else 1
